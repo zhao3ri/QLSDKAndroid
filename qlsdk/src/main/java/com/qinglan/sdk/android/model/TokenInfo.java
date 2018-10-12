@@ -1,8 +1,8 @@
-package com.qinglan.sdk.model;
+package com.qinglan.sdk.android.model;
 
 import android.text.TextUtils;
 
-import com.qinglan.sdk.common.Log;
+import com.qinglan.sdk.android.common.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;

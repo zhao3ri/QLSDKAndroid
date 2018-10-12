@@ -1,4 +1,4 @@
-package com.qinglan.sdk;
+package com.qinglan.sdk.android;
 
 import android.app.Activity;
 
@@ -66,14 +66,14 @@ public class QLSDK {
      * 获取平台id
      */
     public int getPlatformId() {
-        return mHandler.getPlatform().getPlatformInfo().getId();
+        return mHandler.getPlatform().getId();
     }
 
     /**
      * 获取平台名称
      */
     public String getPlatform() {
-        return mHandler.getPlatform().getPlatformInfo().getName();
+        return mHandler.getPlatform().getName();
     }
 
     /**

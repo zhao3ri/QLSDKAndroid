@@ -1,4 +1,4 @@
-package com.qinglan.sdk.http;
+package com.qinglan.sdk.android.http;
 
 public interface RequestParamKey {
     String REQUEST_PARAM_TOKEN_APP_ID = "appId";

@@ -1,4 +1,4 @@
-package com.qinglan.sdk.common;
+package com.qinglan.sdk.android.common;
 
 import android.os.Environment;
 

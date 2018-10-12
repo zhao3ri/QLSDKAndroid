@@ -1,6 +1,6 @@
-package com.qinglan.sdk.http;
+package com.qinglan.sdk.android.http;
 
-import com.qinglan.sdk.common.Log;
+import com.qinglan.sdk.android.common.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

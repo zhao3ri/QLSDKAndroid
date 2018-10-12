@@ -1,4 +1,4 @@
-package com.qinglan.sdk.common;
+package com.qinglan.sdk.android.common;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

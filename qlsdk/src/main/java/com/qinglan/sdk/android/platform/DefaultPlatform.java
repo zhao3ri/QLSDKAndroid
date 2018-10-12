@@ -1,10 +1,9 @@
-package com.qinglan.sdk.platform;
+package com.qinglan.sdk.android.platform;
 
 import android.app.Activity;
 import android.content.Intent;
 
-import com.qinglan.sdk.PlatformInfo;
-import com.qinglan.sdk.model.GameRoleInfo;
+import com.qinglan.sdk.android.model.GameRoleInfo;
 
 /**
  * Created by zhaoj on 2018/9/20
@@ -12,14 +11,22 @@ import com.qinglan.sdk.model.GameRoleInfo;
  * @author zhaoj
  */
 public class DefaultPlatform extends AbsPlatform {
+    public static final String DEFAULT_PLATFORM_NAME = "DEFAULT";
+    public static final int DEFAULT_PLATFORM_ID = 0;
+
     @Override
     public void init() {
 
     }
 
     @Override
-    public PlatformInfo getPlatformInfo() {
-        return PlatformInfo.DEFAULT;
+    public int getId() {
+        return DEFAULT_PLATFORM_ID;
+    }
+
+    @Override
+    public String getName() {
+        return DEFAULT_PLATFORM_NAME;
     }
 
     @Override

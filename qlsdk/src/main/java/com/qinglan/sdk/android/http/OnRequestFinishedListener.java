@@ -1,4 +1,4 @@
-package com.qinglan.sdk.http;
+package com.qinglan.sdk.android.http;
 
 /**
  * Created by zhaoj on 2018/9/20

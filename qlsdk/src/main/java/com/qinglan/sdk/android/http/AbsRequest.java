@@ -1,6 +1,6 @@
-package com.qinglan.sdk.http;
+package com.qinglan.sdk.android.http;
 
-import com.qinglan.sdk.BuildConfig;
+import com.qinglan.sdk.android.BuildConfig;
 
 /**
  * Created by zhaoj on 2018/9/20

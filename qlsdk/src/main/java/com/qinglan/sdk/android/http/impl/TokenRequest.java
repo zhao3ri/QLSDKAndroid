@@ -1,4 +1,8 @@
-package com.qinglan.sdk.http;
+package com.qinglan.sdk.android.http.impl;
+
+import com.qinglan.sdk.android.http.AbsRequest;
+import com.qinglan.sdk.android.http.RequestParamKey;
+import com.qinglan.sdk.android.http.Url;
 
 import java.util.HashMap;
 import java.util.Map;

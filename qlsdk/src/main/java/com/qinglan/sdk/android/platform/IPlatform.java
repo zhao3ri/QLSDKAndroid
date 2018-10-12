@@ -1,10 +1,9 @@
-package com.qinglan.sdk.platform;
+package com.qinglan.sdk.android.platform;
 
 import android.app.Activity;
 import android.content.Intent;
 
-import com.qinglan.sdk.PlatformInfo;
-import com.qinglan.sdk.model.GameRoleInfo;
+import com.qinglan.sdk.android.model.GameRoleInfo;
 
 /**
  * Created by zhaoj on 2018/9/20
@@ -14,7 +13,9 @@ import com.qinglan.sdk.model.GameRoleInfo;
 public interface IPlatform {
     void init();
 
-    PlatformInfo getPlatformInfo();
+    int getId();
+
+    String getName();
 
     void login();
 

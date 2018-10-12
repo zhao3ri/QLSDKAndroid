@@ -1,4 +1,4 @@
-package com.qinglan.sdk.http;
+package com.qinglan.sdk.android.http;
 
 import java.util.Map;
 

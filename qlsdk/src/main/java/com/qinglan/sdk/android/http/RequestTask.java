@@ -1,8 +1,8 @@
-package com.qinglan.sdk.http;
+package com.qinglan.sdk.android.http;
 
 import android.os.AsyncTask;
 
-import com.qinglan.sdk.common.Log;
+import com.qinglan.sdk.android.common.Log;
 
 /**
  * Created by zhaoj on 2018/9/20

@@ -1,9 +1,10 @@
-package com.qinglan.sdk.utils;
+package com.qinglan.sdk.android.utils;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 
-import com.qinglan.sdk.common.Utils;
+import com.qinglan.sdk.android.common.Utils;
+
 
 public class SDKUtils {
 

@@ -1,4 +1,4 @@
-package com.qinglan.sdk.model;
+package com.qinglan.sdk.android.model;
 
 /**
  * Created by zhaoj on 2018/9/20

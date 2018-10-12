@@ -1,4 +1,4 @@
-package com.qinglan.sdk.common;
+package com.qinglan.sdk.android.common;
 
 /**
  * Created by zhaoj on 2018/9/19
