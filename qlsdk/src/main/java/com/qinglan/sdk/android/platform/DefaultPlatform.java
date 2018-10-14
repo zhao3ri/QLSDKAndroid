@@ -3,9 +3,17 @@ package com.qinglan.sdk.android.platform;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.qinglan.sdk.android.model.GameRoleInfo;
+import com.qinglan.sdk.android.Callback;
+import com.qinglan.sdk.android.common.Log;
+import com.qinglan.sdk.android.common.Utils;
+import com.qinglan.sdk.android.model.GameRole;
+import com.qinglan.sdk.android.net.HttpConnectionTask;
+import com.qinglan.sdk.android.net.OnResponseListener;
+import com.qinglan.sdk.android.net.impl.CreateRoleRequestInfo;
+import com.qinglan.sdk.android.net.impl.LoginRequestInfo;
 
 /**
+ * 默认平台
  * Created by zhaoj on 2018/9/20
  *
  * @author zhaoj
@@ -13,11 +21,7 @@ import com.qinglan.sdk.android.model.GameRoleInfo;
 public class DefaultPlatform extends AbsPlatform {
     public static final String DEFAULT_PLATFORM_NAME = "DEFAULT";
     public static final int DEFAULT_PLATFORM_ID = 0;
-
-    @Override
-    public void init() {
-
-    }
+    public static final String DEFAULT_GAME_ID = "";
 
     @Override
     public int getId() {
@@ -30,42 +34,103 @@ public class DefaultPlatform extends AbsPlatform {
     }
 
     @Override
-    public void login() {
+    public void login(Activity activity, Callback.OnLoginResponseListener listener) {
+//        LoginRequestInfo request = new LoginRequestInfo();
+//        request.appId = getAppId(activity);
+//        request.platformId = getId();
+//        request.uid = UserPreferences.get(activity, UserPreferences.KEY_UID, "");
+//        request.zoneId = role.getZoneId();
+//        request.zoneName = role.getZoneName();
+//        request.roleId = role.getRoleId();
+//        request.roleName = role.getRoleName();
+//        request.roleLevel = role.getRoleLevel();
+//        request.deviceId = Utils.getDeviceId(activity);
+//        new HttpConnectionTask().setResponseListener(new OnResponseListener() {
+//            @Override
+//            public void onResponse(boolean success, String result) {
+//                if (listener != null) {
+//                    listener.onFinished(success, result);
+//                }
+//            }
+//        }).execute(request);
+    }
+
+    @Override
+    public void logout(Activity activity) {
 
     }
 
     @Override
-    public void logout() {
+    public void showFloat(Activity activity) {
 
     }
 
     @Override
-    public void showFloat() {
+    public void hideFloat(Activity activity) {
 
     }
 
     @Override
-    public void exit() {
+    public void exit(Activity activity) {
 
     }
 
     @Override
-    public void pay() {
+    public void pay(Activity activity) {
 
     }
 
     @Override
-    public void createRole(GameRoleInfo role) {
+    public void createRole(Activity activity, GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
+        if (role == null) {
+            Log.e("role is null!!!!");
+            if (listener != null) {
+                listener.onFinished(false, "Create role failed! The role is null.");
+            }
+            return;
+        }
+        CreateRoleRequestInfo request = new CreateRoleRequestInfo();
+        request.appId = getAppId(activity);
+        request.platformId = getId();
+        request.uid = UserPreferences.get(activity, UserPreferences.KEY_UID, "");
+        request.zoneId = role.getZoneId();
+        request.zoneName = role.getZoneName();
+        request.roleId = role.getRoleId();
+        request.roleName = role.getRoleName();
+        request.roleLevel = role.getRoleLevel();
+        request.deviceId = Utils.getDeviceId(activity);
+        new HttpConnectionTask().setResponseListener(new OnResponseListener() {
+            @Override
+            public void onResponse(boolean success, String result) {
+                if (listener != null) {
+                    listener.onFinished(success, result);
+                }
+            }
+        }).execute(request);
+    }
+
+    @Override
+    public void setRole(Activity activity, GameRole role) {
 
     }
 
     @Override
-    public void setRole(GameRoleInfo role) {
+    public void levelUpdate(Activity activity) {
 
+    }
+
+    @Override
+    public boolean isCustomLogoutUI() {
+        return false;
     }
 
     @Override
     public void onCreate(Activity activity) {
+
+    }
+
+    @Override
+    public void onStart(Activity activity) {
 
     }
 
@@ -91,6 +156,11 @@ public class DefaultPlatform extends AbsPlatform {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
 
     }
 }

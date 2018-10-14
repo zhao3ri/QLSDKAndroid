@@ -1,4 +1,4 @@
-package com.qinglan.sdk.android.http;
+package com.qinglan.sdk.android.net;
 
 public interface Url {
 
@@ -40,7 +40,7 @@ public interface Url {
     /**
      * 获取用户信息URL
      */
-    String GET_USERINFO_URL = "";
+    String GET_USER_INFO_URL = "";
 
     /**
      * 获取支付签名URL

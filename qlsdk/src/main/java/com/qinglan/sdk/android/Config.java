@@ -3,7 +3,6 @@ package com.qinglan.sdk.android;
 import android.content.Context;
 
 import com.qinglan.sdk.android.platform.DefaultPlatform;
-import com.qinglan.sdk.android.platform.IPlatform;
 
 /**
  * Created by zhaoj on 2018/9/20
@@ -12,22 +11,29 @@ import com.qinglan.sdk.android.platform.IPlatform;
  * @author zhaoj
  */
 public final class Config {
-    protected Context mContext;
-    protected int platformId;
+//    private Context context;
+    private int platformId;
     protected String platformName;
     protected Class platformClass;
+    private String gameId;
 
-    public Config(Context context) {
-        if (context == null) {
-            throw new IllegalArgumentException("context must not be null");
-        }
-        mContext = context;
+    public Config(/*Context ctx*/) {
+//        if (ctx == null) {
+//            throw new IllegalArgumentException("context must not be null");
+//        }
+//        context = ctx;
     }
 
-    public static Config createDefaultConfig(Context context) {
-        return new Config(context).setPlatformName(DefaultPlatform.DEFAULT_PLATFORM_NAME)
+    public static Config createDefaultConfig(/*Context ctx*/) {
+        return new Config().setGameId(DefaultPlatform.DEFAULT_GAME_ID)
+                .setPlatformName(DefaultPlatform.DEFAULT_PLATFORM_NAME)
                 .setPlatformId(DefaultPlatform.DEFAULT_PLATFORM_ID)
                 .setPlatformClass(DefaultPlatform.class);
+    }
+
+    public Config setGameId(String id) {
+        gameId = id;
+        return this;
     }
 
     public Config setPlatformId(int id) {
@@ -45,4 +51,23 @@ public final class Config {
         return this;
     }
 
+//    public Context getContext() {
+//        return context;
+//    }
+
+    public int getPlatformId() {
+        return platformId;
+    }
+
+    public String getPlatformName() {
+        return platformName;
+    }
+
+    public Class getPlatformClass() {
+        return platformClass;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
 }

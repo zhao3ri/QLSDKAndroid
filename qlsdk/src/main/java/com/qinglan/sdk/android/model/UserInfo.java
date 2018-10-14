@@ -11,8 +11,8 @@ public final class UserInfo {
     private String sessionId;
     private String userName;
     private String udToken;
-    private String appId;
-    private String pid;
+//    private String appId;
+//    private String platformId;
 
     public String getId() {
         return id;
@@ -46,19 +46,19 @@ public final class UserInfo {
         this.udToken = udToken;
     }
 
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getPid() {
-        return pid;
-    }
-
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
+//    public String getAppId() {
+//        return appId;
+//    }
+//
+//    public void setAppId(String appId) {
+//        this.appId = appId;
+//    }
+//
+//    public String getPlatformId() {
+//        return platformId;
+//    }
+//
+//    public void setPlatformId(String platformId) {
+//        this.platformId = platformId;
+//    }
 }

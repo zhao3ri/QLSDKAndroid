@@ -1,4 +1,4 @@
-package com.qinglan.sdk.android.http;
+package com.qinglan.sdk.android.net;
 
 import com.qinglan.sdk.android.common.Log;
 
@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
@@ -17,7 +18,7 @@ import java.util.Set;
  *
  * @author zhaoj
  */
-public class HttpRequest {
+class HttpRequest {
     private static final String LOG_HTTP_REQUEST_INFO = "REQUEST";
     private static final String LOG_HTTP_GET_ERROR = "GetError";
     private static final String LOG_HTTP_POST_ERROR = "PostError";
@@ -26,7 +27,7 @@ public class HttpRequest {
     private static final String CHARSET = "utf-8";
     private static final int TIME_OUT = 20000;
 
-    protected synchronized static String execute(IRequest request) throws Exception {
+    protected synchronized static String execute(IRequestInfo request) throws Exception {
         String jsonResult = "";
         String url = request.getUrl();
         switch (request.getMethod()) {
@@ -71,12 +72,7 @@ public class HttpRequest {
             }
             HttpURLConnection conn = getHttpURLConnection(reqUrl.toString());
             conn.setRequestMethod("GET");
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                is = conn.getInputStream();
-                jsonResult = read(is);
-            } else {
-                throw (new Exception("Unknown error"));
-            }
+            jsonResult = getHttpConnectionResponse(conn, is);
         } catch (IOException e) {
             Log.e(LOG_HTTP_GET_ERROR, e.toString());
             throw (e);
@@ -117,13 +113,7 @@ public class HttpRequest {
                 os.write(urlEncodedForm.getBytes());
                 os.flush();
             }
-
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                is = conn.getInputStream();
-                jsonResult = read(is);
-            } else {
-                throw (new Exception("Unknown error"));
-            }
+            jsonResult = getHttpConnectionResponse(conn, is);
         } catch (IOException e) {
             Log.e(LOG_HTTP_POST_ERROR, e.toString());
             throw (e);
@@ -132,6 +122,15 @@ public class HttpRequest {
             closeStream(os);
         }
         return jsonResult;
+    }
+
+    private static String getHttpConnectionResponse(HttpURLConnection conn, InputStream is) throws IOException {
+        if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            is = conn.getInputStream();
+            return read(is);
+        } else {
+            throw (new ConnectException("Unknown error:" + conn.getResponseCode() + "!\n" + conn.getResponseMessage()));
+        }
     }
 
     /**

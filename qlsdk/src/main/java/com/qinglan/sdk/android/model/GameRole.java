@@ -6,10 +6,11 @@ package com.qinglan.sdk.android.model;
  *
  * @author zhaoj
  */
-public final class GameRoleInfo {
+public final class GameRole {
     private String zoneId;
     private String zoneName;
     private String roleId;
+    private String roleName;
     private String roleLevel;
     private String serverId;
 
@@ -35,6 +36,14 @@ public final class GameRoleInfo {
 
     public void setRoleId(String id) {
         roleId = id;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getRoleLevel() {

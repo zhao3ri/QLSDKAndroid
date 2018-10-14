@@ -6,7 +6,7 @@ package com.qinglan.sdk.android.model;
  *
  * @author zhaoj
  */
-public final class GamePayInfo {
+public final class GamePay {
     private String money;
     private String cpOrderId;
     private String extInfo;

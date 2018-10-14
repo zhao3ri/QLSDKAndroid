@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -14,7 +15,6 @@ import android.support.v4.app.ActivityCompat;
 
 import com.qinglan.sdk.android.R;
 import com.qinglan.sdk.android.common.Log;
-import com.qinglan.sdk.android.common.ResBox;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +48,43 @@ public class PermissionUtils {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+    public enum Permission {
+        RECORD_AUDIO(CODE_RECORD_AUDIO, Manifest.permission.RECORD_AUDIO),
+        GET_ACCOUNTS(CODE_GET_ACCOUNTS, Manifest.permission.GET_ACCOUNTS),
+        READ_PHONE_STATE(CODE_READ_PHONE_STATE, Manifest.permission.READ_PHONE_STATE),
+        CALL_PHONE(CODE_CALL_PHONE, Manifest.permission.CALL_PHONE),
+        CAMERA(CODE_CAMERA, Manifest.permission.CAMERA),
+        ACCESS_FINE_LOCATION(CODE_ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+        ACCESS_COARSE_LOCATION(CODE_ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+        READ_EXTERNAL_STORAGE(CODE_READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
+        WRITE_EXTERNAL_STORAGE(CODE_WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        int permissionId;
+        String permissionName;
+
+        Permission(int id, String name) {
+            permissionId = id;
+            permissionName = name;
+        }
+
+        public int getId() {
+            return permissionId;
+        }
+
+        public String getPermission() {
+            return permissionName;
+        }
+
+        public String[] getPermissions() {
+            int length = values().length;
+            String[] pms = new String[length];
+            for (int i = 0; i < length; i++) {
+                pms[i] = values()[i].permissionName;
+            }
+            return pms;
+        }
+    }
+
     public interface PermissionGrant {
         void onPermissionGranted(int requestCode);
     }
@@ -55,7 +92,7 @@ public class PermissionUtils {
     public static int checkSelfPermission(Activity activity, int requestCode) {
         final String requestPermission = requestPermissions[requestCode];
         int checkSelfPermission = PackageManager.PERMISSION_DENIED;
-        ;
+
         try {
             checkSelfPermission = ActivityCompat.checkSelfPermission(activity, requestPermission);
         } catch (RuntimeException e) {
@@ -145,9 +182,13 @@ public class PermissionUtils {
      * 一次申请多个权限
      */
     public static void requestMultiPermissions(final Activity activity, PermissionGrant grant) {
+        requestMultiPermissions(activity, grant, requestPermissions);
+    }
 
-        final List<String> permissionsList = getNoGrantedPermission(activity, false);
-        final List<String> shouldRationalePermissionsList = getNoGrantedPermission(activity, true);
+    public static void requestMultiPermissions(final Activity activity, PermissionGrant grant, String... permissions) {
+
+        final List<String> permissionsList = getNoGrantedPermission(activity, permissions, false);
+        final List<String> shouldRationalePermissionsList = getNoGrantedPermission(activity, permissions, true);
 
         if (permissionsList == null || shouldRationalePermissionsList == null) {
             return;
@@ -178,7 +219,7 @@ public class PermissionUtils {
 
     private static void shouldShowRationale(final Activity activity, final int requestCode, final String requestPermission) {
         String[] permissionsHint = activity.getResources().getStringArray(R.array.qlsdk_permissions);
-//        String[] permissionsHint = activity.getResources().getStringArray(ResBox.get(activity).array("qlsdk_permissions"));
+//        String[] permissionsHint = activity.getResources().getStringArray(ResContainer.get(activity).array("qlsdk_permissions"));
         showMessageOKCancel(activity, "Rationale: " + permissionsHint[requestCode], new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -231,12 +272,12 @@ public class PermissionUtils {
             Log.i("onRequestPermissionsResult PERMISSION_GRANTED");
             //success, do something, can use callback
             if (permissionGrant != null)
-            permissionGrant.onPermissionGranted(requestCode);
+                permissionGrant.onPermissionGranted(requestCode);
 
         } else {
             Log.i("onRequestPermissionsResult PERMISSION NOT GRANTED");
             String[] permissionsHint = activity.getResources().getStringArray(R.array.qlsdk_permissions);
-//            String[] permissionsHint = activity.getResources().getStringArray(ResBox.get(activity).array("qlsdk_permissions"));
+//            String[] permissionsHint = activity.getResources().getStringArray(ResContainer.get(activity).array("qlsdk_permissions"));
             openSettingActivity(activity, "Result" + permissionsHint[requestCode]);
         }
 
@@ -264,11 +305,24 @@ public class PermissionUtils {
      * @return
      */
     public static ArrayList<String> getNoGrantedPermission(Activity activity, boolean isShouldRationale) {
+        return getNoGrantedPermission(activity, requestPermissions, isShouldRationale);
+    }
 
+    /**
+     * @param activity
+     * @param request           request permissions array
+     * @param isShouldRationale true: return no granted and shouldShowRequestPermissionRationale permissions, false:return no granted and !shouldShowRequestPermissionRationale
+     * @return
+     */
+    public static ArrayList<String> getNoGrantedPermission(Activity activity, String[] request, boolean isShouldRationale) {
         ArrayList<String> permissions = new ArrayList<>();
 
-        for (int i = 0; i < requestPermissions.length; i++) {
-            String requestPermission = requestPermissions[i];
+        if (null == request || request.length == 0) {
+            return permissions;
+        }
+
+        for (int i = 0; i < request.length; i++) {
+            String requestPermission = request[i];
 
             int checkSelfPermission = -1;
             try {

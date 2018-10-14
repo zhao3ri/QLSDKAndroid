@@ -10,9 +10,20 @@ import com.qinglan.sdk.android.platform.IPlatform;
  * @author zhaoj
  */
 class PlatformHandler {
+    private static PlatformHandler platformHandler = null;
     private IPlatform platform;
 
-    public PlatformHandler(Config config) {
+    public static PlatformHandler create(Config config) {
+        if (platformHandler == null) {
+            platformHandler = new PlatformHandler(config);
+        }
+        return platformHandler;
+    }
+
+    private PlatformHandler() {
+    }
+
+    private PlatformHandler(Config config) {
         if (platform == null) {
             Class cls = config.platformClass;
             if (cls == null) {
@@ -25,7 +36,7 @@ class PlatformHandler {
                 Log.e("create " + config.platformName + " failed! new instance default platform.");
                 platform = new DefaultPlatform();
             } finally {
-                platform.init();
+                platform.setGameConfig(config);
             }
         }
     }

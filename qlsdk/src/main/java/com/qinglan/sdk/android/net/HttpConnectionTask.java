@@ -1,4 +1,4 @@
-package com.qinglan.sdk.android.http;
+package com.qinglan.sdk.android.net;
 
 import android.os.AsyncTask;
 
@@ -9,19 +9,19 @@ import com.qinglan.sdk.android.common.Log;
  *
  * @author zhaoj
  */
-public class RequestTask extends AsyncTask<IRequest, Void, String> {
+public class HttpConnectionTask extends AsyncTask<IRequestInfo, Void, String> {
     private boolean isSuccess = false;
-    private OnRequestFinishedListener mListener;
+    private OnResponseListener mListener;
 
-    public RequestTask setFinishedListener(OnRequestFinishedListener listener) {
+    public HttpConnectionTask setResponseListener(OnResponseListener listener) {
         mListener = listener;
 
         return this;
     }
 
     @Override
-    protected String doInBackground(IRequest... requests) {
-        IRequest request = requests[0];
+    protected String doInBackground(IRequestInfo... requests) {
+        IRequestInfo request = requests[0];
         String result;
         try {
             result = HttpRequest.execute(request);
@@ -38,7 +38,7 @@ public class RequestTask extends AsyncTask<IRequest, Void, String> {
     protected void onPostExecute(String s) {
         Log.d("result = " + s);
         if (mListener != null) {
-            mListener.onFinished(isSuccess, s);
+            mListener.onResponse(isSuccess, s);
         }
     }
 }

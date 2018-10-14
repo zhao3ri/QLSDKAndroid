@@ -1,8 +1,8 @@
-package com.qinglan.sdk.android.http;
+package com.qinglan.sdk.android.net;
 
 import java.util.Map;
 
-public interface IRequest {
+public interface IRequestInfo {
     String getUrl();
 
     int getMethod();

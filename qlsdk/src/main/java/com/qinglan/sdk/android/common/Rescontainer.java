@@ -12,20 +12,20 @@ import java.util.Set;
 /**
  * Created by zhaoj on 2018/10/13.
  */
-public final class ResBox {
-    private static ResBox R = null;
+public final class ResContainer {
+    private static ResContainer R = null;
     private Map<String, Integer> map = new HashMap();
     private Context mContext = null;
     private Map<String, SocializeResource> mResources;
     private static final String DEFAULT_PACKAGE_NAME = "com.qinglan.sdk.android";
 
-    private ResBox(Context context) {
+    private ResContainer(Context context) {
         mContext = context.getApplicationContext();
     }
 
-    public static synchronized ResBox get(Context context) {
+    public static synchronized ResContainer get(Context context) {
         if (R == null) {
-            R = new ResBox(context);
+            R = new ResContainer(context);
         }
 
         return R;
@@ -79,7 +79,7 @@ public final class ResBox {
         return getResId(mContext, "array", resName);
     }
 
-    public ResBox(Context resName, Map<String, SocializeResource> resourceMap) {
+    public ResContainer(Context resName, Map<String, SocializeResource> resourceMap) {
         mResources = resourceMap;
         mContext = resName;
     }
@@ -130,10 +130,10 @@ public final class ResBox {
         } else {
             Set resName = this.mResources.keySet();
 
-            ResBox.SocializeResource socializeResource;
+            ResContainer.SocializeResource socializeResource;
             for (Iterator iterator = resName.iterator(); iterator.hasNext(); socializeResource.mIsCompleted = true) {
                 String name = (String) iterator.next();
-                socializeResource = (ResBox.SocializeResource) this.mResources.get(name);
+                socializeResource = (ResContainer.SocializeResource) this.mResources.get(name);
                 socializeResource.mId = getResourceId(mContext, socializeResource.mType, socializeResource.mName);
             }
 
