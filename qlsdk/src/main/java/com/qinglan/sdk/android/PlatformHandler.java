@@ -14,7 +14,6 @@ import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.model.UserInfo;
 import com.qinglan.sdk.android.platform.DefaultPlatform;
 import com.qinglan.sdk.android.platform.IPlatform;
-import com.qinglan.sdk.android.platform.UserPreferences;
 
 /**
  * Created by zhaoj on 2018/9/20
@@ -23,6 +22,8 @@ import com.qinglan.sdk.android.platform.UserPreferences;
  */
 public final class PlatformHandler {
     private static PlatformHandler platformHandler = null;
+    private Context mContext;
+    private IPresenter presenter;
     private IPlatform platform;
     private String gameId;
     private boolean isLogged = false;
@@ -56,23 +57,29 @@ public final class PlatformHandler {
 
     private PlatformHandler(Config config) {
         gameId = config.getGameId();
-        heartBeatManager = (AlarmManager) config.context.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        mContext = config.context;
+        heartBeatManager = (AlarmManager) mContext.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
         if (platform == null) {
             Class cls = config.platformClass;
             if (cls == null) {
-                throw new IllegalArgumentException("未配置平台class参数:" + config.platformName);
+                throw new IllegalArgumentException("未配置平台class参数");
             }
             try {
                 platform = (IPlatform) cls.newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("create " + config.platformName + " failed! new instance default platform.");
+                Log.e("create platform failed! new instance default platform.");
                 platform = new DefaultPlatform();
             } finally {
-                platform.setHandler(platformHandler);
+//                platform.setHandler(platformHandler);
+                presenter = new SDKPresenter(gameId, platform);
             }
         }
+    }
+
+    public IPresenter getPresenter() {
+        return presenter;
     }
 
     private PendingIntent getPendingIntent(Context context) {
@@ -114,19 +121,28 @@ public final class PlatformHandler {
         this.loginTime = loginTime;
     }
 
-    public void saveUserInfo(Context context, UserInfo user) {
-        UserPreferences.saveUserInfo(context, user);
+    public void saveUserInfo(UserInfo user) {
+        UserPreferences.saveUserInfo(mContext, user);
     }
 
-    public UserInfo getUserInfo(Context context) {
-        UserInfo user = UserPreferences.getUserInfo(context);
+    public UserInfo getUserInfo() {
+        UserInfo user = UserPreferences.getUserInfo(mContext);
         return user;
+    }
+
+    public String getUid() {
+        return UserPreferences.get(mContext, UserPreferences.KEY_UID, "");
+    }
+
+    public void setSession(String session) {
+        UserPreferences.put(mContext, UserPreferences.KEY_SESSION_ID, session);
     }
 
     public void clear() {
         isLogged = false;
         isHeartBeating = false;
         loginTime = 0;
+        UserPreferences.clear(mContext);
     }
 
     public void register(Activity activity) {

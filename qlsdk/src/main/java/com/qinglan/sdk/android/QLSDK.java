@@ -52,9 +52,9 @@ public class QLSDK {
     }
 
     /**
-     * 设置游戏角色开始游戏
+     * 设置游戏角色进入游戏
      */
-    public void startGame(Activity activity, boolean showFloat, GameRole game, Callback.OnGameStartedListener listener) {
+    public void enterGame(Activity activity, boolean showFloat, GameRole game, Callback.OnGameStartedListener listener) {
         mPlatform.setRole(activity, showFloat, game, listener);
     }
 
@@ -71,13 +71,6 @@ public class QLSDK {
     public void login(Activity activity, Callback.OnLoginResponseListener listener) {
         mPlatform.login(activity, listener);
     }
-
-//    /**
-//     * 提交角色信息
-//     */
-//    public void updateGameRole(Activity activity, GameRole role, Callback.OnGameStartedListener listener) {
-//        mPlatform.setRole(activity, role,listener);
-//    }
 
     /**
      * 创建角色
@@ -103,8 +96,8 @@ public class QLSDK {
     /**
      * 注销
      */
-    public void logout(Activity activity) {
-        mPlatform.logout(activity);
+    public void logout(Activity activity, GameRole role, Callback.OnLogoutResponseListener listener) {
+        mPlatform.logout(activity, role, listener);
     }
 
     /**

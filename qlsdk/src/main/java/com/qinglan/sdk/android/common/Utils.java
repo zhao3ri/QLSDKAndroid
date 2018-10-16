@@ -398,6 +398,10 @@ public class Utils {
         return (int) (px / scale + 0.5);
     }
 
+    public static String getResolution(Context context) {
+        return String.format("%sx%s", getDeviceHeight(context), getDeviceWidth(context));
+    }
+
     public static String mapToJsonArrayString(Map<String, Object> map) {
         if (map.isEmpty())
             return null;

@@ -7,6 +7,7 @@ import com.qinglan.sdk.android.Callback;
 import com.qinglan.sdk.android.Config;
 import com.qinglan.sdk.android.PlatformHandler;
 import com.qinglan.sdk.android.model.GameRole;
+import com.qinglan.sdk.android.model.UserInfo;
 
 /**
  * Created by zhaoj on 2018/9/20
@@ -32,6 +33,8 @@ public interface IPlatform {
      */
     void init(Activity activity, Callback.OnInitCompletedListener listener);
 
+    void init(Activity activity, OnInitConnectedListener listener);
+
     /**
      * 登录
      */
@@ -40,7 +43,7 @@ public interface IPlatform {
     /**
      * 注销
      */
-    void logout(Activity activity);
+    void logout(Activity activity, GameRole role, Callback.OnLogoutResponseListener listener);
 
     /**
      * 显示浮窗
@@ -103,4 +106,10 @@ public interface IPlatform {
     void attachBaseContext(Activity activity);
 
     void onConfigurationChanged();
+
+    interface OnInitConnectedListener {
+        void initSuccess(UserInfo user);
+
+        void initFailed(String msg);
+    }
 }

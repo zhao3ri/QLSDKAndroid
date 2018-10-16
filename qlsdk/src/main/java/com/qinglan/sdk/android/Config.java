@@ -12,8 +12,6 @@ import com.qinglan.sdk.android.platform.DefaultPlatform;
  * @author zhaoj
  */
 public final class Config {
-    private int platformId;
-    protected String platformName;
     private String gameId;
     protected Context context;
     protected Class platformClass;
@@ -27,23 +25,11 @@ public final class Config {
 
     public static Config createDefaultConfig(Context ctx) {
         return new Config(ctx).setGameId(DefaultPlatform.DEFAULT_GAME_ID)
-                .setPlatformName(DefaultPlatform.DEFAULT_PLATFORM_NAME)
-                .setPlatformId(DefaultPlatform.DEFAULT_PLATFORM_ID)
                 .setPlatformClass(DefaultPlatform.class);
     }
 
     public Config setGameId(String id) {
         gameId = id;
-        return this;
-    }
-
-    public Config setPlatformId(int id) {
-        platformId = id;
-        return this;
-    }
-
-    public Config setPlatformName(String name) {
-        platformName = name;
         return this;
     }
 
@@ -55,14 +41,6 @@ public final class Config {
 //    public Context getContext() {
 //        return context;
 //    }
-
-    public int getPlatformId() {
-        return platformId;
-    }
-
-    public String getPlatformName() {
-        return platformName;
-    }
 
     public Class getPlatformClass() {
         return platformClass;

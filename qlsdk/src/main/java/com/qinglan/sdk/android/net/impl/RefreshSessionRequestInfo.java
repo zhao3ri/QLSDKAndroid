@@ -11,7 +11,7 @@ import java.util.Map;
  * Created by tyland on 2018/10/14.
  * SDK提交登录成功的用户数据请求参数
  */
-public class SubmitRequestInfo extends AbsRequestInfo {
+public class RefreshSessionRequestInfo extends AbsRequestInfo {
     public String uid;
     public String zoneId;
     public String zoneName;

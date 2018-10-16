@@ -32,5 +32,5 @@ public final class HttpConstants {
     public static final String RESPONSE_CODE = "code";
     public static final int RESPONSE_SUCCESS_CODE = 0;
     public static final String RESPONSE_LOGIN_TIMESTAMP = "loginTime";
-
+    public static final String RESPONSE_TOKEN = "token";
 }

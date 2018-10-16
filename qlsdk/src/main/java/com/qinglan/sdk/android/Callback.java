@@ -12,9 +12,9 @@ public class Callback {
     }
 
     public interface OnLoginResponseListener {
-        void loginSuccess(UserInfo user);
+        void onSuccess(UserInfo user);
 
-        void loginFailed(String error);
+        void onFailed(String error);
     }
 
     public interface OnCreateRoleFinishedListener {
@@ -25,5 +25,11 @@ public class Callback {
         void onGameStarted(long timestamp);
 
         void onFailed(String result);
+    }
+
+    public interface OnLogoutResponseListener{
+        void onSuccess();
+
+        void onFailed(String error);
     }
 }

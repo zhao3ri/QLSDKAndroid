@@ -35,4 +35,5 @@ public abstract class AbsRequestInfo implements IRequestInfo {
         params.put(HttpConstants.REQUEST_PARAM_PLATFORM_ID, platformId);
         return params;
     }
+
 }

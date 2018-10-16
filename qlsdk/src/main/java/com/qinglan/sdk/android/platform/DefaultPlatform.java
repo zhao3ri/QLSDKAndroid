@@ -56,7 +56,7 @@ public class DefaultPlatform extends AbsPlatform {
     }
 
     @Override
-    public void logout(Activity activity) {
+    public void logout(Activity activity, GameRole role, Callback.OnLogoutResponseListener listener) {
 
     }
 
@@ -81,7 +81,7 @@ public class DefaultPlatform extends AbsPlatform {
     }
 
     @Override
-    public void createRole(Activity activity, @NonNull GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
+    public void createRole(Activity activity, GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
         if (role == null) {
             Log.e("role is null!!!!");
             if (listener != null) {
@@ -92,7 +92,7 @@ public class DefaultPlatform extends AbsPlatform {
         GameRoleRequestInfo request = new GameRoleRequestInfo();
         request.appId = getAppId(activity);
         request.platformId = getId();
-        request.uid = UserPreferences.get(activity, UserPreferences.KEY_UID, "");
+        request.uid = handler.getUid();
         request.zoneId = role.getZoneId();
         request.zoneName = role.getZoneName();
         request.roleId = role.getRoleId();
