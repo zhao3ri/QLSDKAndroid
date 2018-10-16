@@ -7,7 +7,7 @@ import com.qinglan.sdk.android.common.Utils;
 
 
 public class SDKUtils {
-    public static final String META_DATA_APP_ID= "QL_APPID";
+    public static final String META_DATA_APP_ID = "QL_APPID";
 
     public static String getMeteData(Context context, String tag) {
         ApplicationInfo info = Utils.getApplicationInfo(context);
@@ -30,14 +30,15 @@ public class SDKUtils {
         if (info != null) {
             info = Utils.getApplicationInfo(context);
             String appId = info.metaData.getString(META_DATA_APP_ID);
-            if (appId == null) {
-                return null;
-            }
-            if (appId.startsWith(META_DATA_APP_ID)) {
-                return appId.split(":")[1];
-            } else {
-                return null;
-            }
+//            if (appId == null) {
+//                return null;
+//            }
+//            if (appId.startsWith(META_DATA_APP_ID)) {
+//                return appId.split(":")[1];
+//            } else {
+//                return null;
+//            }
+            return appId;
         }
         return null;
     }

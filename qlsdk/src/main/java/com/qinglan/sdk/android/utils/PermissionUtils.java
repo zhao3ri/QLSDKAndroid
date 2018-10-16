@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -17,6 +16,7 @@ import com.qinglan.sdk.android.R;
 import com.qinglan.sdk.android.common.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,18 +36,6 @@ public class PermissionUtils {
     public static final int CODE_WRITE_EXTERNAL_STORAGE = 8;
     public static final int CODE_MULTI_PERMISSION = 100;
 
-    private static final String[] requestPermissions = {
-            Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.GET_ACCOUNTS,
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.CALL_PHONE,
-            Manifest.permission.CAMERA,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-
     public enum Permission {
         RECORD_AUDIO(CODE_RECORD_AUDIO, Manifest.permission.RECORD_AUDIO),
         GET_ACCOUNTS(CODE_GET_ACCOUNTS, Manifest.permission.GET_ACCOUNTS),
@@ -59,23 +47,23 @@ public class PermissionUtils {
         READ_EXTERNAL_STORAGE(CODE_READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
         WRITE_EXTERNAL_STORAGE(CODE_WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        int permissionId;
+        int permissionCode;
         String permissionName;
 
-        Permission(int id, String name) {
-            permissionId = id;
+        Permission(int code, String name) {
+            permissionCode = code;
             permissionName = name;
         }
 
-        public int getId() {
-            return permissionId;
+        public int getCode() {
+            return permissionCode;
         }
 
         public String getPermission() {
             return permissionName;
         }
 
-        public String[] getPermissions() {
+        public static String[] names() {
             int length = values().length;
             String[] pms = new String[length];
             for (int i = 0; i < length; i++) {
@@ -83,14 +71,56 @@ public class PermissionUtils {
             }
             return pms;
         }
+
+        public static String getNameByCode(int id) {
+            for (Permission p : values()) {
+                if (p.permissionCode == id) {
+                    return p.getPermission();
+                }
+            }
+            return null;
+        }
+
+        public static Permission valuesOf(String name) {
+            for (Permission p : values()) {
+                if (p.permissionName.equals(name)) {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        public static Permission valuesOf(int id) {
+            for (Permission p : values()) {
+                if (p.permissionCode == id) {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        public static Permission[] subValues(@NonNull String[] names) {
+            List<Permission> permissions = new ArrayList<>();
+            for (String name : names) {
+                for (Permission p : values()) {
+                    if (p.permissionName.equals(name)) {
+                        permissions.add(p);
+                        continue;
+                    }
+                }
+            }
+            return (Permission[]) permissions.toArray();
+        }
     }
 
     public interface PermissionGrant {
-        void onPermissionGranted(int requestCode);
+        //        void onPermissionGranted(int requestCode);
+        void onPermissionGranted(int requestCode, Permission... p);
     }
 
     public static int checkSelfPermission(Activity activity, int requestCode) {
-        final String requestPermission = requestPermissions[requestCode];
+//        final String requestPermission = requestPermissions[requestCode];
+        final String requestPermission = Permission.getNameByCode(requestCode);
         int checkSelfPermission = PackageManager.PERMISSION_DENIED;
 
         try {
@@ -108,13 +138,20 @@ public class PermissionUtils {
      * @param requestCode request code, e.g. if you need request CAMERA permission,parameters is PermissionUtils.CODE_CAMERA
      */
     public static int requestPermission(final Activity activity, final int requestCode, PermissionGrant permissionGrant) {
+        return requestPermission(activity, Permission.valuesOf(requestCode), permissionGrant);
+    }
+
+    /**
+     * Requests permission.
+     */
+    public static int requestPermission(final Activity activity, final Permission p, PermissionGrant permissionGrant) {
         if (activity == null) {
             return PackageManager.PERMISSION_DENIED;
         }
 
-        Log.i("requestPermission requestCode:" + requestCode);
-        if (requestCode < 0 || requestCode >= requestPermissions.length) {
-            Log.w("requestPermission illegal requestCode:" + requestCode);
+        Log.i("requestPermission requestCode:" + p.getCode());
+        if (p.getCode() < 0 || p.getCode() >= Permission.values().length) {
+            Log.w("requestPermission illegal requestCode:" + p.getCode());
             return PackageManager.PERMISSION_DENIED;
         }
 
@@ -126,8 +163,8 @@ public class PermissionUtils {
             return PackageManager.PERMISSION_GRANTED;
         }
 
-        final String requestPermission = requestPermissions[requestCode];
-        int checkSelfPermission = checkSelfPermission(activity, requestCode);
+        final String requestPermission = p.getPermission();
+        int checkSelfPermission = checkSelfPermission(activity, p.getCode());
 
         if (checkSelfPermission != PackageManager.PERMISSION_GRANTED) {
             Log.i("ActivityCompat.checkSelfPermission != PackageManager.PERMISSION_GRANTED");
@@ -135,17 +172,17 @@ public class PermissionUtils {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, requestPermission)) {
                 Log.i("requestPermission shouldShowRequestPermissionRationale");
-                shouldShowRationale(activity, requestCode, requestPermission);
+                shouldShowRationale(activity, p, requestPermission);
 
             } else {
                 Log.d("requestCameraPermission else");
-                ActivityCompat.requestPermissions(activity, new String[]{requestPermission}, requestCode);
+                ActivityCompat.requestPermissions(activity, new String[]{requestPermission}, p.getCode());
             }
 
         } else {
             Log.d("ActivityCompat.checkSelfPermission ==== PackageManager.PERMISSION_GRANTED");
             if (permissionGrant != null)
-                permissionGrant.onPermissionGranted(requestCode);
+                permissionGrant.onPermissionGranted(p.getCode(), p);
         }
         return checkSelfPermission;
     }
@@ -170,7 +207,7 @@ public class PermissionUtils {
 
         if (notGranted.size() == 0) {
             if (permissionGrant != null)
-                permissionGrant.onPermissionGranted(CODE_MULTI_PERMISSION);
+                permissionGrant.onPermissionGranted(CODE_MULTI_PERMISSION, Permission.subValues(permissions));
         } else {
             openSettingActivity(activity, "those permission need granted!");
         }
@@ -182,7 +219,7 @@ public class PermissionUtils {
      * 一次申请多个权限
      */
     public static void requestMultiPermissions(final Activity activity, PermissionGrant grant) {
-        requestMultiPermissions(activity, grant, requestPermissions);
+        requestMultiPermissions(activity, grant, Permission.names());
     }
 
     public static void requestMultiPermissions(final Activity activity, PermissionGrant grant, String... permissions) {
@@ -216,16 +253,16 @@ public class PermissionUtils {
 
     }
 
+    private static final String PERMISSION_HINT = "没有此权限，无法开启这个功能，请开启权限：%s";
 
-    private static void shouldShowRationale(final Activity activity, final int requestCode, final String requestPermission) {
-        String[] permissionsHint = activity.getResources().getStringArray(R.array.qlsdk_permissions);
+    private static void shouldShowRationale(final Activity activity, /*final int requestCode*/final Permission p, final String requestPermission) {
 //        String[] permissionsHint = activity.getResources().getStringArray(ResContainer.get(activity).array("qlsdk_permissions"));
-        showMessageOKCancel(activity, "Rationale: " + permissionsHint[requestCode], new DialogInterface.OnClickListener() {
+        showMessageOKCancel(activity, "Rationale: " + String.format(PERMISSION_HINT, p.name()), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ActivityCompat.requestPermissions(activity,
                         new String[]{requestPermission},
-                        requestCode);
+                        p.getCode());
                 Log.d("showMessageOKCancel requestPermissions:" + requestPermission);
             }
         });
@@ -260,7 +297,7 @@ public class PermissionUtils {
             return;
         }
 
-        if (requestCode < 0 || requestCode >= requestPermissions.length) {
+        if (requestCode < 0 || requestCode >= Permission.values().length) {
             Log.w("requestPermissionsResult illegal requestCode:" + requestCode);
             return;
         }
@@ -276,9 +313,7 @@ public class PermissionUtils {
 
         } else {
             Log.i("onRequestPermissionsResult PERMISSION NOT GRANTED");
-            String[] permissionsHint = activity.getResources().getStringArray(R.array.qlsdk_permissions);
-//            String[] permissionsHint = activity.getResources().getStringArray(ResContainer.get(activity).array("qlsdk_permissions"));
-            openSettingActivity(activity, "Result" + permissionsHint[requestCode]);
+            openSettingActivity(activity, "Result" + String.format(PERMISSION_HINT, Permission.valuesOf(requestCode).name()));
         }
 
     }
@@ -305,7 +340,7 @@ public class PermissionUtils {
      * @return
      */
     public static ArrayList<String> getNoGrantedPermission(Activity activity, boolean isShouldRationale) {
-        return getNoGrantedPermission(activity, requestPermissions, isShouldRationale);
+        return getNoGrantedPermission(activity, Permission.names(), isShouldRationale);
     }
 
     /**

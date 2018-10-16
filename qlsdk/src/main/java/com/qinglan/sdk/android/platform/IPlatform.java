@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.qinglan.sdk.android.Callback;
 import com.qinglan.sdk.android.Config;
+import com.qinglan.sdk.android.PlatformHandler;
 import com.qinglan.sdk.android.model.GameRole;
 
 /**
@@ -14,7 +15,8 @@ import com.qinglan.sdk.android.model.GameRole;
  */
 public interface IPlatform {
 
-    void setGameConfig(Config config);
+    void setHandler(PlatformHandler handler);
+
     /**
      * 获取平台id
      */
@@ -66,9 +68,9 @@ public interface IPlatform {
     void createRole(Activity activity, GameRole role, Callback.OnCreateRoleFinishedListener listener);
 
     /**
-     * 设置角色信息
+     * 设置进入游戏的角色信息
      */
-    void setRole(Activity activity,GameRole role);
+    void setRole(Activity activity, boolean showFloat, GameRole role, Callback.OnGameStartedListener listener);
 
     /**
      * 升级
@@ -96,4 +98,9 @@ public interface IPlatform {
 
     void onNewIntent(Intent intent);
 
+    void onBackPressed();
+
+    void attachBaseContext(Activity activity);
+
+    void onConfigurationChanged();
 }

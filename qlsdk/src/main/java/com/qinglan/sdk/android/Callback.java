@@ -21,4 +21,9 @@ public class Callback {
         void onFinished(boolean success, String result);
     }
 
+    public interface OnGameStartedListener {
+        void onGameStarted(long timestamp);
+
+        void onFailed(String result);
+    }
 }

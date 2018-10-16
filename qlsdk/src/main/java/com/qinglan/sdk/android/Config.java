@@ -1,6 +1,7 @@
 package com.qinglan.sdk.android;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.qinglan.sdk.android.platform.DefaultPlatform;
 
@@ -11,21 +12,21 @@ import com.qinglan.sdk.android.platform.DefaultPlatform;
  * @author zhaoj
  */
 public final class Config {
-//    private Context context;
     private int platformId;
     protected String platformName;
-    protected Class platformClass;
     private String gameId;
+    protected Context context;
+    protected Class platformClass;
 
-    public Config(/*Context ctx*/) {
-//        if (ctx == null) {
-//            throw new IllegalArgumentException("context must not be null");
-//        }
-//        context = ctx;
+    public Config(@NonNull Context ctx) {
+        if (ctx == null) {
+            throw new IllegalArgumentException("context must not be null");
+        }
+        context = ctx;
     }
 
-    public static Config createDefaultConfig(/*Context ctx*/) {
-        return new Config().setGameId(DefaultPlatform.DEFAULT_GAME_ID)
+    public static Config createDefaultConfig(Context ctx) {
+        return new Config(ctx).setGameId(DefaultPlatform.DEFAULT_GAME_ID)
                 .setPlatformName(DefaultPlatform.DEFAULT_PLATFORM_NAME)
                 .setPlatformId(DefaultPlatform.DEFAULT_PLATFORM_ID)
                 .setPlatformClass(DefaultPlatform.class);

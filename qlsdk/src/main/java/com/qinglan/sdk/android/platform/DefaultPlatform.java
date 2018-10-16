@@ -2,6 +2,7 @@ package com.qinglan.sdk.android.platform;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 
 import com.qinglan.sdk.android.Callback;
 import com.qinglan.sdk.android.common.Log;
@@ -9,8 +10,7 @@ import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.net.HttpConnectionTask;
 import com.qinglan.sdk.android.net.OnResponseListener;
-import com.qinglan.sdk.android.net.impl.CreateRoleRequestInfo;
-import com.qinglan.sdk.android.net.impl.LoginRequestInfo;
+import com.qinglan.sdk.android.net.impl.GameRoleRequestInfo;
 
 /**
  * 默认平台
@@ -81,7 +81,7 @@ public class DefaultPlatform extends AbsPlatform {
     }
 
     @Override
-    public void createRole(Activity activity, GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
+    public void createRole(Activity activity, @NonNull GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
         if (role == null) {
             Log.e("role is null!!!!");
             if (listener != null) {
@@ -89,7 +89,7 @@ public class DefaultPlatform extends AbsPlatform {
             }
             return;
         }
-        CreateRoleRequestInfo request = new CreateRoleRequestInfo();
+        GameRoleRequestInfo request = new GameRoleRequestInfo();
         request.appId = getAppId(activity);
         request.platformId = getId();
         request.uid = UserPreferences.get(activity, UserPreferences.KEY_UID, "");
@@ -107,11 +107,6 @@ public class DefaultPlatform extends AbsPlatform {
                 }
             }
         }).execute(request);
-    }
-
-    @Override
-    public void setRole(Activity activity, GameRole role) {
-
     }
 
     @Override
@@ -161,6 +156,26 @@ public class DefaultPlatform extends AbsPlatform {
 
     @Override
     public void onNewIntent(Intent intent) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
+    public void attachBaseContext(Activity activity) {
+
+    }
+
+    @Override
+    public void onConfigurationChanged() {
+
+    }
+
+    @Override
+    public void selectRole(Activity activity, boolean showFloat, GameRole role, Callback.OnGameStartedListener listener) {
 
     }
 }

@@ -31,8 +31,8 @@ public abstract class AbsRequestInfo implements IRequestInfo {
     @Override
     public Map<String, Object> getParams() {
         Map params = new HashMap();
-        params.put(RequestParamKey.REQUEST_PARAM_APP_ID, appId);
-        params.put(RequestParamKey.REQUEST_PARAM_PLATFORM_ID, platformId);
+        params.put(HttpConstants.REQUEST_PARAM_APP_ID, appId);
+        params.put(HttpConstants.REQUEST_PARAM_PLATFORM_ID, platformId);
         return params;
     }
 }

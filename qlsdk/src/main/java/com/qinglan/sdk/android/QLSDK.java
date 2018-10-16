@@ -52,6 +52,13 @@ public class QLSDK {
     }
 
     /**
+     * 设置游戏角色开始游戏
+     */
+    public void startGame(Activity activity, boolean showFloat, GameRole game, Callback.OnGameStartedListener listener) {
+        mPlatform.setRole(activity, showFloat, game, listener);
+    }
+
+    /**
      * 平台初始化
      */
     public void initPlatform(Activity activity, Callback.OnInitCompletedListener listener) {
@@ -65,12 +72,12 @@ public class QLSDK {
         mPlatform.login(activity, listener);
     }
 
-    /**
-     * 提交角色信息
-     */
-    public void updateGameRole(Activity activity, GameRole role) {
-        mPlatform.setRole(activity, role);
-    }
+//    /**
+//     * 提交角色信息
+//     */
+//    public void updateGameRole(Activity activity, GameRole role, Callback.OnGameStartedListener listener) {
+//        mPlatform.setRole(activity, role,listener);
+//    }
 
     /**
      * 创建角色

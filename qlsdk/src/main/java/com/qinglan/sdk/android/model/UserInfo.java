@@ -10,6 +10,7 @@ public final class UserInfo {
     private String id;
     private String sessionId;
     private String userName;
+    @Deprecated
     private String udToken;
 //    private String appId;
 //    private String platformId;
