@@ -29,8 +29,17 @@ public final class HttpConstants {
     public static final String REQUEST_PARAM_SIMOPERATOR_NAME = "simoperatorname";
     public static final String REQUEST_PARAM_SYSTEM_VERSION = "systemVersion";
 
+    public static final String REQUEST_PARAM_ORDER_ID = "cpOrderId";
+    public static final String REQUEST_PARAM_EXT_INFO = "extInfo";
+    public static final String REQUEST_PARAM_AMOUNT = "amount";
+    public static final String REQUEST_PARAM_NOTIFY_URL = "notifyUrl";
+    public static final String REQUEST_PARAM_FIXED = "fixed";
+    public static final String REQUEST_PARAM_GOLD = "gold";
+
     public static final String RESPONSE_CODE = "code";
     public static final int RESPONSE_SUCCESS_CODE = 0;
     public static final String RESPONSE_LOGIN_TIMESTAMP = "loginTime";
     public static final String RESPONSE_TOKEN = "token";
+    public static final String RESPONSE_NOTIFY_URL = "notifyUrl";
+    public static final String RESPONSE_ORDER_ID = "orderId";
 }

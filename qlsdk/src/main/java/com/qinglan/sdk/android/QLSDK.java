@@ -2,10 +2,11 @@ package com.qinglan.sdk.android;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 
 import com.qinglan.sdk.android.common.Log;
+import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
-import com.qinglan.sdk.android.platform.IPlatform;
 
 /**
  * Created by zhaoj on 2018/9/19
@@ -14,17 +15,17 @@ import com.qinglan.sdk.android.platform.IPlatform;
  */
 public class QLSDK {
     private static QLSDK singleton = null;
-    private IPlatform mPlatform;
+    private IPresenter mPresenter;
 
-    private QLSDK(Config config) {
+    private QLSDK(@NonNull Config config) {
         PlatformHandler mHandler = PlatformHandler.create(config);
-        mPlatform = mHandler.getPlatform();
+        mPresenter = mHandler.getPresenter();
     }
 
     /**
      * 初始化SDK
      */
-    public static QLSDK create(Config config) {
+    public static QLSDK create(@NonNull Config config) {
         synchronized (QLSDK.class) {
             if (singleton == null) {
                 singleton = new QLSDK(config);
@@ -55,116 +56,116 @@ public class QLSDK {
      * 设置游戏角色进入游戏
      */
     public void enterGame(Activity activity, boolean showFloat, GameRole game, Callback.OnGameStartedListener listener) {
-        mPlatform.setRole(activity, showFloat, game, listener);
+        mPresenter.enterGame(activity, showFloat, game, listener);
     }
 
     /**
      * 平台初始化
      */
     public void initPlatform(Activity activity, Callback.OnInitCompletedListener listener) {
-        mPlatform.init(activity, listener);
+        mPresenter.init(activity, listener);
     }
 
     /**
      * 显示登录页面
      */
     public void login(Activity activity, Callback.OnLoginResponseListener listener) {
-        mPlatform.login(activity, listener);
+        mPresenter.login(activity, listener);
     }
 
     /**
      * 创建角色
      */
     public void createGameRole(Activity activity, GameRole role, Callback.OnCreateRoleFinishedListener listener) {
-        mPlatform.createRole(activity, role, listener);
+        mPresenter.createRole(activity, role, listener);
     }
 
     /**
      * 获取平台id
      */
     public int getPlatformId() {
-        return mPlatform.getId();
+        return mPresenter.getPlatformId();
     }
 
     /**
      * 获取平台名称
      */
     public String getPlatformName() {
-        return mPlatform.getName();
+        return mPresenter.getPlatformName();
     }
 
     /**
      * 注销
      */
     public void logout(Activity activity, GameRole role, Callback.OnLogoutResponseListener listener) {
-        mPlatform.logout(activity, role, listener);
+        mPresenter.logout(activity, role, listener);
     }
 
     /**
      * 退出
      */
-    public void exit(Activity activity) {
-        mPlatform.exit(activity);
+    public void exit(Activity activity, GameRole role, Callback.OnExitListener listener) {
+        mPresenter.exitGame(activity, role, listener);
     }
 
     /**
      * 支付
      */
-    public void doPay(Activity activity) {
-        mPlatform.pay(activity);
+    public void doPay(Activity activity, GameRole game, GamePay pay, Callback.OnPayRequestListener listener) {
+        mPresenter.doPay(activity, game, pay, listener);
     }
 
     /**
      * 升级
      */
-    public void levelUpdate(Activity activity) {
-        mPlatform.levelUpdate(activity);
+    public void levelUpdate(Activity activity, GameRole role) {
+        mPresenter.levelUpdate(activity, role);
     }
 
     /**
      * 显示浮窗
      */
     public void showWinFloat(Activity activity) {
-        mPlatform.showFloat(activity);
+        mPresenter.showFloat(activity);
     }
 
     /**
      * 隐藏浮窗
      */
     public void hideWinFloat(Activity activity) {
-        mPlatform.hideFloat(activity);
+        mPresenter.hideFloat(activity);
     }
 
     public void onCreate(Activity activity) {
-        mPlatform.onCreate(activity);
+        mPresenter.onCreate(activity);
     }
 
     public void onStart(Activity activity) {
-        mPlatform.onStart(activity);
+        mPresenter.onStart(activity);
     }
 
     public void onResume(Activity activity) {
-        mPlatform.onResume(activity);
+        mPresenter.onResume(activity);
     }
 
     public void onPause(Activity activity) {
-        mPlatform.onPause(activity);
+        mPresenter.onPause(activity);
     }
 
     public void onStop(Activity activity) {
-        mPlatform.onStop(activity);
+        mPresenter.onStop(activity);
     }
 
     public void onDestroy(Activity activity) {
-        mPlatform.onDestroy(activity);
+        mPresenter.onDestroy(activity);
     }
 
     public void onNewIntent(Intent intent) {
-        mPlatform.onNewIntent(intent);
+        mPresenter.onNewIntent(intent);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mPlatform.onActivityResult(requestCode, resultCode, data);
+        mPresenter.onActivityResult(requestCode, resultCode, data);
     }
 
 }

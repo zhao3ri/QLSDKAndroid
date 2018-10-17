@@ -17,7 +17,7 @@ public class CachePreferences {
         return editor;
     }
 
-    protected static <T extends Object> T get(Context context, String name, String key, Object defValue) {
+    public static <T extends Object> T get(Context context, String name, String key, Object defValue) {
         if (defValue instanceof Integer) {
             return (T) Integer.valueOf(getPreferences(context, name).getInt(key, (int) defValue));
         }
@@ -36,7 +36,7 @@ public class CachePreferences {
         return (T) defValue;
     }
 
-    protected static void put(Context context, String name, String key, Object value) {
+    public static void put(Context context, String name, String key, Object value) {
         SharedPreferences.Editor editor = getEditor(context, name);
         if (value instanceof Integer) {
             editor.putInt(key, (int) value);

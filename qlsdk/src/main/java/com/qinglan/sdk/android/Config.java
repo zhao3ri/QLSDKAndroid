@@ -23,7 +23,7 @@ public final class Config {
         context = ctx;
     }
 
-    public static Config createDefaultConfig(Context ctx) {
+    public static Config createDefaultConfig(@NonNull Context ctx) {
         return new Config(ctx).setGameId(DefaultPlatform.DEFAULT_GAME_ID)
                 .setPlatformClass(DefaultPlatform.class);
     }
@@ -38,11 +38,7 @@ public final class Config {
         return this;
     }
 
-//    public Context getContext() {
-//        return context;
-//    }
-
-    public Class getPlatformClass() {
+    Class getPlatformClass() {
         return platformClass;
     }
 

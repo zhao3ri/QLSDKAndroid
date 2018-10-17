@@ -1,24 +1,35 @@
 package com.qinglan.sdk.android;
 
-import android.app.Activity;
+import android.content.Context;
 
+import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
-import com.qinglan.sdk.android.model.UserInfo;
 
 /**
- * Created by tyland on 2018/10/17.
+ * Created by zhaoj on 2018/10/17.
+ * SDK相关网络请求接口
  */
 public interface IConnector {
 
-    void initSdk(Activity activity, Callback.OnInitCompletedListener listener);
+    /**
+     * 初始化SDK
+     */
+    void initSdk(Context context, Callback.OnInitCompletedListener listener);
 
-    void getToken(Activity activity);
+    /**
+     * 获取token
+     */
+    void getToken(String uid, Callback.GetTokenListener listener);
 
-    void login(Activity activity);
+    void refreshSession(Context context, GameRole role, Callback.OnRefreshSessionListener listener);
 
-    void enterGame(Activity activity, GameRole game);
+    void startHeartBeat(Context context, GameRole role, String time, Callback.HeartBeanRequestListener listener);
 
-    void createRole(Activity activity, GameRole role);
+    void cleanSession(Context context, GameRole role, Callback.OnLogoutResponseListener listener);
 
-    void logout(Activity activity, GameRole role);
+    void exit(Context context, GameRole game, Callback.OnExitListener listener);
+
+    void createRole(Context context, GameRole role, Callback.OnCreateRoleFinishedListener listener);
+
+    void generateOrder(Context context, GameRole game, GamePay pay, int fixed, String loginTime, Callback.GenerateOrderListener listener);
 }

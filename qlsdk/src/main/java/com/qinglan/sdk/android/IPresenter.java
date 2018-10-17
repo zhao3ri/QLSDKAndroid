@@ -1,7 +1,10 @@
 package com.qinglan.sdk.android;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 
+import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
 import com.qinglan.sdk.android.platform.IPlatform;
@@ -11,35 +14,92 @@ import com.qinglan.sdk.android.platform.IPlatform;
  * 业务逻辑相关接口
  */
 public interface IPresenter {
-    void init(Activity activity, Callback.OnInitCompletedListener listener);
+    /**
+     * 初始化
+     */
+    void init(@NonNull Activity activity, Callback.OnInitCompletedListener listener);
 
-    void login(Activity activity, Callback.OnLoginResponseListener listener);
+    /**
+     * 登录
+     */
+    void login(@NonNull Activity activity, Callback.OnLoginResponseListener listener);
 
-    void enterGame(Activity activity, boolean showFloat, GameRole game, Callback.OnGameStartedListener listener);
+    /**
+     * 开始游戏
+     */
+    void enterGame(@NonNull Activity activity, boolean showFloat, @NonNull GameRole game, Callback.OnGameStartedListener listener);
 
-    void createRole(Activity activity, GameRole role, Callback.OnCreateRoleFinishedListener listener);
+    /**
+     * 创建角色
+     */
+    void createRole(@NonNull Activity activity, @NonNull GameRole role, Callback.OnCreateRoleFinishedListener listener);
 
-    void logout(Activity activity, GameRole role, Callback.OnLogoutResponseListener listener);
+    /**
+     * 注销
+     */
+    void logout(@NonNull Activity activity, GameRole role, Callback.OnLogoutResponseListener listener);
 
-    void pay();
+    /**
+     * 退出
+     */
+    void exitGame(@NonNull Activity activity, GameRole role, Callback.OnExitListener listener);
 
-    void exit();
+    /**
+     * 支付
+     */
+    void doPay(@NonNull Activity activity, GameRole game, GamePay pay, Callback.OnPayRequestListener listener);
 
+    /**
+     * 升级
+     */
+    void levelUpdate(Activity activity, GameRole role);
+
+    /**
+     * 获取当前游戏id
+     */
     String getGameId();
 
-    IPlatform getPlatform();
+    /**
+     * 获取平台id
+     */
+    int getPlatformId();
 
-    void setLogged(boolean logged);
+    /**
+     * 获取平台名称
+     */
+    String getPlatformName();
 
-    void setHeartBeating(boolean heartBeating);
+    /**
+     * 显示浮窗
+     */
+    void showFloat(@NonNull Activity activity);
 
-    boolean isLogged();
+    /**
+     * 隐藏浮窗
+     */
+    void hideFloat(@NonNull Activity activity);
 
-    boolean isHeartBeating();
+    void onCreate(Activity activity);
 
-    long getLoginTime();
+    void onStart(Activity activity);
 
-    void setLoginTime(long loginTime);
+    void onResume(Activity activity);
+
+    void onPause(Activity activity);
+
+    void onStop(Activity activity);
+
+    void onDestroy(Activity activity);
+
+    void onActivityResult(int requestCode, int resultCode, Intent data);
+
+    void onNewIntent(Intent intent);
+
+    void onBackPressed();
+
+    void attachBaseContext(Activity activity);
+
+    void onConfigurationChanged();
 
     void saveUserInfo(UserInfo user);
 
@@ -50,5 +110,7 @@ public interface IPresenter {
     void setSession(String session);
 
     void clear();
+
+    String getDeviceId();
 
 }

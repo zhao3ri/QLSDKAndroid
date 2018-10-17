@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.qinglan.sdk.android.Callback;
-import com.qinglan.sdk.android.Config;
 import com.qinglan.sdk.android.PlatformHandler;
+import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
 
@@ -13,6 +13,7 @@ import com.qinglan.sdk.android.model.UserInfo;
  * Created by zhaoj on 2018/9/20
  *
  * @author zhaoj
+ * 平台功能接口
  */
 public interface IPlatform {
 
@@ -31,14 +32,12 @@ public interface IPlatform {
     /***
      * 平台初始化
      */
-    void init(Activity activity, Callback.OnInitCompletedListener listener);
-
     void init(Activity activity, OnInitConnectedListener listener);
 
     /**
      * 登录
      */
-    void login(Activity activity, Callback.OnLoginResponseListener listener);
+    void login(Activity activity, OnLoginListener listener);
 
     /**
      * 注销
@@ -48,40 +47,40 @@ public interface IPlatform {
     /**
      * 显示浮窗
      */
-    void showFloat(Activity activity);
+    void showWinFloat(Activity activity);
 
     /**
      * 隐藏浮窗
      */
-    void hideFloat(Activity activity);
+    void hideWinFloat(Activity activity);
 
     /**
      * 退出
      */
-    void exit(Activity activity);
+    void exit(Activity activity, GameRole role, Callback.OnExitListener listener);
 
     /**
      * 支付
      */
-    void pay(Activity activity);
+    void pay(Activity activity, GameRole role, GamePay pay, String orderId, String notifyUrl, Callback.OnPayRequestListener listener);
 
     /**
      * 创建角色
      */
-    void createRole(Activity activity, GameRole role, Callback.OnCreateRoleFinishedListener listener);
+    void createRole(Activity activity, GameRole role, OnGameRoleRequestListener listener);
 
     /**
-     * 设置进入游戏的角色信息
+     * 设置角色
      */
-    void setRole(Activity activity, boolean showFloat, GameRole role, Callback.OnGameStartedListener listener);
+    void selectRole(Activity activity, boolean showFloat, GameRole role, OnGameRoleRequestListener listener);
 
     /**
      * 升级
      */
-    void levelUpdate(Activity activity);
+    void levelUpdate(Activity activity, GameRole role, OnLevelUpListener listener);
 
     /**
-     * 是否定制退出UI
+     * 是否有自定义退出UI
      */
     boolean isCustomLogoutUI();
 
@@ -111,5 +110,21 @@ public interface IPlatform {
         void initSuccess(UserInfo user);
 
         void initFailed(String msg);
+    }
+
+    interface OnLoginListener {
+        void loginSuccess(UserInfo userInfo);
+
+        void initFailed(String msg);
+    }
+
+    interface OnGameRoleRequestListener {
+        void onSuccess(GameRole role);
+
+        void onFailed(String msg);
+    }
+
+    interface OnLevelUpListener {
+        void onCompleted(boolean success, String msg);
     }
 }

@@ -2,26 +2,32 @@ package com.qinglan.sdk.android.platform;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 
 import com.qinglan.sdk.android.Callback;
+import com.qinglan.sdk.android.PlatformHandler;
 import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.common.Utils;
+import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.net.HttpConnectionTask;
 import com.qinglan.sdk.android.net.OnResponseListener;
 import com.qinglan.sdk.android.net.impl.GameRoleRequestInfo;
 
 /**
- * 默认平台
+ * 默认平台（测试功能使用）
  * Created by zhaoj on 2018/9/20
  *
  * @author zhaoj
  */
-public class DefaultPlatform extends AbsPlatform {
+public class DefaultPlatform implements IPlatform  {
     public static final String DEFAULT_PLATFORM_NAME = "DEFAULT";
     public static final int DEFAULT_PLATFORM_ID = 0;
     public static final String DEFAULT_GAME_ID = "";
+
+    @Override
+    public void setHandler(PlatformHandler handler) {
+
+    }
 
     @Override
     public int getId() {
@@ -34,25 +40,13 @@ public class DefaultPlatform extends AbsPlatform {
     }
 
     @Override
-    public void login(Activity activity, Callback.OnLoginResponseListener listener) {
-//        LoginRequestInfo request = new LoginRequestInfo();
-//        request.appId = getAppId(activity);
-//        request.platformId = getId();
-//        request.uid = UserPreferences.get(activity, UserPreferences.KEY_UID, "");
-//        request.zoneId = role.getZoneId();
-//        request.zoneName = role.getZoneName();
-//        request.roleId = role.getRoleId();
-//        request.roleName = role.getRoleName();
-//        request.roleLevel = role.getRoleLevel();
-//        request.deviceId = Utils.getDeviceId(activity);
-//        new HttpConnectionTask().setResponseListener(new OnResponseListener() {
-//            @Override
-//            public void onResponse(boolean success, String result) {
-//                if (listener != null) {
-//                    listener.onFinished(success, result);
-//                }
-//            }
-//        }).execute(request);
+    public void init(Activity activity, OnInitConnectedListener listener) {
+
+    }
+
+    @Override
+    public void login(Activity activity, OnLoginListener listener) {
+
     }
 
     @Override
@@ -61,56 +55,37 @@ public class DefaultPlatform extends AbsPlatform {
     }
 
     @Override
-    public void showFloat(Activity activity) {
+    public void showWinFloat(Activity activity) {
 
     }
 
     @Override
-    public void hideFloat(Activity activity) {
+    public void hideWinFloat(Activity activity) {
 
     }
 
     @Override
-    public void exit(Activity activity) {
+    public void exit(Activity activity, GameRole role, Callback.OnExitListener listener) {
 
     }
 
     @Override
-    public void pay(Activity activity) {
+    public void pay(Activity activity, GameRole role, GamePay pay, String orderId, String notifyUrl, Callback.OnPayRequestListener listener) {
 
     }
 
     @Override
-    public void createRole(Activity activity, GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
-        if (role == null) {
-            Log.e("role is null!!!!");
-            if (listener != null) {
-                listener.onFinished(false, "Create role failed! The role is null.");
-            }
-            return;
-        }
-        GameRoleRequestInfo request = new GameRoleRequestInfo();
-        request.appId = getAppId(activity);
-        request.platformId = getId();
-        request.uid = handler.getUid();
-        request.zoneId = role.getZoneId();
-        request.zoneName = role.getZoneName();
-        request.roleId = role.getRoleId();
-        request.roleName = role.getRoleName();
-        request.roleLevel = role.getRoleLevel();
-        request.deviceId = Utils.getDeviceId(activity);
-        new HttpConnectionTask().setResponseListener(new OnResponseListener() {
-            @Override
-            public void onResponse(boolean success, String result) {
-                if (listener != null) {
-                    listener.onFinished(success, result);
-                }
-            }
-        }).execute(request);
+    public void createRole(Activity activity, GameRole role, OnGameRoleRequestListener listener) {
+
     }
 
     @Override
-    public void levelUpdate(Activity activity) {
+    public void selectRole(Activity activity, boolean showFloat, GameRole role, OnGameRoleRequestListener listener) {
+
+    }
+
+    @Override
+    public void levelUpdate(Activity activity, GameRole role, OnLevelUpListener listener) {
 
     }
 
@@ -174,8 +149,5 @@ public class DefaultPlatform extends AbsPlatform {
 
     }
 
-    @Override
-    public void selectRole(Activity activity, boolean showFloat, GameRole role, Callback.OnGameStartedListener listener) {
 
-    }
 }

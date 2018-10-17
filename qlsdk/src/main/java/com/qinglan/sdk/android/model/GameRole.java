@@ -1,12 +1,14 @@
 package com.qinglan.sdk.android.model;
 
+import java.io.Serializable;
+
 /**
  * Created by zhaoj on 2018/9/20
  * 游戏角色信息
  *
  * @author zhaoj
  */
-public final class GameRole {
+public final class GameRole implements Serializable{
     private String zoneId;
     private String zoneName;
     private String roleId;

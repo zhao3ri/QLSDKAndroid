@@ -17,6 +17,10 @@ public class Callback {
         void onFailed(String error);
     }
 
+    public interface GetTokenListener {
+        void onFinished(boolean success, String result);
+    }
+
     public interface OnCreateRoleFinishedListener {
         void onFinished(boolean success, String result);
     }
@@ -27,9 +31,34 @@ public class Callback {
         void onFailed(String result);
     }
 
-    public interface OnLogoutResponseListener{
+    public interface OnRefreshSessionListener {
+        void onRefreshed(boolean success, String result);
+    }
+
+    public interface HeartBeanRequestListener {
+        void onResponse(boolean success, String result);
+    }
+
+    public interface OnLogoutResponseListener {
         void onSuccess();
 
         void onFailed(String error);
     }
+
+    public interface OnExitListener {
+        void onCompleted(boolean success, String msg);
+    }
+
+    public interface OnPayRequestListener {
+        void onSuccess(String orderId);
+
+        void onFailed(String msg);
+    }
+
+    public interface GenerateOrderListener {
+        void onSuccess(String orderId, String notifyUrl);
+
+        void onFailed(String msg);
+    }
+
 }
