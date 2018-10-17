@@ -34,7 +34,7 @@ public class GameRoleRequestInfo extends AbsRequestInfo {
         params.put(HttpConstants.REQUEST_PARAM_ROLE_NAME, roleName);
         params.put(HttpConstants.REQUEST_PARAM_ROLE_LEV, roleLevel);
         params.put(HttpConstants.REQUEST_PARAM_DEVICE_ID, deviceId);
-        params.put(HttpConstants.REQUEST_PARAM_CLIENT_TYPE, CLIENT_TYPE);
+        params.put(HttpConstants.REQUEST_PARAM_CLIENT_TYPE, ANDROID_CLIENT_TYPE);
         return params;
     }
 }

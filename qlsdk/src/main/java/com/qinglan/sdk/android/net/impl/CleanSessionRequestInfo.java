@@ -23,7 +23,7 @@ public class CleanSessionRequestInfo extends AbsRequestInfo {
     @Override
     public Map<String, Object> getParams() {
         Map params = super.getParams();
-        params.put(HttpConstants.REQUEST_PARAM_CLIENT_TYPE, CLIENT_TYPE);
+        params.put(HttpConstants.REQUEST_PARAM_CLIENT_TYPE, ANDROID_CLIENT_TYPE);
         params.put(HttpConstants.REQUEST_PARAM_UID, uid);
         params.put(HttpConstants.REQUEST_PARAM_ZONE_ID, zoneId);
         params.put(HttpConstants.REQUEST_PARAM_ROLE_ID, roleId);

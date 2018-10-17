@@ -15,10 +15,10 @@ public class OrderRequestInfo extends AbsRequestInfo {
     public String zoneId;
     public String roleId;
     public String roleName;
-    public String cpOrderId;
-    public String extInfo;
-    public String amount;
-    public String notifyUrl;
+    public String cpOrderId;//CP订单号
+    public String extInfo;//CP自定义参数
+    public String amount;//成功充值金额，单位为分
+    public String notifyUrl;//支付结果通知地址
     public String fixed;
     public String loginTime;
     public String deviceId;
@@ -44,7 +44,7 @@ public class OrderRequestInfo extends AbsRequestInfo {
         params.put(HttpConstants.REQUEST_PARAM_TIMESTAMP, loginTime);
         params.put(HttpConstants.REQUEST_PARAM_DEVICE_ID, deviceId);
         params.put(HttpConstants.REQUEST_PARAM_GOLD, gold);
-        params.put(HttpConstants.REQUEST_PARAM_CLIENT_TYPE, CLIENT_TYPE);
+        params.put(HttpConstants.REQUEST_PARAM_CLIENT_TYPE, ANDROID_CLIENT_TYPE);
         return params;
     }
 }

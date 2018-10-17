@@ -34,7 +34,7 @@ public class InitRequestInfo extends AbsRequestInfo {
     @Override
     public Map<String, Object> getParams() {
         Map params = super.getParams();
-        params.put(HttpConstants.REQUEST_PARAM_CLIENT_TYPE, CLIENT_TYPE);
+        params.put(HttpConstants.REQUEST_PARAM_CLIENT_TYPE, ANDROID_CLIENT_TYPE);
         params.put(HttpConstants.REQUEST_PARAM_DEVICE_ID, deviceId);
         params.put(HttpConstants.REQUEST_PARAM_IMSI, imsi);
         params.put(HttpConstants.REQUEST_PARAM_LATITUDE, latitude);

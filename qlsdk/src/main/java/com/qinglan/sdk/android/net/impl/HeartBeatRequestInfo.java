@@ -27,7 +27,7 @@ public class HeartBeatRequestInfo extends AbsRequestInfo {
         params.put(HttpConstants.REQUEST_PARAM_ROLE_ID, roleId);
         params.put(HttpConstants.REQUEST_PARAM_TIMESTAMP, loginTime);
         params.put(HttpConstants.REQUEST_PARAM_DEVICE_ID, deviceId);
-        params.put(HttpConstants.REQUEST_PARAM_CLIENT_TYPE, CLIENT_TYPE);
+        params.put(HttpConstants.REQUEST_PARAM_CLIENT_TYPE, ANDROID_CLIENT_TYPE);
         return params;
     }
 }

@@ -13,7 +13,7 @@ import java.util.Map;
 public abstract class AbsRequestInfo implements IRequestInfo {
     public String appId;
     public int platformId;
-    public static final String CLIENT_TYPE = "1";
+    public static final String ANDROID_CLIENT_TYPE = "1";
     private static final int DEFAULT_METHOD = HttpMethod.POST;//默认为post方法
 
     public abstract String getPath();
