@@ -1,13 +1,8 @@
 package com.qinglan.sdk.android;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
-import android.text.TextUtils;
 
-import com.qinglan.sdk.android.Callback;
-import com.qinglan.sdk.android.IConnector;
-import com.qinglan.sdk.android.IPresenter;
 import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
@@ -23,7 +18,6 @@ import com.qinglan.sdk.android.net.impl.InitRequestInfo;
 import com.qinglan.sdk.android.net.impl.OrderRequestInfo;
 import com.qinglan.sdk.android.net.impl.RefreshSessionRequestInfo;
 import com.qinglan.sdk.android.net.impl.TokenRequestInfo;
-import com.qinglan.sdk.android.utils.SDKUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +25,7 @@ import org.json.JSONObject;
 /**
  * Created by zhaoj on 2018/10/17.
  */
-public class SDKConnector implements IConnector {
+class SDKConnector implements IConnector {
     private IPresenter iPresenter;
 
     public SDKConnector(IPresenter presenter) {

@@ -20,7 +20,7 @@ import com.qinglan.sdk.android.platform.IPlatform;
  *
  * @author zhaoj
  */
-public final class PlatformHandler {
+final class PlatformHandler {
     private static PlatformHandler platformHandler = null;
     private Context mContext;
     private IPresenter presenter;

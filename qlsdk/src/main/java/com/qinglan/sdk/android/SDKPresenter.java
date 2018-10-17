@@ -64,7 +64,7 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void init(final Activity activity, final Callback.OnInitCompletedListener listener) {
-        iPlatform.init(activity, new IPlatform.OnInitConnectedListener() {
+        iPlatform.init(activity, new Callback.OnInitConnectedListener() {
             @Override
             public void initSuccess(UserInfo user) {
                 if (user != null) {
@@ -83,7 +83,7 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void login(final Activity activity, final Callback.OnLoginResponseListener listener) {
-        iPlatform.login(activity, new IPlatform.OnLoginListener() {
+        iPlatform.login(activity, new Callback.OnLoginListener() {
             @Override
             public void loginSuccess(final UserInfo userInfo) {
                 //当平台登录成功后，调用SDK获取session
@@ -115,7 +115,7 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void enterGame(final Activity activity, final boolean showFloat, GameRole game, final Callback.OnGameStartedListener listener) {
-        iPlatform.selectRole(activity, showFloat, game, new IPlatform.OnGameRoleRequestListener() {
+        iPlatform.selectRole(activity, showFloat, game, new Callback.OnGameRoleRequestListener() {
             @Override
             public void onSuccess(final GameRole role) {
                 iConnector.refreshSession(activity, role, new Callback.OnRefreshSessionListener() {
@@ -174,7 +174,7 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void createRole(final Activity activity, GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
-        iPlatform.createRole(activity, role, new IPlatform.OnGameRoleRequestListener() {
+        iPlatform.createRole(activity, role, new  Callback.OnGameRoleRequestListener() {
             @Override
             public void onSuccess(GameRole role) {
                 iConnector.createRole(activity, role, listener);
@@ -243,6 +243,32 @@ class SDKPresenter implements IPresenter {
         }).setCancelable(false).create().show();
     }
 
+    private void exit(final Activity activity, final GameRole role, final Callback.OnExitListener listener) {
+        iPlatform.exit(activity, role, new Callback.OnExitListener() {
+            @Override
+            public void onCompleted(boolean success, String msg) {
+                if (success) {
+                    if (TextUtils.isEmpty(getUserInfo().getId())) {
+                        listener.onCompleted(true, msg);
+                        return;
+                    }
+                    //当平台退出成功时，调用SDK的退出
+                    iConnector.exit(activity, role, new Callback.OnExitListener() {
+                        @Override
+                        public void onCompleted(boolean success, String msg) {
+                            //若平台退出成功，不管SDK最后请求结果如何都需要清除数据
+                            clear();
+                            listener.onCompleted(true, msg);
+                        }
+                    });
+                } else {
+                    if (listener != null)
+                        listener.onCompleted(false, msg);
+                }
+            }
+        });
+    }
+
     @Override
     public void doPay(@NonNull final Activity activity, final GameRole game, final GamePay pay, final Callback.OnPayRequestListener listener) {
         int fixed = 0;
@@ -278,35 +304,9 @@ class SDKPresenter implements IPresenter {
         });
     }
 
-    private void exit(final Activity activity, final GameRole role, final Callback.OnExitListener listener) {
-        iPlatform.exit(activity, role, new Callback.OnExitListener() {
-            @Override
-            public void onCompleted(boolean success, String msg) {
-                if (success) {
-                    if (TextUtils.isEmpty(getUserInfo().getId())) {
-                        listener.onCompleted(true, msg);
-                        return;
-                    }
-                    //当平台退出成功时，调用SDK的退出
-                    iConnector.exit(activity, role, new Callback.OnExitListener() {
-                        @Override
-                        public void onCompleted(boolean success, String msg) {
-                            //若平台退出成功，不管SDK最后请求结果如何都需要清除数据
-                            clear();
-                            listener.onCompleted(true, msg);
-                        }
-                    });
-                } else {
-                    if (listener != null)
-                        listener.onCompleted(false, msg);
-                }
-            }
-        });
-    }
-
     @Override
     public void levelUpdate(Activity activity, GameRole role) {
-        iPlatform.levelUpdate(activity, role, new IPlatform.OnLevelUpListener() {
+        iPlatform.levelUpdate(activity, role, new Callback.OnLevelUpListener() {
             @Override
             public void onCompleted(boolean success, String msg) {
                 Log.d("level up->success: " + success + ",msg: " + msg);

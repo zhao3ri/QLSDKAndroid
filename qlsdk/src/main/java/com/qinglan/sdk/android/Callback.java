@@ -1,5 +1,6 @@
 package com.qinglan.sdk.android;
 
+import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
 
 /**
@@ -59,6 +60,29 @@ public class Callback {
         void onSuccess(String orderId, String notifyUrl);
 
         void onFailed(String msg);
+    }
+
+
+    public interface OnInitConnectedListener {
+        void initSuccess(UserInfo user);
+
+        void initFailed(String msg);
+    }
+
+    public interface OnLoginListener {
+        void loginSuccess(UserInfo userInfo);
+
+        void initFailed(String msg);
+    }
+
+    public interface OnGameRoleRequestListener {
+        void onSuccess(GameRole role);
+
+        void onFailed(String msg);
+    }
+
+    public interface OnLevelUpListener {
+        void onCompleted(boolean success, String msg);
     }
 
 }

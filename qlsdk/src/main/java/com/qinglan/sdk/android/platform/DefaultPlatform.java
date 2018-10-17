@@ -4,14 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.qinglan.sdk.android.Callback;
-import com.qinglan.sdk.android.PlatformHandler;
-import com.qinglan.sdk.android.common.Log;
-import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
-import com.qinglan.sdk.android.net.HttpConnectionTask;
-import com.qinglan.sdk.android.net.OnResponseListener;
-import com.qinglan.sdk.android.net.impl.GameRoleRequestInfo;
 
 /**
  * 默认平台（测试功能使用）
@@ -25,11 +19,6 @@ public class DefaultPlatform implements IPlatform  {
     public static final String DEFAULT_GAME_ID = "";
 
     @Override
-    public void setHandler(PlatformHandler handler) {
-
-    }
-
-    @Override
     public int getId() {
         return DEFAULT_PLATFORM_ID;
     }
@@ -40,12 +29,12 @@ public class DefaultPlatform implements IPlatform  {
     }
 
     @Override
-    public void init(Activity activity, OnInitConnectedListener listener) {
+    public void init(Activity activity, Callback.OnInitConnectedListener listener) {
 
     }
 
     @Override
-    public void login(Activity activity, OnLoginListener listener) {
+    public void login(Activity activity, Callback.OnLoginListener listener) {
 
     }
 
@@ -75,17 +64,17 @@ public class DefaultPlatform implements IPlatform  {
     }
 
     @Override
-    public void createRole(Activity activity, GameRole role, OnGameRoleRequestListener listener) {
+    public void createRole(Activity activity, GameRole role, Callback.OnGameRoleRequestListener listener) {
 
     }
 
     @Override
-    public void selectRole(Activity activity, boolean showFloat, GameRole role, OnGameRoleRequestListener listener) {
+    public void selectRole(Activity activity, boolean showFloat, GameRole role, Callback.OnGameRoleRequestListener listener) {
 
     }
 
     @Override
-    public void levelUpdate(Activity activity, GameRole role, OnLevelUpListener listener) {
+    public void levelUpdate(Activity activity, GameRole role, Callback.OnLevelUpListener listener) {
 
     }
 

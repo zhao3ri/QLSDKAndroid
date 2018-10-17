@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.qinglan.sdk.android.Callback;
-import com.qinglan.sdk.android.PlatformHandler;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
-import com.qinglan.sdk.android.model.UserInfo;
 
 /**
  * Created by zhaoj on 2018/9/20
@@ -16,8 +14,6 @@ import com.qinglan.sdk.android.model.UserInfo;
  * 平台功能接口
  */
 public interface IPlatform {
-
-    void setHandler(PlatformHandler handler);
 
     /**
      * 获取平台id
@@ -32,12 +28,12 @@ public interface IPlatform {
     /***
      * 平台初始化
      */
-    void init(Activity activity, OnInitConnectedListener listener);
+    void init(Activity activity,  Callback.OnInitConnectedListener listener);
 
     /**
      * 登录
      */
-    void login(Activity activity, OnLoginListener listener);
+    void login(Activity activity,  Callback.OnLoginListener listener);
 
     /**
      * 注销
@@ -67,17 +63,17 @@ public interface IPlatform {
     /**
      * 创建角色
      */
-    void createRole(Activity activity, GameRole role, OnGameRoleRequestListener listener);
+    void createRole(Activity activity, GameRole role,  Callback.OnGameRoleRequestListener listener);
 
     /**
      * 设置角色
      */
-    void selectRole(Activity activity, boolean showFloat, GameRole role, OnGameRoleRequestListener listener);
+    void selectRole(Activity activity, boolean showFloat, GameRole role,  Callback.OnGameRoleRequestListener listener);
 
     /**
      * 升级
      */
-    void levelUpdate(Activity activity, GameRole role, OnLevelUpListener listener);
+    void levelUpdate(Activity activity, GameRole role, Callback.OnLevelUpListener listener);
 
     /**
      * 是否有自定义退出UI
@@ -106,25 +102,4 @@ public interface IPlatform {
 
     void onConfigurationChanged();
 
-    interface OnInitConnectedListener {
-        void initSuccess(UserInfo user);
-
-        void initFailed(String msg);
-    }
-
-    interface OnLoginListener {
-        void loginSuccess(UserInfo userInfo);
-
-        void initFailed(String msg);
-    }
-
-    interface OnGameRoleRequestListener {
-        void onSuccess(GameRole role);
-
-        void onFailed(String msg);
-    }
-
-    interface OnLevelUpListener {
-        void onCompleted(boolean success, String msg);
-    }
 }
