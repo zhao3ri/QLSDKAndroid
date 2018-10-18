@@ -1,7 +1,9 @@
 package com.qinglan.sdk.android;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 
 import com.qinglan.sdk.android.common.Log;
@@ -168,4 +170,15 @@ public class QLSDK {
         mPresenter.onActivityResult(requestCode, resultCode, data);
     }
 
+    public void onBackPressed() {
+        mPresenter.onBackPressed();
+    }
+
+    public void attachBaseContext(Context newBase) {
+        mPresenter.attachBaseContext(newBase);
+    }
+
+    public void onConfigurationChanged(Configuration newConfig) {
+        mPresenter.onConfigurationChanged(newConfig);
+    }
 }

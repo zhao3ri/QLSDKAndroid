@@ -1,17 +1,9 @@
 package com.qinglan.sdk.android;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Build;
 import android.support.annotation.NonNull;
 
 import com.qinglan.sdk.android.common.Log;
-import com.qinglan.sdk.android.model.UserInfo;
 import com.qinglan.sdk.android.platform.DefaultPlatform;
 import com.qinglan.sdk.android.platform.IPlatform;
 

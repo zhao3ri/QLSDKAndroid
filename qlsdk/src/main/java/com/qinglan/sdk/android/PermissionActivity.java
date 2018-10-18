@@ -19,7 +19,7 @@ public class PermissionActivity extends Activity {
         }
     };
 
-    protected final boolean checkPermission(@NonNull PermissionUtils.Permission p) {
+    public final boolean checkPermission(@NonNull PermissionUtils.Permission p) {
         boolean hasPermission = false;
         if (PermissionUtils.checkSelfPermission(this, p.getCode()) == PackageManager.PERMISSION_GRANTED) {
             hasPermission = true;
@@ -27,7 +27,7 @@ public class PermissionActivity extends Activity {
         return hasPermission;
     }
 
-    protected final void requestPermission(@NonNull PermissionUtils.Permission... p) {
+    public final void requestPermission(@NonNull PermissionUtils.Permission... p) {
         if (p.length == 1) {
             PermissionUtils.requestPermission(this, p[0], grant);
         } else {

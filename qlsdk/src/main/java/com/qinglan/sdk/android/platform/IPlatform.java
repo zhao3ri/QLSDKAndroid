@@ -1,7 +1,9 @@
 package com.qinglan.sdk.android.platform;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 
 import com.qinglan.sdk.android.Callback;
 import com.qinglan.sdk.android.model.GamePay;
@@ -28,12 +30,12 @@ public interface IPlatform {
     /***
      * 平台初始化
      */
-    void init(Activity activity,  Callback.OnInitConnectedListener listener);
+    void init(Activity activity, Callback.OnInitConnectedListener listener);
 
     /**
      * 登录
      */
-    void login(Activity activity,  Callback.OnLoginListener listener);
+    void login(Activity activity, Callback.OnLoginListener listener);
 
     /**
      * 注销
@@ -63,12 +65,12 @@ public interface IPlatform {
     /**
      * 创建角色
      */
-    void createRole(Activity activity, GameRole role,  Callback.OnGameRoleRequestListener listener);
+    void createRole(Activity activity, GameRole role, Callback.OnGameRoleRequestListener listener);
 
     /**
      * 设置角色
      */
-    void selectRole(Activity activity, boolean showFloat, GameRole role,  Callback.OnGameRoleRequestListener listener);
+    void selectRole(Activity activity, boolean showFloat, GameRole role, Callback.OnGameRoleRequestListener listener);
 
     /**
      * 升级
@@ -98,8 +100,8 @@ public interface IPlatform {
 
     void onBackPressed();
 
-    void attachBaseContext(Activity activity);
+    void attachBaseContext(Context newBase);
 
-    void onConfigurationChanged();
+    void onConfigurationChanged(Configuration newConfig);
 
 }

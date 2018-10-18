@@ -1,7 +1,9 @@
 package com.qinglan.sdk.android;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 
 import com.qinglan.sdk.android.model.GamePay;
@@ -97,9 +99,9 @@ public interface IPresenter {
 
     void onBackPressed();
 
-    void attachBaseContext(Activity activity);
+    void attachBaseContext(Context newBase);
 
-    void onConfigurationChanged();
+    void onConfigurationChanged(Configuration newConfig);
 
     void saveUserInfo(UserInfo user);
 

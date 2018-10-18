@@ -130,10 +130,10 @@ public final class ResContainer {
         } else {
             Set resName = this.mResources.keySet();
 
-            ResContainer.SocializeResource socializeResource;
+            SocializeResource socializeResource;
             for (Iterator iterator = resName.iterator(); iterator.hasNext(); socializeResource.mIsCompleted = true) {
                 String name = (String) iterator.next();
-                socializeResource = (ResContainer.SocializeResource) this.mResources.get(name);
+                socializeResource = (SocializeResource) this.mResources.get(name);
                 socializeResource.mId = getResourceId(mContext, socializeResource.mType, socializeResource.mName);
             }
 

@@ -109,7 +109,8 @@ public class PermissionUtils {
                     }
                 }
             }
-            return (Permission[]) permissions.toArray();
+            Permission[] permissionArray = new Permission[permissions.size()];
+            return (Permission[]) permissions.toArray(permissionArray);
         }
     }
 

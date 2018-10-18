@@ -42,7 +42,7 @@ public final class Config {
         return platformClass;
     }
 
-    public String getGameId() {
+    String getGameId() {
         return gameId;
     }
 }

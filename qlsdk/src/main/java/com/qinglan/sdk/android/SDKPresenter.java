@@ -2,15 +2,16 @@ package com.qinglan.sdk.android;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
 import com.qinglan.sdk.android.common.CachePreferences;
@@ -174,7 +175,7 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void createRole(final Activity activity, GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
-        iPlatform.createRole(activity, role, new  Callback.OnGameRoleRequestListener() {
+        iPlatform.createRole(activity, role, new Callback.OnGameRoleRequestListener() {
             @Override
             public void onSuccess(GameRole role) {
                 iConnector.createRole(activity, role, listener);
@@ -240,7 +241,7 @@ class SDKPresenter implements IPresenter {
             public void onClick(DialogInterface dialog, int which) {
                 exit(activity, role, listener);
             }
-        }).setCancelable(false).create().show();
+        }).setCancelable(false).show();
     }
 
     private void exit(final Activity activity, final GameRole role, final Callback.OnExitListener listener) {
@@ -316,9 +317,9 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public String getGameId() {
-        String id = SDKUtils.getAppId(mContext);
+        String id = gameId;
         if (TextUtils.isEmpty(id)) {
-            id = gameId;
+            id = SDKUtils.getAppId(mContext);
         }
         return id;
     }
@@ -393,13 +394,13 @@ class SDKPresenter implements IPresenter {
     }
 
     @Override
-    public void attachBaseContext(Activity activity) {
-        iPlatform.attachBaseContext(activity);
+    public void attachBaseContext(Context newBase) {
+        iPlatform.attachBaseContext(newBase);
     }
 
     @Override
-    public void onConfigurationChanged() {
-        iPlatform.onConfigurationChanged();
+    public void onConfigurationChanged(Configuration newConfig) {
+        iPlatform.onConfigurationChanged(newConfig);
     }
 
     @Override
