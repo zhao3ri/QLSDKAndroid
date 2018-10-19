@@ -1,1 +1,1 @@
-include ':app', ':qlsdk'
+include ':app', ':yxfplatform', ':qlsdk-core'
