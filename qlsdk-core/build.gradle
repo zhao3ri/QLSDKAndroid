@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 def getConfigs() {
-        def environment = hasProperty('env') ? env : 'dev'//测试环境
+    def environment = hasProperty('env') ? env : 'dev'//测试环境
 //    def environment = hasProperty('env') ? env : 'prod'//产品环境
     println "Environment is set to $environment"
     Properties props = new Properties()
@@ -21,7 +21,7 @@ def valueType(value) {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 16

@@ -1,46 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.qinglan.sdk.android.demo">
-
-    <!-- 检测网络状态 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 获取mac地址作为用户的备用唯一标识 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 获取用户手机的IMEI，用来唯一的标识用户 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 缓存资源优先存入SDcard -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 允许应用程序联网 -->
+    <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- QQ、QQ空间所需权限 -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-
+    <!-- 获取网络状态的权限控制 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!-- 读取手机状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <!-- 往SDCard写入数据权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <!-- 往SDCard写入数据权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
-
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission android:name="android.webkit.permission.PLUGIN" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <!-- 照相的权限 -->
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- 读取短信验证码   可选 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <!-- 录像需要的权限 -->
+    <uses-permission android:name="android.permission.RECORD_VIDEO" />
+
+    <!-- 添加可以向外拨打电话的权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions"></uses-permission>
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
+        android:name=".GameApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:label="@string/app_name">
+
         <activity
-            android:name=".MainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:name="com.qinglan.sdk.android.demo.MySplashActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.qinglan.sdk.android.demo.WelComeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="landscape"></activity>
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.LoginPhoneActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.LoginPwdActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.LoginQuickActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.LoginQuickResultActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.ForgetChoseActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.ForgetPwdActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.ForgetPwdChooseActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.ForgetPwdPhoneActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.ForgetPwdEmailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.LoginYxfSeleAccActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.LoginGameSeleAccActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!--权限管理-->
+        <activity
+            android:name="com.game.sdk.ui.mainUI.PermissonActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.FloatWebActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.SDKTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name="com.game.sdk.ui.mainUI.GetInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <service android:name="com.game.sdk.SDKAppService">
+            <intent-filter android:priority="1000">
+                <action android:name="SDKService" />
+            </intent-filter>
+        </service>
+
+        <!--测试游戏id-->
+        <meta-data
+            android:name="QL_GAMEID"
+            android:value="181018126361" />
+
+        <!-- meta-data需要写在application中 -->
+        <!-- SDK_APPID的值android:value="2"在4.0没有意义，但是该meta-data要保留在清单文件 -->
+        <meta-data
+            android:name="SDK_APPID"
+            android:value="2" />
+        <!-- SDK_GAMEID的值android:value="5"在4.0有意义，运营会在qq群分配参数给你们去替换 -->
+        <meta-data
+            android:name="SDK_GAMEID"
+            android:value="5" />
+
+        <meta-data
+            android:name="SDK_AGENT"
+            android:value="default" />
+
+        <!-- provider authorities的值com.demo.sdkinsapk里面的com.demo换成你们自己的包名 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.demo.sdkinsapk"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!--  元数据    -->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/yxf_file_paths" />
+        </provider>
+
     </application>
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
+
 </manifest>
