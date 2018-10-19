@@ -2,6 +2,7 @@ package com.qinglan.sdk.android;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.qinglan.sdk.android.common.CachePreferences;
 import com.qinglan.sdk.android.model.UserInfo;
@@ -23,9 +24,10 @@ final class UserPreferences extends CachePreferences {
         if (userInfo != null) {
             SharedPreferences.Editor editor = getEditor(context, USER_INFO);
             editor.putString(KEY_UID, userInfo.getId());
-            editor.putString(KEY_SESSION_ID, userInfo.getSessionId());
-            editor.putString(KEY_USER_NAME, userInfo.getUserName());
+            if (!TextUtils.isEmpty(userInfo.getSessionId()))
+                editor.putString(KEY_SESSION_ID, userInfo.getSessionId());
             editor.putString(KEY_UD_TOKEN, userInfo.getUdToken());
+            editor.putString(KEY_USER_NAME, userInfo.getUserName());
             editor.commit();
         }
     }

@@ -16,7 +16,7 @@ public class HeartBeatRequestInfo extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return BuildConfig.DOMAIN_HOST + Url.HEARTBEAT_URL;
+        return Url.HEARTBEAT_URL;
     }
 
     @Override

@@ -93,6 +93,7 @@ class SDKPresenter implements IPresenter {
                     public void onFinished(boolean success, String result) {
                         //获取session成功，保存用户信息，并回调成功方法，否则回调失败方法
                         if (success) {
+                            isLogged = true;
                             setSession(result);
                             if (userInfo != null)
                                 saveUserInfo(userInfo);
@@ -406,6 +407,7 @@ class SDKPresenter implements IPresenter {
     @Override
     public void saveUserInfo(UserInfo user) {
         UserPreferences.saveUserInfo(mContext, user);
+        Log.d(getUserInfo().toString());
     }
 
     @Override
@@ -430,6 +432,8 @@ class SDKPresenter implements IPresenter {
         isHeartBeating = false;
         loginTime = 0;
         UserPreferences.clear(mContext);
+        stopHeartBeat(null);
+        Log.d("User===" + getUserInfo().toString());
     }
 
     private static final String KEY_DEVICE_ID = "deviceId";

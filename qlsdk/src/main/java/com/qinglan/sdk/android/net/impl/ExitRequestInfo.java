@@ -18,7 +18,7 @@ public class ExitRequestInfo extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return BuildConfig.DOMAIN_HOST + Url.QUIT_URL;
+        return Url.QUIT_URL;
     }
 
     @Override

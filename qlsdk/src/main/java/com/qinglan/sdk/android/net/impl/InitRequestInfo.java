@@ -28,7 +28,7 @@ public class InitRequestInfo extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return BuildConfig.DOMAIN_HOST + Url.INIT_URL;
+        return Url.INIT_URL;
     }
 
     @Override
@@ -49,6 +49,6 @@ public class InitRequestInfo extends AbsRequestInfo {
         params.put(HttpConstants.REQUEST_PARAM_RESOLUTION, resolution);
         params.put(HttpConstants.REQUEST_PARAM_SIMOPERATOR_NAME, simOperatorName);
         params.put(HttpConstants.REQUEST_PARAM_SYSTEM_VERSION, systemVersion);
-        return super.getParams();
+        return params;
     }
 }

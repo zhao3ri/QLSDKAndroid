@@ -21,7 +21,7 @@ public class GameRoleRequestInfo extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return BuildConfig.DOMAIN_HOST + Url.ROLE_ESTABLISH_URL;
+        return Url.ROLE_ESTABLISH_URL;
     }
 
     @Override

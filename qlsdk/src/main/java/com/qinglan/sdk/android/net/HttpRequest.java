@@ -158,6 +158,7 @@ class HttpRequest {
                 continue;
             }
         }
+        Log.d("params-->" + strBuffer.toString());
         return strBuffer.toString();
     }
 

@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 public abstract class BaseSplashActivity extends Activity {
     private LinearLayout linearLayout;
     private Handler handler = new Handler();
-    private static final long DEFAULT_SPLASH_MILLIS = 2000;
+    private static final long DEFAULT_SPLASH_MILLIS = 2*1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

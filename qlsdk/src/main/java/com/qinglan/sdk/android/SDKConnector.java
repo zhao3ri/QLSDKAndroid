@@ -34,6 +34,7 @@ class SDKConnector implements IConnector {
 
     @Override
     public void initSdk(Context context, final Callback.OnInitCompletedListener listener) {
+        Log.d("init sdk request");
         InitRequestInfo request = new InitRequestInfo();
         request.appId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
@@ -60,6 +61,7 @@ class SDKConnector implements IConnector {
                         isSuccess = true;
                     } else {
                         isSuccess = false;
+                        Log.e("initSdk error," + result);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -75,6 +77,7 @@ class SDKConnector implements IConnector {
 
     @Override
     public void getToken(String uid, final Callback.GetTokenListener listener) {
+        Log.d("getToken request");
         TokenRequestInfo request = new TokenRequestInfo();
         request.appId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
@@ -105,6 +108,7 @@ class SDKConnector implements IConnector {
 
     @Override
     public void refreshSession(final Context context, final GameRole role, final Callback.OnRefreshSessionListener listener) {
+        Log.d("refreshSession request");
         RefreshSessionRequestInfo request = new RefreshSessionRequestInfo();
         request.appId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
@@ -140,6 +144,7 @@ class SDKConnector implements IConnector {
 
     @Override
     public void startHeartBeat(Context context, GameRole role, String time, final Callback.HeartBeanRequestListener listener) {
+        Log.d("startHeartBeat request");
         HeartBeatRequestInfo request = new HeartBeatRequestInfo();
         request.appId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
@@ -172,6 +177,7 @@ class SDKConnector implements IConnector {
 
     @Override
     public void cleanSession(Context context, GameRole role, final Callback.OnLogoutResponseListener listener) {
+        Log.d("cleanSession request");
         CleanSessionRequestInfo request = new CleanSessionRequestInfo();
         request.appId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
@@ -205,6 +211,7 @@ class SDKConnector implements IConnector {
 
     @Override
     public void exit(Context context, GameRole role, final Callback.OnExitListener listener) {
+        Log.d("exit request");
         ExitRequestInfo request = new ExitRequestInfo();
         request.appId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
@@ -222,6 +229,7 @@ class SDKConnector implements IConnector {
                     } else {
                         if (listener != null)
                             listener.onCompleted(false, result);
+                        Log.e("exit error:" + result);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -235,6 +243,7 @@ class SDKConnector implements IConnector {
 
     @Override
     public void createRole(Context context, GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
+        Log.d("createRole request");
         GameRoleRequestInfo request = new GameRoleRequestInfo();
         request.appId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
@@ -255,6 +264,7 @@ class SDKConnector implements IConnector {
                     } else {
                         if (listener != null)
                             listener.onFinished(false, result);
+                        Log.e("createRole error:" + result);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -268,6 +278,7 @@ class SDKConnector implements IConnector {
 
     @Override
     public void generateOrder(Context context, GameRole game, GamePay pay, int fixed, String loginTime, final Callback.GenerateOrderListener listener) {
+        Log.d("generateOrder request");
         OrderRequestInfo request = new OrderRequestInfo();
         request.appId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
@@ -296,6 +307,7 @@ class SDKConnector implements IConnector {
                     } else {
                         if (listener != null)
                             listener.onFailed(result);
+                        Log.e("generateOrder error:" + result);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -12,6 +12,7 @@ import com.qinglan.sdk.android.utils.PermissionUtils;
  * Created by zhaoj on 2018/10/14.
  */
 public class PermissionActivity extends Activity {
+
     private PermissionUtils.PermissionGrant grant = new PermissionUtils.PermissionGrant() {
         @Override
         public void onPermissionGranted(int requestCode, PermissionUtils.Permission... p) {
@@ -28,12 +29,14 @@ public class PermissionActivity extends Activity {
     }
 
     public final void requestPermission(@NonNull PermissionUtils.Permission... p) {
+        if (p.length == 0) {
+            return;
+        }
         if (p.length == 1) {
             PermissionUtils.requestPermission(this, p[0], grant);
         } else {
             PermissionUtils.requestMultiPermissions(this, grant, getPermissionIds(p));
         }
-
     }
 
     private String[] getPermissionIds(PermissionUtils.Permission[] permissions) {
@@ -48,7 +51,7 @@ public class PermissionActivity extends Activity {
     /**
      * 获取权限成功时调用此方法
      * 当只请求多个权限时，需所有权限都获取成功才会调用
-     * */
+     */
     public void onPermissionGranted(PermissionUtils.Permission... p) {
     }
 
@@ -56,6 +59,5 @@ public class PermissionActivity extends Activity {
     public void onRequestPermissionsResult(int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionUtils.requestPermissionsResult(this, requestCode, permissions, grantResults, grant);
-
     }
 }

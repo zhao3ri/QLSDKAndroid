@@ -17,7 +17,7 @@ public class CleanSessionRequestInfo extends AbsRequestInfo {
     public String deviceId;
     @Override
     public String getPath() {
-        return BuildConfig.DOMAIN_HOST + Url.LOGOUT_URL;
+        return Url.LOGOUT_URL;
     }
 
     @Override

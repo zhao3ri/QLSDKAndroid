@@ -62,4 +62,9 @@ public final class UserInfo {
 //    public void setPlatformId(String platformId) {
 //        this.platformId = platformId;
 //    }
+
+    @Override
+    public String toString() {
+        return "UserInfo:id=" + id + ",name=" + userName + ",udToken=" + udToken + ",session=" + sessionId;
+    }
 }

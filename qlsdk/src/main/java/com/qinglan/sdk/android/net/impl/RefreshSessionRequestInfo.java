@@ -22,7 +22,7 @@ public class RefreshSessionRequestInfo extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return BuildConfig.DOMAIN_HOST + Url.LOGIN_URL;
+        return Url.LOGIN_URL;
     }
 
     @Override
