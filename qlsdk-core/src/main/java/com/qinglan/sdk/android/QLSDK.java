@@ -46,14 +46,6 @@ public class QLSDK {
         return singleton;
     }
 
-    public void setDebug(boolean debug) {
-        if (debug) {
-            Log.setLevel(Log.VERBOSE);
-        } else {
-            Log.setLevel(Log.ERROR);
-        }
-    }
-
     /**
      * 设置游戏角色进入游戏
      */

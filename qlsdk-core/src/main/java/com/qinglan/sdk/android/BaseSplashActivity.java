@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -14,35 +16,55 @@ import android.widget.LinearLayout;
  */
 public abstract class BaseSplashActivity extends Activity {
     private LinearLayout linearLayout;
+    private ImageView imageView;
     private Handler handler = new Handler();
-    private static final long DEFAULT_SPLASH_MILLIS = 2*1000;
+    private static final long DEFAULT_SPLASH_MILLIS = 2 * 1000;
+    protected static final int TYPE_IMAGE = 0;
+    protected static final int TYPE_ANIM = 1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         linearLayout = new LinearLayout(this);
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         linearLayout.setLayoutParams(p);
         linearLayout.setBackgroundColor(Color.WHITE);
-        ImageView imageView = new ImageView(this);
+        imageView = new ImageView(this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         lp.gravity = Gravity.FILL;
         imageView.setLayoutParams(lp);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        imageView.setImageResource(getSplashDrawableId());
         linearLayout.addView(imageView);
         setContentView(linearLayout);
-        if (isDelay()) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    onSplashStop();
-                }
-            }, getSplashMills());
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        if (hasFocus) {
+            show();
+        }
+    }
+
+    private void show() {
+        if (getSplashType() == TYPE_IMAGE && getSplashDrawableId() != 0) {
+            imageView.setImageResource(getSplashDrawableId());
+        } else if (getSplashType() == TYPE_ANIM && getAnimation(imageView) != null) {
+            if (!getAnimation(imageView).hasStarted())
+                getAnimation(imageView).start();
         } else {
             onSplashStop();
+            return;
         }
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                onSplashStop();
+                if (getSplashType() == TYPE_ANIM) {
+                    stopAnim();
+                }
+            }
+        }, getSplashMills());
     }
 
     /**
@@ -53,7 +75,9 @@ public abstract class BaseSplashActivity extends Activity {
     /**
      * 闪屏图片的drawable Id
      */
-    public abstract int getSplashDrawableId();
+    public int getSplashDrawableId() {
+        return 0;
+    }
 
     /**
      * 闪屏显示时间，单位毫秒
@@ -62,10 +86,18 @@ public abstract class BaseSplashActivity extends Activity {
         return DEFAULT_SPLASH_MILLIS;
     }
 
-    /**
-     * 是否延时
-     * */
-    public boolean isDelay() {
-        return true;
+    public int getSplashType() {
+        return TYPE_IMAGE;
+    }
+
+    public Animation getAnimation(ImageView view) {
+        return null;
+    }
+
+    private void stopAnim() {
+        Animation anim = getAnimation(imageView);
+        if (anim != null && anim.hasStarted()) {
+            anim.cancel();
+        }
     }
 }

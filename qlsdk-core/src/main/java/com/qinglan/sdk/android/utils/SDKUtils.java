@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 
 
 public class SDKUtils {
-    public static final String META_DATA_APP_ID = "QL_GAMEID";
+    public static final String META_DATA_APP_ID = "QLSDK_GAMEID";
 
     public static String getMeteData(Context context, String tag) {
         ApplicationInfo info = Utils.getApplicationInfo(context);

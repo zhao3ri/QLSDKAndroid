@@ -25,25 +25,64 @@ import java.util.Map;
  * Created by tyland on 2018/4/29.
  */
 public class PermissionUtils {
-    public static final int CODE_RECORD_AUDIO = 0;
-    public static final int CODE_GET_ACCOUNTS = 1;
-    public static final int CODE_READ_PHONE_STATE = 2;
-    public static final int CODE_CALL_PHONE = 3;
-    public static final int CODE_CAMERA = 4;
-    public static final int CODE_ACCESS_FINE_LOCATION = 5;
-    public static final int CODE_ACCESS_COARSE_LOCATION = 6;
-    public static final int CODE_READ_EXTERNAL_STORAGE = 7;
-    public static final int CODE_WRITE_EXTERNAL_STORAGE = 8;
+    public static final int CODE_READ_CALENDAR = 0;
+    public static final int CODE_WRITE_CALENDAR = 1;
+    public static final int CODE_CAMERA = 2;
+    public static final int CODE_READ_CONTACTS = 3;
+    public static final int CODE_WRITE_CONTACTS = 4;
+    public static final int CODE_GET_ACCOUNTS = 5;
+    public static final int CODE_ACCESS_FINE_LOCATION = 6;
+    public static final int CODE_ACCESS_COARSE_LOCATION = 7;
+    public static final int CODE_RECORD_AUDIO = 8;
+    public static final int CODE_READ_PHONE_STATE = 9;
+    public static final int CODE_CALL_PHONE = 10;
+    public static final int CODE_READ_CALL_LOG = 11;
+    public static final int CODE_WRITE_CALL_LOG = 12;
+    public static final int CODE_ADD_VOICEMAIL = 13;
+    public static final int CODE_USE_SIP = 14;
+    public static final int CODE_PROCESS_OUTGOING_CALLS = 15;
+    public static final int CODE_BODY_SENSORS = 16;
+    public static final int CODE_SEND_SMS = 17;
+    public static final int CODE_RECEIVE_SMS = 18;
+    public static final int CODE_READ_SMS = 19;
+    public static final int CODE_RECEIVE_WAP_PUSH = 20;
+    public static final int CODE_RECEIVE_MMS = 21;
+    public static final int CODE_READ_EXTERNAL_STORAGE = 22;
+    public static final int CODE_WRITE_EXTERNAL_STORAGE = 23;
     public static final int CODE_MULTI_PERMISSION = 100;
 
     public enum Permission {
+        //CALENDAR
+        READ_CALENDAR(CODE_READ_CALENDAR, Manifest.permission.READ_CALENDAR),
+        WRITE_CALENDAR(CODE_WRITE_CALENDAR, Manifest.permission.WRITE_CALENDAR),
+        //CAMERA
+        CAMERA(CODE_CAMERA, Manifest.permission.CAMERA),
+        //CONTACTS
+        READ_CONTACTS(CODE_READ_CONTACTS, Manifest.permission.READ_CONTACTS),
+        WRITE_CONTACTS(CODE_WRITE_CONTACTS, Manifest.permission.WRITE_CONTACTS),
+        GET_ACCOUNTS(CODE_GET_ACCOUNTS, Manifest.permission.GET_ACCOUNTS)
+        //LOCATION
+,        ACCESS_FINE_LOCATION(CODE_ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+        ACCESS_COARSE_LOCATION(CODE_ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+        //AUDIO
         RECORD_AUDIO(CODE_RECORD_AUDIO, Manifest.permission.RECORD_AUDIO),
-        GET_ACCOUNTS(CODE_GET_ACCOUNTS, Manifest.permission.GET_ACCOUNTS),
+        //PHONE
         READ_PHONE_STATE(CODE_READ_PHONE_STATE, Manifest.permission.READ_PHONE_STATE),
         CALL_PHONE(CODE_CALL_PHONE, Manifest.permission.CALL_PHONE),
-        CAMERA(CODE_CAMERA, Manifest.permission.CAMERA),
-        ACCESS_FINE_LOCATION(CODE_ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
-        ACCESS_COARSE_LOCATION(CODE_ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+        READ_CALL_LOG(CODE_READ_CALL_LOG, Manifest.permission.READ_CALL_LOG),
+        WRITE_CALL_LOG(CODE_WRITE_CALL_LOG, Manifest.permission.WRITE_CALL_LOG),
+        ADD_VOICEMAIL(CODE_ADD_VOICEMAIL, Manifest.permission.ADD_VOICEMAIL),
+        USE_SIP(CODE_USE_SIP, Manifest.permission.USE_SIP),
+        PROCESS_OUTGOING_CALLS(CODE_PROCESS_OUTGOING_CALLS, Manifest.permission.PROCESS_OUTGOING_CALLS),
+        //SENSORS
+        BODY_SENSORS(CODE_BODY_SENSORS, Manifest.permission.BODY_SENSORS),
+        //SMS
+        SEND_SMS(CODE_SEND_SMS, Manifest.permission.SEND_SMS),
+        RECEIVE_SMS(CODE_RECEIVE_SMS, Manifest.permission.RECEIVE_SMS),
+        READ_SMS(CODE_READ_SMS, Manifest.permission.READ_SMS),
+        RECEIVE_WAP_PUSH(CODE_RECEIVE_WAP_PUSH, Manifest.permission.RECEIVE_WAP_PUSH),
+        RECEIVE_MMS(CODE_RECEIVE_MMS, Manifest.permission.RECEIVE_MMS),
+        //STORAGE
         READ_EXTERNAL_STORAGE(CODE_READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
         WRITE_EXTERNAL_STORAGE(CODE_WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 

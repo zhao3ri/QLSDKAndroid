@@ -3,6 +3,7 @@ package com.qinglan.sdk.android;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.platform.DefaultPlatform;
 
 /**
@@ -23,10 +24,10 @@ public final class Config {
         context = ctx;
     }
 
-    public static Config createDefaultConfig(@NonNull Context ctx) {
-        return new Config(ctx).setGameId(DefaultPlatform.DEFAULT_GAME_ID)
-                .setPlatformClass(DefaultPlatform.class);
-    }
+//    public static Config createDefaultConfig(@NonNull Context ctx) {
+//        return new Config(ctx).setGameId(DefaultPlatform.DEFAULT_GAME_ID)
+//                .setPlatformClass(DefaultPlatform.class);
+//    }
 
     public Config setGameId(String id) {
         gameId = id;
@@ -35,6 +36,15 @@ public final class Config {
 
     public Config setPlatformClass(Class cls) {
         platformClass = cls;
+        return this;
+    }
+
+    public Config setDebug(boolean debug) {
+        if (debug) {
+            Log.setLevel(Log.VERBOSE);
+        } else {
+            Log.setLevel(Log.ERROR);
+        }
         return this;
     }
 

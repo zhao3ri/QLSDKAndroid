@@ -72,15 +72,19 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
      * 检查权限
      */
     private void checkPermission() {
-        if (checkPermission(PermissionUtils.Permission.READ_PHONE_STATE) && checkPermission(PermissionUtils.Permission.WRITE_EXTERNAL_STORAGE)) {
+        if (checkPermission(PermissionUtils.Permission.READ_PHONE_STATE)
+                && checkPermission(PermissionUtils.Permission.WRITE_EXTERNAL_STORAGE)) {
+            //若当前已获得权限，则做以下操作
             init();
         } else {
+            //否则将请求获取权限
             requestPermission(PermissionUtils.Permission.READ_PHONE_STATE, PermissionUtils.Permission.WRITE_EXTERNAL_STORAGE);
         }
     }
 
     @Override
     public void onPermissionGranted(PermissionUtils.Permission... p) {
+        //当申请获得权限成功时的操作
         init();
     }
 
