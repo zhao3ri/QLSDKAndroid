@@ -115,7 +115,7 @@
         <!-- provider authorities的值com.demo.sdkinsapk里面的com.demo换成你们自己的包名 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.demo.sdkinsapk"
+            android:authorities="com.qinglan.sdk.android.demo"
             android:exported="false"
             android:grantUriPermissions="true">
             <!--  元数据    -->

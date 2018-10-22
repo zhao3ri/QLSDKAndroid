@@ -11,6 +11,7 @@ public class MySplashActivity extends BaseSplashActivity {
         //当显示结束时，需要做的操作
         Intent intent = new Intent(this, WelComeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
