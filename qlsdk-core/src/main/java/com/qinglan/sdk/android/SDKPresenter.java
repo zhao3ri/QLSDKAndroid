@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -47,8 +48,9 @@ class SDKPresenter implements IPresenter {
                 if (!isLogged) {
                     return;
                 }
-                GameRole role = (GameRole) intent.getSerializableExtra(KEY_GAME_ROLE);
+                GameRole role = (GameRole) intent.getExtras().getSerializable(KEY_GAME_ROLE);
                 if (role != null) {
+                    Log.d("heartBeat!");
                     iConnector.startHeartBeat(mContext, role, String.valueOf(loginTime), null);
                 }
             }
@@ -122,14 +124,13 @@ class SDKPresenter implements IPresenter {
             public void onSuccess(final GameRole role) {
                 iConnector.refreshSession(activity, role, new Callback.OnRefreshSessionListener() {
                     @Override
-                    public void onRefreshed(boolean success, String result) {
+                    public void onRefreshed(boolean success, long timestamp, String result) {
                         if (success) {//刷新SDK数据成功
-                            long timestamp = Long.getLong(result, 0);
+                            loginTime = timestamp;
                             if (!isHeartBeating) {//若当前心跳未启动
                                 //启动心跳
                                 startHeartBeat(role);
                                 isHeartBeating = true;
-                                loginTime = timestamp;
                             }
                             if (listener != null)
                                 listener.onGameStarted(timestamp);
@@ -167,8 +168,12 @@ class SDKPresenter implements IPresenter {
 
     private PendingIntent getPendingIntent(GameRole role) {
         Intent intent = new Intent(HEART_BEAT_ACTION + getGameId());
-        if (role != null)
-            intent.putExtra(KEY_GAME_ROLE, role);
+        if (role != null) {
+            Bundle extra = new Bundle();
+            extra.putSerializable(KEY_GAME_ROLE, role);
+//            intent.putExtra(KEY_GAME_ROLE, role);
+            intent.putExtras(extra);
+        }
         PendingIntent pi = PendingIntent
                 .getBroadcast(mContext.getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pi;
@@ -353,7 +358,7 @@ class SDKPresenter implements IPresenter {
     @Override
     public void onStart(Activity activity) {
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(HEART_BEAT_ACTION);
+        intentFilter.addAction(HEART_BEAT_ACTION + getGameId());
         activity.registerReceiver(heartBeatReceiver, intentFilter);
         iPlatform.onStart(activity);
     }

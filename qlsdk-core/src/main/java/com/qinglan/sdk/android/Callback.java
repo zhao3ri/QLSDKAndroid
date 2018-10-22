@@ -33,7 +33,7 @@ public class Callback {
     }
 
     public interface OnRefreshSessionListener {
-        void onRefreshed(boolean success, String result);
+        void onRefreshed(boolean success, long timestamp, String result);
     }
 
     public interface HeartBeanRequestListener {

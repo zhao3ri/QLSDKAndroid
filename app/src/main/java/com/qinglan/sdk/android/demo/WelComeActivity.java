@@ -15,6 +15,7 @@ import com.qinglan.sdk.android.Callback;
 import com.qinglan.sdk.android.PermissionActivity;
 import com.qinglan.sdk.android.QLSDK;
 import com.qinglan.sdk.android.common.Log;
+import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
 import com.qinglan.sdk.android.utils.PermissionUtils;
@@ -93,18 +94,25 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
         if (v.getId() == R.id.doneCusompay) {
 //            //提示，要按照正常游戏的步骤，创建角色，上传角色信息，开始游戏，进入到游戏主界面，再去调用支付api，不然会出问题
 //            //自定义充值(回调地址，你们自己设置，不需要我们后台去配置)
-//            Toast.makeText(this, "订单生成中~~~~~~" + mMonnyEdit.getText().toString(), Toast.LENGTH_SHORT).show();
-//            //所有参数不能为空，否则报错
-//            GamePayInfo payInfo = new GamePayInfo();
-//            payInfo.setExtInfo("cusompay");
-//            payInfo.setMoney(mMonnyEdit.getText().toString());
-//            payInfo.setNotifyUrl("http://192.168.6.49:8180/");//前端设置支付回调地址，设置你们自己的通知地址。
-//            payInfo.setCpOrderId("353535");
-//            payInfo.setProductCount(10);
-//            payInfo.setProductId("001");
-//            payInfo.setProductName("钻石");
-//            YYReleaseSDK.getInstance().doPay(this, gameRole, payInfo, callback);
+            GamePay payInfo = new GamePay();
+            payInfo.setExtInfo("cusompay");
+            payInfo.setMoney(Integer.parseInt(mMonnyEdit.getText().toString()));
+            payInfo.setNotifyUrl("http://esrsservice.yaoyuenet.com/platform/yuewan");//前端设置支付回调地址，设置你们自己的通知地址。
+            payInfo.setCpOrderId("353535");
+            payInfo.setProductCount(10);
+            payInfo.setProductId("001");
+            payInfo.setProductName("钻石");
+            qlSDK.doPay(this, gameRole, payInfo, new Callback.OnPayRequestListener() {
+                @Override
+                public void onSuccess(String orderId) {
+                    ToastUtils.showToast(WelComeActivity.this, "支付成功！" + orderId);
+                }
 
+                @Override
+                public void onFailed(String result) {
+                    ToastUtils.showToast(WelComeActivity.this, result);
+                }
+            });
         } else if (v.getId() == R.id.logout) {
             logout();
         } else if (v.getId() == R.id.exit) {

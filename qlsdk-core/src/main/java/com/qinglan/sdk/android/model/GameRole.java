@@ -9,6 +9,7 @@ import java.io.Serializable;
  * @author zhaoj
  */
 public final class GameRole implements Serializable{
+    private static final long serialVersionUID = -1941612847047022843L;
     private String zoneId;
     private String zoneName;
     private String roleId;
