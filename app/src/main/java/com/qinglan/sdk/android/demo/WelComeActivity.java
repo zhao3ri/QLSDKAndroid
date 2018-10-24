@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -72,70 +73,6 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
 //        gameRole.setServerId("1");
 //    }
 
-    private void showDialog(final boolean isCreate) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = View.inflate(this, R.layout.view_role_input, null);
-        builder.setView(view);
-        builder.setCancelable(true);
-        final EditText etRoleId = (EditText) view.findViewById(R.id.et_role_id);
-        final EditText etRoleName = (EditText) view.findViewById(R.id.et_role_name);
-        final EditText etRoleLevel = (EditText) view.findViewById(R.id.et_role_level);
-        final EditText etZoneId = (EditText) view.findViewById(R.id.et_zone_id);
-        final EditText etZoneName = (EditText) view.findViewById(R.id.et_zone_name);
-        Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
-        Button btnConfirm = (Button) view.findViewById(R.id.btn_confirm);
-        //取消或确定按钮监听事件处理
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-        btnCancel.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-        if (gameRole != null) {
-            etRoleId.setText(gameRole.getRoleId());
-            etRoleName.setText(gameRole.getRoleName());
-            etRoleLevel.setText(gameRole.getRoleLevel());
-            etZoneId.setText(gameRole.getZoneId());
-            etZoneName.setText(gameRole.getZoneName());
-        }
-        btnConfirm.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(etRoleId.getText().toString().trim())) {
-                    ToastUtils.showToast(WelComeActivity.this, "角色id不能为空！");
-                    return;
-                }
-                if (TextUtils.isEmpty(etRoleName.getText().toString().trim())) {
-                    ToastUtils.showToast(WelComeActivity.this, "角色名称不能为空！");
-                    return;
-                }
-                if (TextUtils.isEmpty(etZoneId.getText().toString().trim())) {
-                    ToastUtils.showToast(WelComeActivity.this, "分区id不能为空！");
-                    return;
-                }
-                if (TextUtils.isEmpty(etZoneName.getText().toString().trim())) {
-                    ToastUtils.showToast(WelComeActivity.this, "分区名称不能为空！");
-                    return;
-                }
-                gameRole = new GameRole();
-                gameRole.setRoleId(etRoleId.getText().toString());
-                gameRole.setRoleName(etRoleName.getText().toString());
-                String level = TextUtils.isEmpty(etRoleLevel.getText().toString().trim()) ? "0" : etRoleLevel.getText().toString();
-                gameRole.setRoleLevel(level);
-                gameRole.setZoneId(etZoneId.getText().toString());
-                gameRole.setZoneName(etZoneName.getText().toString());
-                gameRole.setServerId("1");
-                edRoleName.setText(etRoleName.getText().toString());
-                if (isCreate) {
-                    createRole();
-                }
-                dialog.cancel();
-            }
-        });
-    }
-
     /**
      * 检查权限
      */
@@ -183,7 +120,6 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
         }
 
     }
-
 
     /**
      * 平台初始化
@@ -262,6 +198,70 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
                 } else {
                     ToastUtils.showToast(WelComeActivity.this, result);
                 }
+            }
+        });
+    }
+
+    private void showDialog(final boolean isCreate) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = View.inflate(this, R.layout.view_role_input, null);
+        builder.setView(view);
+        builder.setCancelable(true);
+        final EditText etRoleId = (EditText) view.findViewById(R.id.et_role_id);
+        final EditText etRoleName = (EditText) view.findViewById(R.id.et_role_name);
+        final EditText etRoleLevel = (EditText) view.findViewById(R.id.et_role_level);
+        final EditText etZoneId = (EditText) view.findViewById(R.id.et_zone_id);
+        final EditText etZoneName = (EditText) view.findViewById(R.id.et_zone_name);
+        Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
+        Button btnConfirm = (Button) view.findViewById(R.id.btn_confirm);
+        //取消或确定按钮监听事件处理
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        btnCancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        if (gameRole != null) {
+            etRoleId.setText(gameRole.getRoleId());
+            etRoleName.setText(gameRole.getRoleName());
+            etRoleLevel.setText(gameRole.getRoleLevel());
+            etZoneId.setText(gameRole.getZoneId());
+            etZoneName.setText(gameRole.getZoneName());
+        }
+        btnConfirm.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(etRoleId.getText().toString().trim())) {
+                    ToastUtils.showToast(WelComeActivity.this, "角色id不能为空！");
+                    return;
+                }
+                if (TextUtils.isEmpty(etRoleName.getText().toString().trim())) {
+                    ToastUtils.showToast(WelComeActivity.this, "角色名称不能为空！");
+                    return;
+                }
+                if (TextUtils.isEmpty(etZoneId.getText().toString().trim())) {
+                    ToastUtils.showToast(WelComeActivity.this, "分区id不能为空！");
+                    return;
+                }
+                if (TextUtils.isEmpty(etZoneName.getText().toString().trim())) {
+                    ToastUtils.showToast(WelComeActivity.this, "分区名称不能为空！");
+                    return;
+                }
+                gameRole = new GameRole();
+                gameRole.setRoleId(etRoleId.getText().toString());
+                gameRole.setRoleName(etRoleName.getText().toString());
+                String level = TextUtils.isEmpty(etRoleLevel.getText().toString().trim()) ? "0" : etRoleLevel.getText().toString();
+                gameRole.setRoleLevel(level);
+                gameRole.setZoneId(etZoneId.getText().toString());
+                gameRole.setZoneName(etZoneName.getText().toString());
+                gameRole.setServerId("1");
+                edRoleName.setText(etRoleName.getText().toString());
+                if (isCreate) {
+                    createRole();
+                }
+                dialog.cancel();
             }
         });
     }
@@ -397,4 +397,20 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
         qlSDK.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if(event.getKeyCode()==KeyEvent.KEYCODE_BACK && event.getAction()==KeyEvent.ACTION_DOWN){
+            exit();
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus){
+            qlSDK.showWinFloat(this);
+        }
+    }
 }

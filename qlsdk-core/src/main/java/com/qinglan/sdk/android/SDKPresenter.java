@@ -233,23 +233,29 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void exitGame(@NonNull final Activity activity, @NonNull final GameRole role, final Callback.OnExitListener listener) {
+        exitGameWithTips(activity, role, listener, "退出游戏", "不多玩一会吗？", "取消", "确定");
+    }
+
+    @Override
+    public void exitGameWithTips(@NonNull final Activity activity, final GameRole role, final Callback.OnExitListener listener, String title, String msg, String negativeButtonText, String positiveButtonText) {
         if (iPlatform.isCustomLogoutUI()) {//若平台有自定义的退出UI，直接调用退出方法
             exit(activity, role, listener);
             return;
         }
-        new AlertDialog.Builder(activity).setTitle("退出游戏")
-                .setMessage("不多玩一会吗！")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(activity).setTitle(title)
+                .setMessage(msg)
+                .setNegativeButton(negativeButtonText, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        dialog.dismiss();
                     }
-                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                }).setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 exit(activity, role, listener);
+                dialog.dismiss();
             }
         }).setCancelable(false).show();
     }
@@ -327,11 +333,10 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public String getGameId() {
-        String id = gameId;
-        if (TextUtils.isEmpty(id)) {
-            id = SDKUtils.getAppId(mContext);
+        if (TextUtils.isEmpty(gameId)) {
+            gameId = SDKUtils.getAppId(mContext.getApplicationContext());
         }
-        return id;
+        return gameId;
     }
 
     @Override
