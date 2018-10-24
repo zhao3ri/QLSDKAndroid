@@ -104,7 +104,7 @@ class SDKPresenter implements IPresenter {
                             if (userInfo != null)
                                 saveUserInfo(userInfo);
                             if (listener != null)
-                                listener.onSuccess(userInfo);
+                                listener.onSuccess(getUserInfo());
                         } else {
                             if (listener != null)
                                 listener.onFailed(result);

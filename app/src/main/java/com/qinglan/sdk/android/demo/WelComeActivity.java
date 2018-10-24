@@ -1,15 +1,19 @@
 package com.qinglan.sdk.android.demo;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.qinglan.sdk.android.Callback;
 import com.qinglan.sdk.android.PermissionActivity;
@@ -56,17 +60,80 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
         edRoleName = (EditText) findViewById(R.id.role_name);
         mMonnyEdit = (EditText) findViewById(R.id.customPaytEdit);
 
-        setupGamRole();
         checkPermission();
     }
 
-    private void setupGamRole() {
-        gameRole = new GameRole();
-        gameRole.setRoleId("2333"); //必须传这个参数，没有传"0" (凡是涉及到这个对象gameInfo的所有api的实现，都要传RoleId这个参数)
-        gameRole.setRoleLevel("11");
-        gameRole.setZoneId("1");
-        gameRole.setZoneName("big");
-        gameRole.setServerId("1");
+//    private void setupGamRole() {
+//        gameRole = new GameRole();
+//        gameRole.setRoleId("2333"); //必须传这个参数，没有传"0" (凡是涉及到这个对象gameInfo的所有api的实现，都要传RoleId这个参数)
+//        gameRole.setRoleLevel("11");
+//        gameRole.setZoneId("1234");
+//        gameRole.setZoneName("我就是用来测试的啊");
+//        gameRole.setServerId("1");
+//    }
+
+    private void showDialog(final boolean isCreate) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = View.inflate(this, R.layout.view_role_input, null);
+        builder.setView(view);
+        builder.setCancelable(true);
+        final EditText etRoleId = (EditText) view.findViewById(R.id.et_role_id);
+        final EditText etRoleName = (EditText) view.findViewById(R.id.et_role_name);
+        final EditText etRoleLevel = (EditText) view.findViewById(R.id.et_role_level);
+        final EditText etZoneId = (EditText) view.findViewById(R.id.et_zone_id);
+        final EditText etZoneName = (EditText) view.findViewById(R.id.et_zone_name);
+        Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
+        Button btnConfirm = (Button) view.findViewById(R.id.btn_confirm);
+        //取消或确定按钮监听事件处理
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        btnCancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        if (gameRole != null) {
+            etRoleId.setText(gameRole.getRoleId());
+            etRoleName.setText(gameRole.getRoleName());
+            etRoleLevel.setText(gameRole.getRoleLevel());
+            etZoneId.setText(gameRole.getZoneId());
+            etZoneName.setText(gameRole.getZoneName());
+        }
+        btnConfirm.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(etRoleId.getText().toString().trim())) {
+                    ToastUtils.showToast(WelComeActivity.this, "角色id不能为空！");
+                    return;
+                }
+                if (TextUtils.isEmpty(etRoleName.getText().toString().trim())) {
+                    ToastUtils.showToast(WelComeActivity.this, "角色名称不能为空！");
+                    return;
+                }
+                if (TextUtils.isEmpty(etZoneId.getText().toString().trim())) {
+                    ToastUtils.showToast(WelComeActivity.this, "分区id不能为空！");
+                    return;
+                }
+                if (TextUtils.isEmpty(etZoneName.getText().toString().trim())) {
+                    ToastUtils.showToast(WelComeActivity.this, "分区名称不能为空！");
+                    return;
+                }
+                gameRole = new GameRole();
+                gameRole.setRoleId(etRoleId.getText().toString());
+                gameRole.setRoleName(etRoleName.getText().toString());
+                String level = TextUtils.isEmpty(etRoleLevel.getText().toString().trim()) ? "0" : etRoleLevel.getText().toString();
+                gameRole.setRoleLevel(level);
+                gameRole.setZoneId(etZoneId.getText().toString());
+                gameRole.setZoneName(etZoneName.getText().toString());
+                gameRole.setServerId("1");
+                edRoleName.setText(etRoleName.getText().toString());
+                if (isCreate) {
+                    createRole();
+                }
+                dialog.cancel();
+            }
+        });
     }
 
     /**
@@ -101,11 +168,15 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
         if (v.getId() == R.id.item_begin) {
             // 提示，这个动作比较重要，这个涉及后面sdk的支付api是否能够正常使用
             // 开始游戏
-            startGame();
+            if (gameRole == null) {
+                showDialog(false);
+            } else {
+                startGame();
+            }
         } else if (v.getId() == R.id.item_create) {
             // 提示，这个动作比较重要，这个涉及后面sdk的支付api是否能够正常使用
             // 创建角色
-            createRole();
+            showDialog(true);
         } else if (v.getId() == R.id.levelUpdate) {
             //等级升级(如果不是角色升级的游戏，可以不实现这个方法)
             qlSDK.levelUpdate(this, gameRole);
@@ -139,7 +210,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
             @Override
             public void onSuccess(UserInfo user) {
                 if (user != null) {
-                    Log.d("id==" + user.getId() + ",name==" + user.getUserName());
+                    Log.d("id==" + user.getId() + ",name==" + user.getUserName() + ",session==" + user.getSessionId());
                 }
                 boo = true;
 
@@ -207,6 +278,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
                 mainPage.setVisibility(View.GONE);
                 qlSDK.hideWinFloat(WelComeActivity.this);
                 login();
+                gameRole = null;
             }
 
             @Override

@@ -4,5 +4,6 @@
     <string name="app_name">sdk_</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="qlsdk_gameid">180928139602</string>
 
 </resources>

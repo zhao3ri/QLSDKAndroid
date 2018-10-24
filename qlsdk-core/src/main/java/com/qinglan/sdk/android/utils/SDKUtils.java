@@ -5,8 +5,6 @@ import android.content.pm.ApplicationInfo;
 
 import com.qinglan.sdk.android.common.Utils;
 
-import java.text.DecimalFormat;
-
 
 public class SDKUtils {
     public static final String META_DATA_APP_ID = "QLSDK_GAMEID";
@@ -29,18 +27,16 @@ public class SDKUtils {
 
     public static String getAppId(Context context) {
         ApplicationInfo info = Utils.getApplicationInfo(context);
+        String gameId = "";
         if (info == null) {
             return null;
         }
-        Object value = info.metaData.get(META_DATA_APP_ID);
-        if (value == null) {
-            return null;
+        int id = info.metaData.getInt(META_DATA_APP_ID);
+        if (id != 0) {
+            gameId = context.getResources().getString(id);
+            return gameId;
         }
-        if (value instanceof Number) {
-            DecimalFormat df = new DecimalFormat(	"000000000000");
-            return df.format(value);
-        }
-        return value.toString();
+        return gameId;
     }
 
     public static String getMeteDataNoTag(Context context, String tag) {
