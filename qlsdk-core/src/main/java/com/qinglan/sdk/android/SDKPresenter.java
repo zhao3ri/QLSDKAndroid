@@ -12,6 +12,8 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -48,9 +50,11 @@ class SDKPresenter implements IPresenter {
                 if (!isLogged) {
                     return;
                 }
-                GameRole role = (GameRole) intent.getExtras().getSerializable(KEY_GAME_ROLE);
+//                GameRole role = (GameRole) intent.getSerializableExtra(KEY_GAME_ROLE);
+                GameRole role = GameRole.readJson(intent.getStringExtra(KEY_GAME_ROLE));
                 if (role != null) {
                     Log.d("heartBeat!");
+                    Log.d("Intent Extra:" + role.toString());
                     iConnector.startHeartBeat(mContext, role, String.valueOf(loginTime), null);
                 }
             }
@@ -169,10 +173,10 @@ class SDKPresenter implements IPresenter {
     private PendingIntent getPendingIntent(GameRole role) {
         Intent intent = new Intent(HEART_BEAT_ACTION + getGameId());
         if (role != null) {
-            Bundle extra = new Bundle();
-            extra.putSerializable(KEY_GAME_ROLE, role);
+            Log.d(role.toString());
+            //6.0之后使用getSerializable取不到值，换成json的形式传递数据
 //            intent.putExtra(KEY_GAME_ROLE, role);
-            intent.putExtras(extra);
+            intent.putExtra(KEY_GAME_ROLE, GameRole.toJson(role));
         }
         PendingIntent pi = PendingIntent
                 .getBroadcast(mContext.getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -375,12 +379,12 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void onStop(Activity activity) {
-        activity.unregisterReceiver(heartBeatReceiver);
         iPlatform.onStop(activity);
     }
 
     @Override
     public void onDestroy(Activity activity) {
+        activity.unregisterReceiver(heartBeatReceiver);
         iPlatform.onDestroy(activity);
     }
 
