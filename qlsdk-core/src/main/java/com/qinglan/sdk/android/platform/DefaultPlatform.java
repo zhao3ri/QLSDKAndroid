@@ -17,7 +17,7 @@ import com.qinglan.sdk.android.model.UserInfo;
  *
  * @author zhaoj
  */
-public class DefaultPlatform implements IPlatform {
+public class DefaultPlatform extends BasePlatform {
     private static final String TAG = "DefaultPlatform";
     public static final String DEFAULT_PLATFORM_NAME = "DEFAULT";
     public static final int DEFAULT_PLATFORM_ID = 41;

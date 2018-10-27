@@ -17,6 +17,8 @@ import com.qinglan.sdk.android.model.GameRole;
  */
 public interface IPlatform {
 
+    void load(PlatformParamsReader.PlatformParam p);
+
     /**
      * 获取平台id
      */

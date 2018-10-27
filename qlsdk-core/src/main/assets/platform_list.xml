@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<platform-list>
+    <!--所有渠道平台的配置参数在此添加-->
+    <!--游戏fun平台-->
+    <!--id为服务端分配的平台id，不可随意更改，name可根据需要修改-->
+    <platform id="4" name="YXF">
+        <class-name>YXFPlatform</class-name>
+    </platform>
+</platform-list>

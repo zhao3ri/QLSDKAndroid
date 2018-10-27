@@ -20,22 +20,12 @@ import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
 
-public class YXFPlatform implements IPlatform {
+public class YXFPlatform extends BasePlatform {
     private YXFSDKManager manager;
 
     @Override
-    public int getId() {
-        return 4;
-    }
-
-    @Override
-    public String getName() {
-        return "YXF";
-    }
-
-    @Override
     public void init(Activity activity, Callback.OnInitConnectedListener onInitConnectedListener) {
-        Log.d(getName() + " Platform init");
+        Log.d(getName() + " PlatformParam init");
         //yxf平台不需要初始化，直接回调成功
         YXFSDKManager.getInstance(activity);
         if (onInitConnectedListener != null) {
@@ -45,7 +35,7 @@ public class YXFPlatform implements IPlatform {
 
     @Override
     public void login(Activity activity, final Callback.OnLoginListener onLoginListener) {
-        Log.d(getName() + " Platform login");
+        Log.d(getName() + " PlatformParam login");
         YXFSDKManager.getInstance(activity).showLogin(activity, true, new OnLoginListener() {
             @Override
             public void loginSuccess(LogincallBack logincallBack) {
@@ -84,7 +74,7 @@ public class YXFPlatform implements IPlatform {
 
     @Override
     public void logout(Activity activity, GameRole gameRole, Callback.OnLogoutResponseListener onLogoutResponseListener) {
-        Log.d(getName() + " Platform logout");
+        Log.d(getName() + " PlatformParam logout");
         YXFSDKManager.getInstance(activity).LoginOut(false);
         onLogoutResponseListener.onSuccess();
     }
@@ -101,7 +91,7 @@ public class YXFPlatform implements IPlatform {
 
     @Override
     public void exit(Activity activity, GameRole gameRole, Callback.OnExitListener onExitListener) {
-        Log.d(getName() + " Platform exit");
+        Log.d(getName() + " PlatformParam exit");
         YXFSDKManager.getInstance(activity).LoginOut(true);
         if (onExitListener != null)
             onExitListener.onCompleted(true, "");
@@ -109,7 +99,7 @@ public class YXFPlatform implements IPlatform {
 
     @Override
     public void pay(Activity activity, GameRole gameRole, GamePay gamePay, String orderId, String notifyUrl, Callback.OnPayRequestListener onPayRequestListener) {
-        Log.d(getName() + " Platform pay");
+        Log.d(getName() + " PlatformParam pay");
         YXFSDKManager.getInstance(activity)
                 .showPay(activity, gameRole.getRoleId()
                         , String.valueOf(Integer.valueOf(gamePay.getMoney()) / 100), gameRole.getServerId(), gamePay.getProductName(), gamePay.getProductId(), orderId);
@@ -117,7 +107,7 @@ public class YXFPlatform implements IPlatform {
 
     @Override
     public void createRole(Activity activity, final GameRole gameRole, final Callback.OnGameRoleRequestListener onGameRoleRequestListener) {
-        Log.d(getName() + " Platform createRole");
+        Log.d(getName() + " PlatformParam createRole");
         RoleInfo roleInfo = getRoleInfo(gameRole);
         YXFSDKManager.getInstance(activity).getRoleInfo(activity, roleInfo, Constants.TYPE_CREATE_ROLE, new onRoleListener() {
             public void onSuccess(RolecallBack rolecallBack) {

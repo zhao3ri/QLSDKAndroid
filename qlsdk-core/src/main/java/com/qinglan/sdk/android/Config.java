@@ -15,7 +15,6 @@ import com.qinglan.sdk.android.platform.DefaultPlatform;
 public final class Config {
     private String gameId;
     protected Context context;
-    protected Class platformClass;
 
     public Config(@NonNull Context ctx) {
         if (ctx == null) {
@@ -24,18 +23,12 @@ public final class Config {
         context = ctx;
     }
 
-//    public static Config createDefaultConfig(@NonNull Context ctx) {
-//        return new Config(ctx).setGameId(DefaultPlatform.DEFAULT_GAME_ID)
-//                .setPlatformClass(DefaultPlatform.class);
-//    }
+    public static Config createDefaultConfig(@NonNull Context ctx) {
+        return new Config(ctx).setDebug(false);
+    }
 
     public Config setGameId(String id) {
         gameId = id;
-        return this;
-    }
-
-    public Config setPlatformClass(Class cls) {
-        platformClass = cls;
         return this;
     }
 
@@ -46,10 +39,6 @@ public final class Config {
             Log.setLevel(Log.ERROR);
         }
         return this;
-    }
-
-    Class getPlatformClass() {
-        return platformClass;
     }
 
     String getGameId() {

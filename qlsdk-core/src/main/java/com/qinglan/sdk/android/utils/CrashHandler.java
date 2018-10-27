@@ -1,4 +1,4 @@
-package com.qinglan.sdk.android;
+package com.qinglan.sdk.android.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
