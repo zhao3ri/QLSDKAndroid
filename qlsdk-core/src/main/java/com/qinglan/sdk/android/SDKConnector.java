@@ -125,18 +125,18 @@ class SDKConnector implements IConnector {
                 try {
                     if (success && getResponseCode(result) == HttpConstants.RESPONSE_SUCCESS_CODE) {
                         JSONObject jsonObject = new JSONObject(result);
-                        String timestamp = jsonObject.optString(HttpConstants.RESPONSE_LOGIN_TIMESTAMP);
+                        long timestamp = jsonObject.optLong(HttpConstants.RESPONSE_LOGIN_TIMESTAMP);
                         if (listener != null)
-                            listener.onRefreshed(true, timestamp);
+                            listener.onRefreshed(true, timestamp, result);
                     } else {
                         if (listener != null)
-                            listener.onRefreshed(false, result);
+                            listener.onRefreshed(false, 0, result);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("refreshSession error, The jason was not properly formatted." + result);
                     if (listener != null)
-                        listener.onRefreshed(false, result);
+                        listener.onRefreshed(false, 0, result);
                 }
             }
         }).execute(request);

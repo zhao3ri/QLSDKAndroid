@@ -16,7 +16,7 @@ public class GameApplication extends Application {
         super.onCreate();
         QLSDK.create(new Config(this)
                 .setPlatformClass(YXFPlatform.class)//必填，当前平台的class
-                .setGameId(GAME_ID)//可选，SDK服务端给游戏分配的游戏id，也可在manifest中配置
+//                .setGameId(GAME_ID)//可选，SDK服务端给游戏分配的游戏id，也可在manifest中配置
                                     // 选择其中一种配置方式即可，若两者都配置了则以代码配置优先
                 .setDebug(true));//可选，设置为true时开启log，便于调试
     }

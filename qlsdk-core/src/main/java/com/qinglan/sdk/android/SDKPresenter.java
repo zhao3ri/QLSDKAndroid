@@ -11,6 +11,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -47,8 +50,11 @@ class SDKPresenter implements IPresenter {
                 if (!isLogged) {
                     return;
                 }
-                GameRole role = (GameRole) intent.getSerializableExtra(KEY_GAME_ROLE);
+//                GameRole role = (GameRole) intent.getSerializableExtra(KEY_GAME_ROLE);
+                GameRole role = GameRole.readJson(intent.getStringExtra(KEY_GAME_ROLE));
                 if (role != null) {
+                    Log.d("heartBeat!");
+                    Log.d("Intent Extra:" + role.toString());
                     iConnector.startHeartBeat(mContext, role, String.valueOf(loginTime), null);
                 }
             }
@@ -98,7 +104,7 @@ class SDKPresenter implements IPresenter {
                             if (userInfo != null)
                                 saveUserInfo(userInfo);
                             if (listener != null)
-                                listener.onSuccess(userInfo);
+                                listener.onSuccess(getUserInfo());
                         } else {
                             if (listener != null)
                                 listener.onFailed(result);
@@ -122,14 +128,13 @@ class SDKPresenter implements IPresenter {
             public void onSuccess(final GameRole role) {
                 iConnector.refreshSession(activity, role, new Callback.OnRefreshSessionListener() {
                     @Override
-                    public void onRefreshed(boolean success, String result) {
+                    public void onRefreshed(boolean success, long timestamp, String result) {
                         if (success) {//刷新SDK数据成功
-                            long timestamp = Long.getLong(result, 0);
+                            loginTime = timestamp;
                             if (!isHeartBeating) {//若当前心跳未启动
                                 //启动心跳
                                 startHeartBeat(role);
                                 isHeartBeating = true;
-                                loginTime = timestamp;
                             }
                             if (listener != null)
                                 listener.onGameStarted(timestamp);
@@ -167,8 +172,12 @@ class SDKPresenter implements IPresenter {
 
     private PendingIntent getPendingIntent(GameRole role) {
         Intent intent = new Intent(HEART_BEAT_ACTION + getGameId());
-        if (role != null)
-            intent.putExtra(KEY_GAME_ROLE, role);
+        if (role != null) {
+            Log.d(role.toString());
+            //6.0之后使用getSerializable取不到值，换成json的形式传递数据
+//            intent.putExtra(KEY_GAME_ROLE, role);
+            intent.putExtra(KEY_GAME_ROLE, GameRole.toJson(role));
+        }
         PendingIntent pi = PendingIntent
                 .getBroadcast(mContext.getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pi;
@@ -224,23 +233,29 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void exitGame(@NonNull final Activity activity, @NonNull final GameRole role, final Callback.OnExitListener listener) {
+        exitGameWithTips(activity, role, listener, "退出游戏", "不多玩一会吗？", "取消", "确定");
+    }
+
+    @Override
+    public void exitGameWithTips(@NonNull final Activity activity, final GameRole role, final Callback.OnExitListener listener, String title, String msg, String negativeButtonText, String positiveButtonText) {
         if (iPlatform.isCustomLogoutUI()) {//若平台有自定义的退出UI，直接调用退出方法
             exit(activity, role, listener);
             return;
         }
-        new AlertDialog.Builder(activity).setTitle("退出游戏")
-                .setMessage("不多玩一会吗！")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(activity).setTitle(title)
+                .setMessage(msg)
+                .setNegativeButton(negativeButtonText, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        dialog.dismiss();
                     }
-                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                }).setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 exit(activity, role, listener);
+                dialog.dismiss();
             }
         }).setCancelable(false).show();
     }
@@ -318,11 +333,10 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public String getGameId() {
-        String id = gameId;
-        if (TextUtils.isEmpty(id)) {
-            id = SDKUtils.getAppId(mContext);
+        if (TextUtils.isEmpty(gameId)) {
+            gameId = SDKUtils.getAppId(mContext.getApplicationContext());
         }
-        return id;
+        return gameId;
     }
 
     @Override
@@ -353,7 +367,7 @@ class SDKPresenter implements IPresenter {
     @Override
     public void onStart(Activity activity) {
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(HEART_BEAT_ACTION);
+        intentFilter.addAction(HEART_BEAT_ACTION + getGameId());
         activity.registerReceiver(heartBeatReceiver, intentFilter);
         iPlatform.onStart(activity);
     }
@@ -370,12 +384,12 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void onStop(Activity activity) {
-        activity.unregisterReceiver(heartBeatReceiver);
         iPlatform.onStop(activity);
     }
 
     @Override
     public void onDestroy(Activity activity) {
+        activity.unregisterReceiver(heartBeatReceiver);
         iPlatform.onDestroy(activity);
     }
 

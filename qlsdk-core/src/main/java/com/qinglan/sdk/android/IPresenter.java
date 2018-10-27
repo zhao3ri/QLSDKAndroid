@@ -47,6 +47,12 @@ public interface IPresenter {
     void exitGame(@NonNull Activity activity, GameRole role, Callback.OnExitListener listener);
 
     /**
+     * 退出游戏，可自定义退出的提示
+     */
+    void exitGameWithTips(@NonNull Activity activity, GameRole role, Callback.OnExitListener listener
+            , String title, String msg, String negativeButtonText, String positiveButtonText);
+
+    /**
      * 支付
      */
     void doPay(@NonNull Activity activity, GameRole game, GamePay pay, Callback.OnPayRequestListener listener);
