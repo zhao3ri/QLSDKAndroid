@@ -106,5 +106,16 @@
                 <action android:name="SDKService" />
             </intent-filter>
         </service>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!--  元数据    -->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/yxf_file_paths" />
+        </provider>
     </application>
 </manifest>
