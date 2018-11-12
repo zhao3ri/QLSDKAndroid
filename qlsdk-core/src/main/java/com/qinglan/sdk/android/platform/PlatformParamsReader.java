@@ -66,10 +66,13 @@ public final class PlatformParamsReader {
             if (qName.equals(ELEMENT_PLATFORM)) {
                 platform = new PlatformParam();
                 if (attributes != null) {
-                    if (attributes.getIndex(ATTRIBUTE_PLATFORM_ID) != -1) {
-                        platform.id = Integer.parseInt(attributes.getValue(ATTRIBUTE_PLATFORM_ID));
-                    } else if (attributes.getIndex(ATTRIBUTE_PLATFORM_NAME) != -1) {
-                        platform.name = attributes.getValue(ATTRIBUTE_PLATFORM_NAME);
+                    Log.d("attributes length===" + attributes.getLength());
+                    for (int i = 0; i < attributes.getLength(); i++) {
+                        if (attributes.getQName(i).equals(ATTRIBUTE_PLATFORM_ID)) {
+                            platform.id = Integer.parseInt(attributes.getValue(ATTRIBUTE_PLATFORM_ID));
+                        } else if (attributes.getQName(i).equals(ATTRIBUTE_PLATFORM_NAME)) {
+                            platform.name = attributes.getValue(ATTRIBUTE_PLATFORM_NAME);
+                        }
                     }
                 }
             }

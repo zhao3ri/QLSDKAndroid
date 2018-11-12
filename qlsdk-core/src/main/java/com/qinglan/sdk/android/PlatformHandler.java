@@ -22,7 +22,10 @@ final class PlatformHandler implements PlatformParamsReader.OnReadEndListener {
     private Context mContext;
     private Config mConfig;
     private IPresenter presenter;
+    private IPlatform platform;
+    private int platformId;
     private static final String PLATFORM_PACKAGE_NAME = "com.qinglan.sdk.android.platform";
+    private static final String PLATFORM_PREFIX = "qlsdk_";
 
     static PlatformHandler create(@NonNull Config config) {
         synchronized (PlatformHandler.class) {
@@ -42,6 +45,14 @@ final class PlatformHandler implements PlatformParamsReader.OnReadEndListener {
         if (presenter == null) {
             AssetManager am = mContext.getAssets();
             try {
+                String[] files = am.list("");
+                for (String file : files) {
+                    if (file.startsWith(PLATFORM_PREFIX)) {
+                        Log.d(file.substring(file.indexOf(PLATFORM_PREFIX)));
+                        platformId = Integer.valueOf(file.substring(file.indexOf(PLATFORM_PREFIX) + PLATFORM_PREFIX.length()));
+                        break;
+                    }
+                }
                 PlatformParamsReader reader = new PlatformParamsReader(am.open("platform_list.xml"));
                 reader.setOnReadEndListener(this);
                 reader.parser();
@@ -57,12 +68,11 @@ final class PlatformHandler implements PlatformParamsReader.OnReadEndListener {
 
     @Override
     public void onEnd(Map<Integer, PlatformParamsReader.PlatformParam> p) {
-        int id = 4;
-        if (p != null && p.get(id) != null) {
-            PlatformParamsReader.PlatformParam param = p.get(id);
-            IPlatform platform = null;
+        if (p != null && p.get(platformId) != null) {
+            PlatformParamsReader.PlatformParam param = p.get(platformId);
+            String clsName = String.format("%s.%s", PLATFORM_PACKAGE_NAME, param.getClazz());
             try {
-                Class cls = Class.forName(String.format("%.%", PLATFORM_PACKAGE_NAME, param.getClazz()));
+                Class cls = Class.forName(clsName);
                 platform = (IPlatform) cls.newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -75,6 +85,7 @@ final class PlatformHandler implements PlatformParamsReader.OnReadEndListener {
                 platform = new DefaultPlatform();
             } finally {
                 platform.load(param);
+                Log.d("id===" + platform.getId() + ",name====" + platform.getName());
                 presenter = new SDKPresenter(mContext, mConfig.getGameId(), platform);
             }
         }
