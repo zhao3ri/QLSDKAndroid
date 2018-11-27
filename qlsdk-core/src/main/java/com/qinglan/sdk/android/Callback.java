@@ -72,7 +72,7 @@ public class Callback {
     public interface OnLoginListener {
         void loginSuccess(UserInfo userInfo);
 
-        void initFailed(String msg);
+        void loginFailed(String msg);
     }
 
     public interface OnGameRoleRequestListener {

@@ -1,1 +1,1 @@
-include ':app', ':yxfplatform', ':qlsdk-core'
+include ':app', ':yxf-channel', ':qlsdk-core', ':gionee-channel'

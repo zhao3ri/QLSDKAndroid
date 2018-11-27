@@ -14,11 +14,11 @@ public class MySplashActivity extends BaseSplashActivity {
         finish();
     }
 
-    @Override
-    public int getSplashDrawableId() {
-        //闪屏图片drawable id
-        return R.drawable.img_crash_screen;
-    }
+//    @Override
+//    public int getSplashDrawableId() {
+//        //闪屏图片drawable id
+//        return R.drawable.img_crash_screen;
+//    }
 
     @Override
     public long getSplashMills() {

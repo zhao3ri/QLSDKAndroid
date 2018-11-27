@@ -157,8 +157,8 @@ public class QLSDK {
         mPresenter.onNewIntent(intent);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mPresenter.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        mPresenter.onActivityResult(activity, requestCode, resultCode, data);
     }
 
     public void onBackPressed() {

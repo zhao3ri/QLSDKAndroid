@@ -371,7 +371,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        qlSDK.onActivityResult(requestCode, resultCode, data);
+        qlSDK.onActivityResult(this, requestCode, resultCode, data);
     }
 
     @Override
@@ -399,7 +399,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if(event.getKeyCode()==KeyEvent.KEYCODE_BACK && event.getAction()==KeyEvent.ACTION_DOWN){
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             exit();
             return true;
         }
@@ -409,7 +409,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus){
+        if (hasFocus) {
             qlSDK.showWinFloat(this);
         }
     }

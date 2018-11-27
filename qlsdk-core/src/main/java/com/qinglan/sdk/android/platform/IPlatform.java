@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 
 import com.qinglan.sdk.android.Callback;
+import com.qinglan.sdk.android.Config;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 
@@ -17,7 +18,7 @@ import com.qinglan.sdk.android.model.GameRole;
  */
 public interface IPlatform {
 
-    void load(PlatformParamsReader.PlatformParam p);
+    void load(PlatformParamsReader.PlatformParam p, Config config);
 
     /**
      * 获取平台id
@@ -96,7 +97,7 @@ public interface IPlatform {
 
     void onDestroy(Activity activity);
 
-    void onActivityResult(int requestCode, int resultCode, Intent data);
+    void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data);
 
     void onNewIntent(Intent intent);
 

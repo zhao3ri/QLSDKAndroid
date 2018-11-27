@@ -1,13 +1,17 @@
 package com.qinglan.sdk.android.platform;
 
+import com.qinglan.sdk.android.Config;
+
 public abstract class BasePlatform implements IPlatform {
     private int platformId;
     private String platformName;
+    protected Config gameConfig;
 
     @Override
-    public final void load(PlatformParamsReader.PlatformParam p) {
+    public void load(PlatformParamsReader.PlatformParam p, Config config) {
         platformId = p.id;
         platformName = p.name;
+        gameConfig = config;
     }
 
     @Override

@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.qinglan.sdk.android.demo"
-        minSdkVersion 20
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -29,6 +29,9 @@ android {
     lintOptions {
         abortOnError false
     }
+    dexOptions{
+        preDexLibraries = false
+    }
 }
 
 repositories {
@@ -40,9 +43,10 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(":qlsdk-core")
-    implementation project(":yxfplatform")
+    implementation project(':yxf-channel')
+    implementation project(':gionee-channel')
 //    implementation project(":qlsdk")
-//    implementation 'com.android.support:appcompat-v7:23.3.0'{
+//    implementation ('com.android.support:appcompat-v7:23.3.0'){
 //        exclude module: 'support-v4'
 //    }
     implementation 'com.android.support:appcompat-v7:23+'

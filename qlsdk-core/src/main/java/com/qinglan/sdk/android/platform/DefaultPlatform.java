@@ -21,7 +21,6 @@ public class DefaultPlatform extends BasePlatform {
     private static final String TAG = "DefaultPlatform";
     public static final String DEFAULT_PLATFORM_NAME = "DEFAULT";
     public static final int DEFAULT_PLATFORM_ID = 41;
-    public static final String DEFAULT_GAME_ID = "181018126361";
 
     @Override
     public int getId() {
@@ -126,7 +125,7 @@ public class DefaultPlatform extends BasePlatform {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult");
     }
 

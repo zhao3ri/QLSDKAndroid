@@ -114,7 +114,7 @@ class SDKPresenter implements IPresenter {
             }
 
             @Override
-            public void initFailed(String msg) {
+            public void loginFailed(String msg) {
                 if (listener != null)
                     listener.onFailed(msg);
             }
@@ -394,8 +394,8 @@ class SDKPresenter implements IPresenter {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        iPlatform.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        iPlatform.onActivityResult(activity, requestCode, resultCode, data);
     }
 
     @Override

@@ -48,7 +48,6 @@ final class PlatformHandler implements PlatformParamsReader.OnReadEndListener {
                 String[] files = am.list("");
                 for (String file : files) {
                     if (file.startsWith(PLATFORM_PREFIX)) {
-                        Log.d(file.substring(file.indexOf(PLATFORM_PREFIX)));
                         platformId = Integer.valueOf(file.substring(file.indexOf(PLATFORM_PREFIX) + PLATFORM_PREFIX.length()));
                         break;
                     }
@@ -84,7 +83,7 @@ final class PlatformHandler implements PlatformParamsReader.OnReadEndListener {
                 }
                 platform = new DefaultPlatform();
             } finally {
-                platform.load(param);
+                platform.load(param, mConfig);
                 Log.d("id===" + platform.getId() + ",name====" + platform.getName());
                 presenter = new SDKPresenter(mContext, mConfig.getGameId(), platform);
             }

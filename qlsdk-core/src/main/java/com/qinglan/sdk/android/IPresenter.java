@@ -99,7 +99,7 @@ public interface IPresenter {
 
     void onDestroy(Activity activity);
 
-    void onActivityResult(int requestCode, int resultCode, Intent data);
+    void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data);
 
     void onNewIntent(Intent intent);
 

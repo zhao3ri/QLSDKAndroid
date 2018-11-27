@@ -12,6 +12,8 @@ import android.view.animation.AnimationSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.qinglan.sdk.android.common.ResContainer;
+
 /**
  * Created by zhaoj on 2018/10/13.
  */
@@ -27,7 +29,7 @@ public abstract class BaseSplashActivity extends Activity {
     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,  WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         linearLayout = new LinearLayout(this);
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         linearLayout.setLayoutParams(p);
@@ -78,7 +80,13 @@ public abstract class BaseSplashActivity extends Activity {
      * 闪屏图片的drawable Id
      */
     public int getSplashDrawableId() {
-        return 0;
+        int drawableId = 0;
+        try {
+            drawableId = ResContainer.get(getApplicationContext()).drawable("bg_crash_screen");
+        } catch (Exception e) {
+
+        }
+        return drawableId;
     }
 
     /**

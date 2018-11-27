@@ -14,6 +14,8 @@ import com.qinglan.sdk.android.platform.DefaultPlatform;
  */
 public final class Config {
     private String gameId;
+    private String appKey;
+    private String privateKey;
     protected Context context;
 
     public Config(@NonNull Context ctx) {
@@ -43,5 +45,27 @@ public final class Config {
 
     String getGameId() {
         return gameId;
+    }
+
+    public Config setAppKey(String key) {
+        appKey = key;
+        return this;
+    }
+
+    public Config setPrivateKey(String key) {
+        privateKey = key;
+        return this;
+    }
+
+    public String getAppKey() {
+        return appKey;
+    }
+
+    public String getPrivateKey() {
+        return privateKey;
+    }
+
+    public Context getContext() {
+        return context;
     }
 }
