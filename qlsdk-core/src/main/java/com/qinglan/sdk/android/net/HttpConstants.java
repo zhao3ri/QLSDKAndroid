@@ -1,7 +1,7 @@
 package com.qinglan.sdk.android.net;
 
 public final class HttpConstants {
-    public static final String REQUEST_PARAM_APP_ID = "appId";
+    public static final String REQUEST_PARAM_GAME_ID = "gameId";
     public static final String REQUEST_PARAM_PLATFORM_ID = "platformId";
     public static final String REQUEST_PARAM_TOKEN_EXTEND = "extend";
 
@@ -39,6 +39,7 @@ public final class HttpConstants {
     public static final String RESPONSE_CODE = "code";
     public static final int RESPONSE_SUCCESS_CODE = 0;
     public static final String RESPONSE_LOGIN_TIMESTAMP = "loginTime";
+    public static final String RESPONSE_CREATE_TIMESTAMP = "createTime";
     public static final String RESPONSE_TOKEN = "token";
     public static final String RESPONSE_NOTIFY_URL = "notifyUrl";
     public static final String RESPONSE_ORDER_ID = "orderId";

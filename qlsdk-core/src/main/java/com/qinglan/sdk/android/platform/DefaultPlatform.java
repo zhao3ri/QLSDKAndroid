@@ -11,6 +11,8 @@ import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
 
+import java.util.Map;
+
 /**
  * 默认平台（测试功能使用）
  * Created by zhaoj on 2018/9/20
@@ -67,8 +69,9 @@ public class DefaultPlatform extends BasePlatform {
     }
 
     @Override
-    public void pay(Activity activity, GameRole role, GamePay pay, String orderId, String notifyUrl, Callback.OnPayRequestListener listener) {
+    public void pay(Activity activity, GameRole role, GamePay pay, Map<String, Object> result, Callback.OnPayRequestListener listener) {
         Log.d(TAG, "pay");
+        listener.onSuccess("");
     }
 
     @Override

@@ -21,6 +21,7 @@ public abstract class BaseSplashActivity extends Activity {
     private LinearLayout linearLayout;
     private ImageView imageView;
     private Handler handler = new Handler();
+    private static final String DEFAULT_DRAWABLE_SPLASH_NAME = "bg_crash_screen";
     private static final long DEFAULT_SPLASH_MILLIS = 2 * 1000;
     protected static final int TYPE_IMAGE = 0;
     protected static final int TYPE_ANIM = 1;
@@ -82,7 +83,7 @@ public abstract class BaseSplashActivity extends Activity {
     public int getSplashDrawableId() {
         int drawableId = 0;
         try {
-            drawableId = ResContainer.get(getApplicationContext()).drawable("bg_crash_screen");
+            drawableId = ResContainer.getResourceId(getApplicationContext(), "drawable", DEFAULT_DRAWABLE_SPLASH_NAME);
         } catch (Exception e) {
 
         }

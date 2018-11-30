@@ -6,10 +6,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 
-import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
+import com.qinglan.sdk.android.model.PayRequest;
 import com.qinglan.sdk.android.model.UserInfo;
-import com.qinglan.sdk.android.platform.IPlatform;
 
 /**
  * Created by zhaoj on 2018/10/17.
@@ -55,7 +54,7 @@ public interface IPresenter {
     /**
      * 支付
      */
-    void doPay(@NonNull Activity activity, GameRole game, GamePay pay, Callback.OnPayRequestListener listener);
+    void doPay(@NonNull Activity activity, PayRequest pay, Callback.OnPayRequestListener listener);
 
     /**
      * 升级

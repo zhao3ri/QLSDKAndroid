@@ -26,7 +26,7 @@ public class OrderRequestInfo extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return Url.ROLE_ESTABLISH_URL;
+        return Url.ORDER_GENERATE_URL;
     }
 
     @Override

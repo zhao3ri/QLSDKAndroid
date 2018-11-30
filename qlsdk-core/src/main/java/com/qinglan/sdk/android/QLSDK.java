@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 
-import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
+import com.qinglan.sdk.android.model.PayRequest;
 
 /**
  * Created by zhaoj on 2018/9/19
@@ -104,8 +104,8 @@ public class QLSDK {
     /**
      * 支付
      */
-    public void doPay(Activity activity, GameRole game, GamePay pay, Callback.OnPayRequestListener listener) {
-        mPresenter.doPay(activity, game, pay, listener);
+    public void doPay(Activity activity, PayRequest pay, Callback.OnPayRequestListener listener) {
+        mPresenter.doPay(activity, pay, listener);
     }
 
     /**

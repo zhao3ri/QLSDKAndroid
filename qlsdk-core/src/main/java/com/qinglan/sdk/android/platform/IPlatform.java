@@ -9,6 +9,9 @@ import com.qinglan.sdk.android.Callback;
 import com.qinglan.sdk.android.Config;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
+import com.qinglan.sdk.android.model.UserInfo;
+
+import java.util.Map;
 
 /**
  * Created by zhaoj on 2018/9/20
@@ -63,22 +66,22 @@ public interface IPlatform {
     /**
      * 支付
      */
-    void pay(Activity activity, GameRole role, GamePay pay, String orderId, String notifyUrl, Callback.OnPayRequestListener listener);
+    void pay(Activity activity, GameRole role, GamePay pay, Map<String, Object> result, Callback.OnPayRequestListener listener);
 
     /**
      * 创建角色
      */
-    void createRole(Activity activity, GameRole role, Callback.OnGameRoleRequestListener listener);
+    void createRole(Activity activity, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener);
 
     /**
      * 设置角色
      */
-    void selectRole(Activity activity, boolean showFloat, GameRole role, Callback.OnGameRoleRequestListener listener);
+    void selectRole(Activity activity, boolean showFloat, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener);
 
     /**
      * 升级
      */
-    void levelUpdate(Activity activity, GameRole role, Callback.OnLevelUpListener listener);
+    void levelUpdate(Activity activity, GameRole role, long createTime, Callback.OnLevelUpListener listener);
 
     /**
      * 是否有自定义退出UI
@@ -107,4 +110,5 @@ public interface IPlatform {
 
     void onConfigurationChanged(Configuration newConfig);
 
+    void setUser(UserInfo user);
 }

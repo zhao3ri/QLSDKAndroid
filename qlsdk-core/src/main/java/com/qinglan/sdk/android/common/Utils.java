@@ -1,5 +1,6 @@
 package com.qinglan.sdk.android.common;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -14,11 +15,17 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -141,6 +148,7 @@ public class Utils {
         return (networkInfo != null && networkInfo.isConnected());
     }
 
+    @SuppressLint("MissingPermission")
     public static String getIMSI(Context context) {
         if (hasPermission(context, READ_PHONE_STATE) && hasFeature(context, FEATURE_TELEPHONY)) {
             TelephonyManager telephonyManager = getSystemService(context, TELEPHONY_SERVICE);
@@ -155,6 +163,7 @@ public class Utils {
     /**
      * 获取设备号
      */
+    @SuppressLint("MissingPermission")
     public static String getDeviceId(Context context) {
         String androidId = getString(context.getContentResolver(), ANDROID_ID);
         if (!TextUtils.isEmpty(androidId) && !"9774d56d682e549c".equals(androidId) && !"unknown".equals(
@@ -431,10 +440,52 @@ public class Utils {
         return jsonObject.toString();
     }
 
+    public static String object2Json(Object o) {
+        Gson gson = new Gson();
+        return gson.toJson(o);
+    }
+
+    public static <T> T json2Object(String json, Class<T> cls) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, cls);
+    }
+
+    public static <T> T json2Object(String json, Type type) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, type);
+    }
+
+
     public static boolean isEmptyStr(String str) {
         if (str == null || str.length() == 0) {
             return true;
         }
         return false;
+    }
+
+    public static final String DEFAULT_FORMAT = "yyyyMMddHHmmss";
+
+    public static Timestamp toTimestamp(String submitTime) {
+        submitTime = new StringBuilder().append(
+                submitTime.substring(0, 4) + "-" + submitTime.substring(4, 6) + "-" + submitTime.substring(6, 8)
+                        + " " + submitTime.substring(8, 10) + ":" + submitTime.substring(10, 12) + ":"
+                        + submitTime.substring(12, 14)).toString();
+        return Timestamp.valueOf(submitTime);
+    }
+
+    public static String toTimeString(Date date) {
+        return toTimeString(date, DEFAULT_FORMAT);
+    }
+
+    public static String toTimeString(long currentTimestamp) {
+        return toTimeString(new Date(currentTimestamp), DEFAULT_FORMAT);
+    }
+
+    public static String toTimeString(Date date, String format) {
+        if (date == null || format.isEmpty()) {
+            return "";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(date);
     }
 }

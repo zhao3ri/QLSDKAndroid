@@ -19,6 +19,9 @@ import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
+import com.qinglan.sdk.android.net.HttpConstants;
+
+import java.util.Map;
 
 public class YXFPlatform extends BasePlatform {
 
@@ -97,15 +100,16 @@ public class YXFPlatform extends BasePlatform {
     }
 
     @Override
-    public void pay(Activity activity, GameRole gameRole, GamePay gamePay, String orderId, String notifyUrl, Callback.OnPayRequestListener onPayRequestListener) {
+    public void pay(Activity activity, GameRole role, GamePay pay, Map<String, Object> result, Callback.OnPayRequestListener listener) {
         Log.d(getName() + " PlatformParam pay");
+        String orderId = result.get(HttpConstants.RESPONSE_ORDER_ID).toString();
         YXFSDKManager.getInstance(activity)
-                .showPay(activity, gameRole.getRoleId()
-                        , String.valueOf(Integer.valueOf(gamePay.getMoney()) / 100), gameRole.getServerId(), gamePay.getProductName(), gamePay.getProductId(), orderId);
+                .showPay(activity, role.getRoleId()
+                        , String.valueOf(Long.valueOf(pay.getAmount()) / 100), role.getServerId(), pay.getProductName(), pay.getProductId(), orderId);
     }
 
     @Override
-    public void createRole(Activity activity, final GameRole gameRole, final Callback.OnGameRoleRequestListener onGameRoleRequestListener) {
+    public void createRole(Activity activity, final GameRole gameRole, long createTime, final Callback.OnGameRoleRequestListener onGameRoleRequestListener) {
         Log.d(getName() + " PlatformParam createRole");
         RoleInfo roleInfo = getRoleInfo(gameRole);
         YXFSDKManager.getInstance(activity).getRoleInfo(activity, roleInfo, Constants.TYPE_CREATE_ROLE, new onRoleListener() {
@@ -122,7 +126,7 @@ public class YXFPlatform extends BasePlatform {
     }
 
     @Override
-    public void selectRole(Activity activity, boolean b, final GameRole gameRole, final Callback.OnGameRoleRequestListener onGameRoleRequestListener) {
+    public void selectRole(Activity activity, boolean show, final GameRole gameRole, long createTime, final Callback.OnGameRoleRequestListener onGameRoleRequestListener) {
         RoleInfo roleInfo = new RoleInfo();
         roleInfo.setRoleName(gameRole.getRoleName());
         roleInfo.setRoleVIP("1");
@@ -147,7 +151,7 @@ public class YXFPlatform extends BasePlatform {
     }
 
     @Override
-    public void levelUpdate(Activity activity, GameRole gameRole, Callback.OnLevelUpListener onLevelUpListener) {
+    public void levelUpdate(Activity activity, GameRole gameRole, long createTime, Callback.OnLevelUpListener onLevelUpListener) {
         if (onLevelUpListener != null)
             onLevelUpListener.onCompleted(true, "");
     }

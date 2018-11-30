@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.qinglan.sdk.android.common.Log;
-import com.qinglan.sdk.android.platform.DefaultPlatform;
 
 /**
  * Created by zhaoj on 2018/9/20
@@ -14,9 +13,14 @@ import com.qinglan.sdk.android.platform.DefaultPlatform;
  */
 public final class Config {
     private String gameId;
+    private String appID;
     private String appKey;
     private String privateKey;
+    private int screenOrientation;
     protected Context context;
+    //屏幕方向
+    public static final int SCREEN_ORIENTATION_PORTRAIT = 0;//竖屏
+    public static final int SCREEN_ORIENTATION_LANDSCAPE = 1;//横屏
 
     public Config(@NonNull Context ctx) {
         if (ctx == null) {
@@ -26,7 +30,7 @@ public final class Config {
     }
 
     public static Config createDefaultConfig(@NonNull Context ctx) {
-        return new Config(ctx).setDebug(false);
+        return new Config(ctx).setDebug(false).setScreenOrientation(SCREEN_ORIENTATION_PORTRAIT);
     }
 
     public Config setGameId(String id) {
@@ -43,7 +47,7 @@ public final class Config {
         return this;
     }
 
-    String getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
@@ -52,8 +56,18 @@ public final class Config {
         return this;
     }
 
+    public Config setAppID(String id) {
+        appID = id;
+        return this;
+    }
+
     public Config setPrivateKey(String key) {
         privateKey = key;
+        return this;
+    }
+
+    public Config setScreenOrientation(int orientation) {
+        screenOrientation = orientation;
         return this;
     }
 
@@ -65,7 +79,15 @@ public final class Config {
         return privateKey;
     }
 
+    public String getAppID() {
+        return appID;
+    }
+
     public Context getContext() {
         return context;
+    }
+
+    public int getScreenOrientation() {
+        return screenOrientation;
     }
 }

@@ -28,7 +28,7 @@ public class SDKUtils {
         return null;
     }
 
-    public static String getAppId(Context context) {
+    public static String getGameId(Context context) {
         ApplicationInfo info = Utils.getApplicationInfo(context);
         String gameId = "";
         if (info == null) {

@@ -15,9 +15,13 @@ import com.gionee.gamesdk.floatwindow.QuitGameCallback;
 import com.qinglan.sdk.android.Callback;
 import com.qinglan.sdk.android.Config;
 import com.qinglan.sdk.android.common.Log;
+import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
+import com.qinglan.sdk.android.net.HttpConstants;
+
+import java.util.Map;
 
 public class GioneePlatform extends BasePlatform {
 
@@ -113,12 +117,13 @@ public class GioneePlatform extends BasePlatform {
     }
 
     @Override
-    public void pay(Activity activity, GameRole role, GamePay pay, final String orderId, String notifyUrl, final Callback.OnPayRequestListener listener) {
+    public void pay(Activity activity, GameRole role, GamePay pay, Map<String, Object> result, final Callback.OnPayRequestListener listener) {
+        final String orderId = result.get(HttpConstants.RESPONSE_ORDER_ID).toString();
         GameOrder gameOrder = new GameOrder();
         gameOrder.mOutOrderNo = pay.getCpOrderId();
-        gameOrder.mSubmitTime = "";
+        gameOrder.mSubmitTime = Utils.toTimeString(System.currentTimeMillis());
         gameOrder.mSubject = pay.getProductName();
-        gameOrder.mTotalFee = String.valueOf(pay.getMoney() / 100);
+        gameOrder.mTotalFee = String.valueOf(pay.getAmount() / 100);
         gameOrder.mNotifyURL = pay.getNotifyUrl();
         gameOrder.mGamePayCallback = new GamePayCallBack() {
             @Override
@@ -144,21 +149,21 @@ public class GioneePlatform extends BasePlatform {
     }
 
     @Override
-    public void createRole(Activity activity, GameRole role, Callback.OnGameRoleRequestListener listener) {
+    public void createRole(Activity activity, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
         if (listener != null) {
             listener.onSuccess(role);
         }
     }
 
     @Override
-    public void selectRole(Activity activity, boolean showFloat, GameRole role, Callback.OnGameRoleRequestListener listener) {
+    public void selectRole(Activity activity, boolean showFloat, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
         if (listener != null) {
             listener.onSuccess(role);
         }
     }
 
     @Override
-    public void levelUpdate(Activity activity, GameRole role, Callback.OnLevelUpListener listener) {
+    public void levelUpdate(Activity activity, GameRole role, long createTime, Callback.OnLevelUpListener listener) {
         if (listener != null) {
             listener.onCompleted(true, "");
         }

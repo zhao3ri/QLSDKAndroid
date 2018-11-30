@@ -3,6 +3,8 @@ package com.qinglan.sdk.android;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
 
+import java.util.Map;
+
 /**
  * Created by tyland on 2018/10/13.
  */
@@ -33,7 +35,7 @@ public class Callback {
     }
 
     public interface OnRefreshSessionListener {
-        void onRefreshed(boolean success, long timestamp, String result);
+        void onRefreshed(boolean success, long loginTimestamp, long createTimestamp,String result);
     }
 
     public interface HeartBeanRequestListener {
@@ -57,7 +59,8 @@ public class Callback {
     }
 
     public interface GenerateOrderListener {
-        void onSuccess(String orderId, String notifyUrl);
+        //        void onSuccess(String orderId, String notifyUrl);
+        void onSuccess(Map<String, Object> result);
 
         void onFailed(String msg);
     }

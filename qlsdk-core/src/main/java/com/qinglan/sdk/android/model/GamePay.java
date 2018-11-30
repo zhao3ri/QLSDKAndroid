@@ -7,7 +7,7 @@ package com.qinglan.sdk.android.model;
  * @author zhaoj
  */
 public final class GamePay {
-    private int money;
+    private long amount;
     private String cpOrderId;
     private String extInfo;
     private String notifyUrl;
@@ -15,12 +15,12 @@ public final class GamePay {
     private int productCount;
     private String productId;
 
-    public int getMoney() {
-        return money;
+    public long getAmount() {
+        return amount;
     }
 
-    public void setMoney(int money) {
-        this.money = money;
+    public void setAmount(long amount) {
+        this.amount = amount;
     }
 
     public String getCpOrderId() {

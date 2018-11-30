@@ -3,6 +3,7 @@ package com.qinglan.sdk.android;
 import android.content.Context;
 import android.os.Build;
 
+import com.google.gson.reflect.TypeToken;
 import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
@@ -22,6 +23,8 @@ import com.qinglan.sdk.android.net.impl.TokenRequestInfo;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 /**
  * Created by zhaoj on 2018/10/17.
  */
@@ -36,7 +39,7 @@ class SDKConnector implements IConnector {
     public void initSdk(Context context, final Callback.OnInitCompletedListener listener) {
         Log.d("init sdk request");
         InitRequestInfo request = new InitRequestInfo();
-        request.appId = iPresenter.getGameId();
+        request.gameId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
         request.deviceId = iPresenter.getDeviceId();
         request.imsi = Utils.getIMSI(context);
@@ -79,7 +82,7 @@ class SDKConnector implements IConnector {
     public void getToken(String uid, final Callback.GetTokenListener listener) {
         Log.d("getToken request");
         TokenRequestInfo request = new TokenRequestInfo();
-        request.appId = iPresenter.getGameId();
+        request.gameId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
         request.extend = uid;
         new HttpConnectionTask().setResponseListener(new OnResponseListener() {
@@ -110,7 +113,7 @@ class SDKConnector implements IConnector {
     public void refreshSession(final Context context, final GameRole role, final Callback.OnRefreshSessionListener listener) {
         Log.d("refreshSession request");
         RefreshSessionRequestInfo request = new RefreshSessionRequestInfo();
-        request.appId = iPresenter.getGameId();
+        request.gameId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
         request.uid = iPresenter.getUid();
         request.zoneId = role.getZoneId();
@@ -125,18 +128,19 @@ class SDKConnector implements IConnector {
                 try {
                     if (success && getResponseCode(result) == HttpConstants.RESPONSE_SUCCESS_CODE) {
                         JSONObject jsonObject = new JSONObject(result);
-                        long timestamp = jsonObject.optLong(HttpConstants.RESPONSE_LOGIN_TIMESTAMP);
+                        long loginTimestamp = jsonObject.optLong(HttpConstants.RESPONSE_LOGIN_TIMESTAMP);
+                        long createTimestamp = jsonObject.optLong(HttpConstants.RESPONSE_CREATE_TIMESTAMP);
                         if (listener != null)
-                            listener.onRefreshed(true, timestamp, result);
+                            listener.onRefreshed(true, loginTimestamp, createTimestamp, result);
                     } else {
                         if (listener != null)
-                            listener.onRefreshed(false, 0, result);
+                            listener.onRefreshed(false, 0, 0, result);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("refreshSession error, The jason was not properly formatted." + result);
                     if (listener != null)
-                        listener.onRefreshed(false, 0, result);
+                        listener.onRefreshed(false, 0, 0, result);
                 }
             }
         }).execute(request);
@@ -146,7 +150,7 @@ class SDKConnector implements IConnector {
     public void startHeartBeat(Context context, GameRole role, String time, final Callback.HeartBeanRequestListener listener) {
         Log.d("startHeartBeat request");
         HeartBeatRequestInfo request = new HeartBeatRequestInfo();
-        request.appId = iPresenter.getGameId();
+        request.gameId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
         request.loginTime = time;
         request.uid = iPresenter.getUid();
@@ -179,7 +183,7 @@ class SDKConnector implements IConnector {
     public void cleanSession(Context context, GameRole role, final Callback.OnLogoutResponseListener listener) {
         Log.d("cleanSession request");
         CleanSessionRequestInfo request = new CleanSessionRequestInfo();
-        request.appId = iPresenter.getGameId();
+        request.gameId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
         request.uid = iPresenter.getUid();
         if (role != null) {
@@ -213,7 +217,7 @@ class SDKConnector implements IConnector {
     public void exit(Context context, GameRole role, final Callback.OnExitListener listener) {
         Log.d("exit request");
         ExitRequestInfo request = new ExitRequestInfo();
-        request.appId = iPresenter.getGameId();
+        request.gameId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
         request.uid = iPresenter.getUid();
         request.zoneId = role.getZoneId();
@@ -245,7 +249,7 @@ class SDKConnector implements IConnector {
     public void createRole(Context context, GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
         Log.d("createRole request");
         GameRoleRequestInfo request = new GameRoleRequestInfo();
-        request.appId = iPresenter.getGameId();
+        request.gameId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
         request.uid = iPresenter.getUid();
         request.zoneId = role.getZoneId();
@@ -280,7 +284,7 @@ class SDKConnector implements IConnector {
     public void generateOrder(Context context, GameRole game, GamePay pay, int fixed, String loginTime, final Callback.GenerateOrderListener listener) {
         Log.d("generateOrder request");
         OrderRequestInfo request = new OrderRequestInfo();
-        request.appId = iPresenter.getGameId();
+        request.gameId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
         request.uid = iPresenter.getUid();
         request.zoneId = game.getZoneId();
@@ -288,7 +292,7 @@ class SDKConnector implements IConnector {
         request.roleName = game.getRoleName();
         request.cpOrderId = pay.getCpOrderId();
         request.extInfo = pay.getExtInfo();
-        request.amount = String.valueOf(pay.getMoney());
+        request.amount = String.valueOf(pay.getAmount());
         request.notifyUrl = pay.getNotifyUrl();
         request.fixed = String.valueOf(fixed);
         request.loginTime = loginTime;
@@ -299,11 +303,15 @@ class SDKConnector implements IConnector {
             public void onResponse(boolean success, String result) {
                 try {
                     if (success && getResponseCode(result) == HttpConstants.RESPONSE_SUCCESS_CODE) {
-                        JSONObject jsonObject = new JSONObject(result);
-                        String orderId = jsonObject.optString(HttpConstants.RESPONSE_ORDER_ID);
-                        String notifyUrl = jsonObject.optString(HttpConstants.REQUEST_PARAM_NOTIFY_URL);
+                        Map<String, Object> resultMap = Utils.json2Object(result, new TypeToken<Map<String, Object>>() {
+                        }.getType());
+                        if (resultMap == null) {
+                            if (listener != null)
+                                listener.onFailed(result);
+                            return;
+                        }
                         if (listener != null)
-                            listener.onSuccess(orderId, notifyUrl);
+                            listener.onSuccess(resultMap);
                     } else {
                         if (listener != null)
                             listener.onFailed(result);

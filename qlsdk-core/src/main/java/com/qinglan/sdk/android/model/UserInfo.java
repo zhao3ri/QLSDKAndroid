@@ -46,7 +46,7 @@ public final class UserInfo {
         this.udToken = udToken;
     }
 
-//    public String getAppId() {
+//    public String getGameId() {
 //        return appId;
 //    }
 //

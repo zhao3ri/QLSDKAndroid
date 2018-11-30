@@ -1,6 +1,5 @@
 package com.qinglan.sdk.android.demo;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,14 +13,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.qinglan.sdk.android.Callback;
 import com.qinglan.sdk.android.PermissionActivity;
 import com.qinglan.sdk.android.QLSDK;
 import com.qinglan.sdk.android.common.Log;
-import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
+import com.qinglan.sdk.android.model.PayRequest;
 import com.qinglan.sdk.android.model.UserInfo;
 import com.qinglan.sdk.android.utils.PermissionUtils;
 import com.qinglan.sdk.android.utils.ToastUtils;
@@ -308,15 +306,15 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
     private void pay() {
         //提示，要按照正常游戏的步骤，创建角色，上传角色信息，开始游戏，进入到游戏主界面，再去调用支付api，不然会出问题
         //自定义充值(回调地址，你们自己设置，不需要我们后台去配置)
-        GamePay payInfo = new GamePay();
-        payInfo.setExtInfo("cusompay");
-        payInfo.setMoney(Integer.parseInt(mMonnyEdit.getText().toString()));
-        payInfo.setNotifyUrl("http://esrsservice.yaoyuenet.com/platform/yuewan");//前端设置支付回调地址，设置你们自己的通知地址。
+        PayRequest payInfo = new PayRequest();
+        payInfo.setCpInfo("cusompay");
+        payInfo.setAmount(Integer.parseInt(mMonnyEdit.getText().toString()));
+//        payInfo.setNotifyUrl("http://esrsservice.yaoyuenet.com/platform/yuewan");//前端设置支付回调地址，设置你们自己的通知地址。
         payInfo.setCpOrderId("353535");
         payInfo.setProductCount(10);
         payInfo.setProductId("001");
         payInfo.setProductName("钻石");
-        qlSDK.doPay(this, gameRole, payInfo, new Callback.OnPayRequestListener() {
+        qlSDK.doPay(this, payInfo, new Callback.OnPayRequestListener() {
             @Override
             public void onSuccess(String orderId) {
                 ToastUtils.showToast(WelComeActivity.this, "支付成功！" + orderId);

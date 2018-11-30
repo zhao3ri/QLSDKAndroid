@@ -1,7 +1,6 @@
 package com.qinglan.sdk.android.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.qinglan.sdk.android.common.Utils;
 
 import java.io.Serializable;
 
@@ -18,15 +17,7 @@ public final class GameRole implements Serializable {
     private String roleId;
     private String roleName;
     private String roleLevel;
-    private String serverId;
-
-    private static final String ZONE_ID = "zoneId";
-    private static final String ZONE_NAME = "zoneName";
-    private static final String ROLE_ID = "roleId";
-    private static final String ROLE_NAME = "roleName";
-    private static final String ROLE_LEVEL = "roleLevel";
-    private static final String SERVER_ID = "serverId";
-
+    private String serverId = "1";
 
     public String getZoneId() {
         return zoneId;
@@ -77,37 +68,11 @@ public final class GameRole implements Serializable {
     }
 
     public static String toJson(GameRole role) {
-        String json = "";
-        JSONObject object = new JSONObject();
-        try {
-            object.put(ZONE_ID, role.zoneId);
-            object.put(ZONE_NAME, role.zoneName);
-            object.put(ROLE_ID, role.roleId);
-            object.put(ROLE_NAME, role.roleName);
-            object.put(ROLE_LEVEL, role.roleLevel);
-            object.put(SERVER_ID, role.serverId);
-            json = object.toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
+        return Utils.object2Json(role);
     }
 
     public static GameRole readJson(String json) {
-        GameRole role = null;
-        try {
-            JSONObject object = new JSONObject(json);
-            role = new GameRole();
-            role.zoneId = object.getString(ZONE_ID);
-            role.zoneName = object.getString(ZONE_NAME);
-            role.roleId = object.getString(ROLE_ID);
-            role.roleName = object.getString(ROLE_NAME);
-            role.roleLevel = object.getString(ROLE_LEVEL);
-            role.serverId = object.getString(SERVER_ID);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return role;
+        return Utils.json2Object(json, GameRole.class);
     }
 
     @Override
