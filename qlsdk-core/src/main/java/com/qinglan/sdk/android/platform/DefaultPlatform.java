@@ -75,19 +75,19 @@ public class DefaultPlatform extends BasePlatform {
     }
 
     @Override
-    public void createRole(Activity activity, GameRole role, Callback.OnGameRoleRequestListener listener) {
+    public void createRole(Activity activity, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
         Log.d(TAG, "createRole");
         listener.onSuccess(role);
     }
 
     @Override
-    public void selectRole(Activity activity, boolean showFloat, GameRole role, Callback.OnGameRoleRequestListener listener) {
+    public void selectRole(Activity activity, boolean showFloat, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
         Log.d(TAG, "selectRole");
         listener.onSuccess(role);
     }
 
     @Override
-    public void levelUpdate(Activity activity, GameRole role, Callback.OnLevelUpListener listener) {
+    public void levelUpdate(Activity activity, GameRole role, long createTime, Callback.OnLevelUpListener listener) {
         Log.d(TAG, "levelUpdate");
         listener.onCompleted(true, "");
     }

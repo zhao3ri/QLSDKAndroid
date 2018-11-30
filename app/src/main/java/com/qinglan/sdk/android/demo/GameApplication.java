@@ -7,7 +7,7 @@ import com.qinglan.sdk.android.QLSDK;
 
 public class GameApplication extends Application {
 
-    private static final String GAME_ID = "181018126361";
+    private static final String GAME_ID = "180928139602";
     private static final String APP_ID = "你的AppId";
     private static final String PRIVATE_KEY = "你的privateKey";
 
