@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 23
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         minSdkVersion 16
@@ -20,13 +21,27 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    compileOnly project(':qlsdk-core')
-    implementation 'com.android.support:appcompat-v7:23+'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    if (buildToolIsGreaterThan3 == true) {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        compileOnly project(':qlsdk-core')
+//        api 'com.android.support:appcompat-v7:23+'
+        implementation 'com.android.support:appcompat-v7:23.4.0'
+        testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'com.android.support.test:runner:1.0.2'
+        androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    } else {
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+        provided project(':qlsdk-core')
+        compile 'com.android.support:appcompat-v7:23+' //Non embedded dependency
+        testCompile 'junit:junit:4.12'
+        androidTestCompile 'com.android.support.test:runner:1.0.2'
+        androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
+    }
 }

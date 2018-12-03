@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 23
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         minSdkVersion 16
@@ -11,9 +12,6 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        ndk {
-            abiFilters 'armeabi', 'armeabi-v7a','x86', 'x86_64'
-        }
     }
 
     buildTypes {
@@ -29,20 +27,29 @@ android {
         }
     }
 
-    sourceSets{
-        main{
+    sourceSets {
+        main {
             jniLibs.srcDirs = ['libs/so']
         }
     }
 }
 
 dependencies {
+    if (buildToolIsGreaterThan3 == true) {
 //    api fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:23+'
-    compileOnly project(':qlsdk-core')
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    api files('libs/android-support-v4.jar')
-    implementation files('libs/yxf4.1_1011.jar')
+        api 'com.android.support:appcompat-v7:23+'
+        compileOnly project(':qlsdk-core')
+        testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'com.android.support.test:runner:1.0.2'
+        androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+        api files('libs/android-support-v4.jar')
+        implementation files('libs/yxf4.1_1011.jar')
+    }else{
+        compile fileTree(include: ['*.jar'], dir: 'libs')
+        compile 'com.android.support:appcompat-v7:23+'
+        provided project(':qlsdk-core')
+        testCompile 'junit:junit:4.12'
+        androidTestCompile 'com.android.support.test:runner:1.0.2'
+        androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
+    }
 }

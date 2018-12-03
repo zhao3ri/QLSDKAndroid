@@ -4,7 +4,6 @@ android {
     compileSdkVersion 23
     buildToolsVersion '25.0.0'
 
-
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 23
@@ -12,6 +11,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -21,44 +21,39 @@ android {
         }
     }
 
-}
-
-repositories {
-    flatDir {
-        dirs 'libs'
+    repositories {
+        flatDir {
+            dirs 'libs', '/../uc-channel/libs'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = [' /../yxf-channel/libs/so']
+        }
     }
 }
 
+apply from: "../fat-aar.gradle"
 dependencies {
     if (buildToolIsGreaterThan3 == true) {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-        implementation 'com.android.support:appcompat-v7:23+'
+        embedded project(':uc-channel')
+        embedded project(':yxf-channel')
+
+        implementation 'com.android.support:appcompat-v7:23.4.0'
         testImplementation 'junit:junit:4.12'
         androidTestImplementation 'com.android.support.test:runner:1.0.2'
         androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-        compileOnly project(':qlsdk-core')
-
-        fileTree(dir: 'libs', include: '**/*.aar')
-                .each { File file ->
-            dependencies.add("implementation", [name: file.name.lastIndexOf('.').with {
-                it != -1 ? file.name[0..<it] : file.name
-            }, ext                                  : 'aar'])
-        }
     } else {
         compile fileTree(dir: 'libs', include: ['*.jar'])
+
+        embedded project(':uc-channel')
+        embedded project(':yxf-channel')
 
         compile 'com.android.support:appcompat-v7:23+'
         testCompile 'junit:junit:4.12'
         androidTestCompile 'com.android.support.test:runner:1.0.2'
         androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
-        provided project(':qlsdk-core')
-
-        fileTree(dir: 'libs', include: '**/*.aar')
-                .each { File file ->
-            dependencies.add("compile", [name: file.name.lastIndexOf('.').with {
-                it != -1 ? file.name[0..<it] : file.name
-            }, ext                           : 'aar'])
-        }
     }
 }

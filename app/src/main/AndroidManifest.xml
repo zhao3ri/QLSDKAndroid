@@ -35,7 +35,6 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- 录像需要的权限 -->
@@ -77,7 +76,8 @@
         android:name=".GameApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        tools:replace="android:allowBackup,icon,label">
 
         <activity
             android:name=".MySplashActivity"

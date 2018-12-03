@@ -94,6 +94,10 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.doneCusompay) {
+            if (TextUtils.isEmpty(mMonnyEdit.getText())) {
+                ToastUtils.showToast(this, "请输入金额");
+                return;
+            }
             pay();
         } else if (v.getId() == R.id.logout) {
             logout();
@@ -307,6 +311,11 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
         //提示，要按照正常游戏的步骤，创建角色，上传角色信息，开始游戏，进入到游戏主界面，再去调用支付api，不然会出问题
         //自定义充值(回调地址，你们自己设置，不需要我们后台去配置)
         PayRequest payInfo = new PayRequest();
+        payInfo.setRoleId(gameRole.getRoleId());
+        payInfo.setRoleName(gameRole.getRoleName());
+        payInfo.setRoleLevel(gameRole.getRoleLevel());
+        payInfo.setZoneId(gameRole.getZoneId());
+        payInfo.setZoneName(gameRole.getZoneName());
         payInfo.setCpInfo("cusompay");
         payInfo.setAmount(Integer.parseInt(mMonnyEdit.getText().toString()));
 //        payInfo.setNotifyUrl("http://esrsservice.yaoyuenet.com/platform/yuewan");//前端设置支付回调地址，设置你们自己的通知地址。

@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.qinglan.sdk.android.platform">
+    package="com.qinglan.sdk.android.platform.yxf">
 
     <application>
         <activity
@@ -110,7 +110,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}"
+            android:authorities=".applicationId"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">

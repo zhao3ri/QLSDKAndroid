@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.qinglan.sdk.android.platform">
+    package="com.qinglan.sdk.android.platform.uc">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -41,16 +41,16 @@
             android:exported="true"
             android:label="PullupActivity"
             android:launchMode="singleTop"
-            android:node="replace"
-            android:taskAffinity="${applicationId}.diff"
+            tools:replace="android:taskAffinity"
+            android:taskAffinity=".applicationId.diff"
             android:theme="@android:style/Theme.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BRO WSABLE" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="${QLSDK_GAMEID}" />
+                <data android:scheme="ng00000000" />
             </intent-filter>
         </activity>
         <!-- alipay sdk begin -->

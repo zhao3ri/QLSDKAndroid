@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.qinglan.sdk.android.platform">
+    package="com.qinglan.sdk.android.platform.gionee">
 
     <!-- 开始添加Amigo Play SDK需要的权限，开发者重点关注，不要用手打，直接复制，避免出错 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
