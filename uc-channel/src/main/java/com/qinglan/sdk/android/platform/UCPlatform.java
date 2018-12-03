@@ -194,7 +194,7 @@ public class UCPlatform extends BasePlatform {
     public void pay(Activity activity, GameRole role, GamePay
             pay, final Map<String, Object> result, final Callback.OnPayRequestListener listener) {
         SDKParams params = new SDKParams();
-        params.put(SDKParamKey.CALLBACK_INFO, pay.getExtInfo());
+        params.put(SDKParamKey.CALLBACK_INFO, pay.getCpExtInfo());
         params.put(SDKParamKey.NOTIFY_URL, pay.getNotifyUrl());
         params.put(SDKParamKey.AMOUNT, pay.getAmount() / 100);
         params.put(SDKParamKey.CP_ORDER_ID, pay.getCpOrderId());

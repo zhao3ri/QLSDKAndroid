@@ -369,7 +369,7 @@ class SDKPresenter implements IPresenter {
         if (TextUtils.isEmpty(request.getCpInfo())) {
             request.setCpInfo("ExtInfo");
         }
-        pay.setExtInfo(request.getCpInfo());
+        pay.setCpExtInfo(request.getCpInfo());
         pay.setAmount(request.getAmount());
         pay.setCpOrderId(request.getCpOrderId());
         pay.setProductId(request.getProductId());

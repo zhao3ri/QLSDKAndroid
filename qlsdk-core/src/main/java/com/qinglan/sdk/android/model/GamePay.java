@@ -9,7 +9,7 @@ package com.qinglan.sdk.android.model;
 public final class GamePay {
     private long amount;
     private String cpOrderId;
-    private String extInfo;
+    private String cpExtInfo;
     private String notifyUrl;
     private String productName;
     private int productCount;
@@ -31,12 +31,12 @@ public final class GamePay {
         cpOrderId = id;
     }
 
-    public String getExtInfo() {
-        return extInfo;
+    public String getCpExtInfo() {
+        return cpExtInfo;
     }
 
-    public void setExtInfo(String info) {
-        extInfo = info;
+    public void setCpExtInfo(String info) {
+        cpExtInfo = info;
     }
 
     public String getNotifyUrl() {
