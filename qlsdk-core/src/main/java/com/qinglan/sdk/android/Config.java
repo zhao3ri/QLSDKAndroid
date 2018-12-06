@@ -15,7 +15,8 @@ public final class Config {
     private String gameId;
     private String appID;
     private String appKey;
-    private String privateKey;
+    private String publicKey;
+    private String cpID;
     private int screenOrientation;
     protected Context context;
     //屏幕方向
@@ -61,8 +62,13 @@ public final class Config {
         return this;
     }
 
-    public Config setPrivateKey(String key) {
-        privateKey = key;
+    public Config setPublicKey(String key) {
+        publicKey = key;
+        return this;
+    }
+
+    public Config setCpID(String id) {
+        cpID = id;
         return this;
     }
 
@@ -75,12 +81,16 @@ public final class Config {
         return appKey;
     }
 
-    public String getPrivateKey() {
-        return privateKey;
+    public String getPublicKey() {
+        return publicKey;
     }
 
     public String getAppID() {
         return appID;
+    }
+
+    public String getCpID() {
+        return cpID;
     }
 
     public Context getContext() {

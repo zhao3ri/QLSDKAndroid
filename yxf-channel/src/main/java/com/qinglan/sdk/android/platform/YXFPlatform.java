@@ -65,15 +65,6 @@ public class YXFPlatform extends BasePlatform {
         return user;
     }
 
-    private RoleInfo getRoleInfo(GameRole game) {
-        RoleInfo roleInfo = new RoleInfo();
-        roleInfo.setRoleLevel(game.getRoleLevel());
-        roleInfo.setRoleName(game.getRoleName());
-        roleInfo.setServerID(game.getServerId());
-        roleInfo.setRoleID(game.getRoleId());
-        return roleInfo;
-    }
-
     @Override
     public void logout(Activity activity, GameRole gameRole, Callback.OnLogoutResponseListener onLogoutResponseListener) {
         Log.d(getName() + " PlatformParam logout");
@@ -127,13 +118,7 @@ public class YXFPlatform extends BasePlatform {
 
     @Override
     public void selectRole(Activity activity, boolean show, final GameRole gameRole, long createTime, final Callback.OnGameRoleRequestListener onGameRoleRequestListener) {
-        RoleInfo roleInfo = new RoleInfo();
-        roleInfo.setRoleName(gameRole.getRoleName());
-        roleInfo.setRoleVIP("1");
-        roleInfo.setRoleLevel(gameRole.getRoleLevel());
-        roleInfo.setServerID(gameRole.getServerId());
-        roleInfo.setServerName("1");
-        roleInfo.setRoleID(gameRole.getRoleId());
+        RoleInfo roleInfo = getRoleInfo(gameRole);
         Log.d("setGameInfo RoleInfo : " + gameRole.getRoleLevel() + " " + gameRole.getRoleName() + " " + gameRole.getServerId());
         YXFSDKManager.getInstance(activity).getRoleInfo(activity, roleInfo, Constants.TYPE_ENTER_GAME, new onRoleListener() {
             public void onSuccess(RolecallBack rolecallBack) {
@@ -148,6 +133,17 @@ public class YXFPlatform extends BasePlatform {
                     onGameRoleRequestListener.onFailed(rolecallBack.msg);
             }
         });
+    }
+
+    private RoleInfo getRoleInfo(GameRole game) {
+        RoleInfo roleInfo = new RoleInfo();
+        roleInfo.setRoleLevel(game.getRoleLevel());
+        roleInfo.setRoleVIP("1");
+        roleInfo.setRoleName(game.getRoleName());
+        roleInfo.setServerID(game.getServerId());
+        roleInfo.setRoleID(game.getRoleId());
+        roleInfo.setServerName("1");
+        return roleInfo;
     }
 
     @Override

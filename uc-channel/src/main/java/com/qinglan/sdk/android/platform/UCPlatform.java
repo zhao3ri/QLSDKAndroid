@@ -34,7 +34,6 @@ import cn.gundam.sdk.shell.param.SDKParams;
 import cn.uc.gamesdk.UCGameSdk;
 
 public class UCPlatform extends BasePlatform {
-    private static final String PARAM_PAY_SIGN = "sign";
     private static final String SIGN_TYPE_MD5 = "MD5";
 
     @Override
@@ -107,23 +106,23 @@ public class UCPlatform extends BasePlatform {
 
             @Override
             public void onResponse(boolean success, String result) {
-                if (!success) {
+                if (success && !TextUtils.isEmpty(result)) {
+                    UCResponse response = Utils.json2Object(result, UCResponse.class);
+                    if (null == response
+                            || Integer.valueOf(response.state.get(UCResponse.RESPONSE_KEY_CODE).toString()) != UCResponse.RESPONSE_SUCCESS_CODE) {
+                        if (listener != null)
+                            listener.loginFailed(result);
+                        return;
+                    }
+                    UserInfo userInfo = new UserInfo();
+                    userInfo.setId(response.data.get(UCResponse.RESPONSE_KEY_ACCOUNT_ID).toString());
+                    userInfo.setUserName(response.data.get(UCResponse.RESPONSE_KEY_NICKNAME).toString());
+                    if (listener != null) {
+                        listener.loginSuccess(userInfo);
+                    }
+                } else {
                     if (listener != null)
                         listener.loginFailed(result);
-                    return;
-                }
-                UCResponse response = Utils.json2Object(result, UCResponse.class);
-                if (null == response
-                        || Integer.valueOf(response.state.get(UCResponse.RESPONSE_KEY_CODE).toString()) != UCResponse.RESPONSE_SUCCESS_CODE) {
-                    if (listener != null)
-                        listener.loginFailed(result);
-                    return;
-                }
-                UserInfo userInfo = new UserInfo();
-                userInfo.setId(response.data.get(UCResponse.RESPONSE_KEY_ACCOUNT_ID).toString());
-                userInfo.setUserName(response.data.get(UCResponse.RESPONSE_KEY_NICKNAME).toString());
-                if (listener != null) {
-                    listener.loginSuccess(userInfo);
                 }
             }
         }).execute(request);
@@ -198,7 +197,7 @@ public class UCPlatform extends BasePlatform {
         params.put(SDKParamKey.NOTIFY_URL, pay.getNotifyUrl());
         params.put(SDKParamKey.AMOUNT, pay.getAmount() / 100);
         params.put(SDKParamKey.CP_ORDER_ID, pay.getCpOrderId());
-        params.put(SDKParamKey.ACCOUNT_ID, user.getId());
+        params.put(SDKParamKey.ACCOUNT_ID, getUserId());
         params.put(SDKParamKey.SIGN_TYPE, SIGN_TYPE_MD5);
         params.put(SDKParamKey.SIGN, result.get(PARAM_PAY_SIGN).toString());
         // 以上字段的值都需要由游戏服务器生成,各字段详细说明，见SDKParamKey参数表
@@ -211,8 +210,7 @@ public class UCPlatform extends BasePlatform {
                         String txt = orderInfo.getOrderAmount() + "," + orderInfo.getOrderId() + "," + orderInfo.getPayWay();
                         Log.d("create order success:" + txt);
                     }
-                    if (listener != null)
-                        listener.onSuccess(result.get(HttpConstants.RESPONSE_ORDER_ID).toString());
+                    queryOrderStatus(result.get(HttpConstants.RESPONSE_ORDER_ID).toString(), listener);
                     UCGameSdk.defaultSdk().unregisterSDKEventReceiver(this);
                 }
 

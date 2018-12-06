@@ -1,6 +1,5 @@
 package com.qinglan.sdk.android.net.impl;
 
-import com.qinglan.sdk.android.BuildConfig;
 import com.qinglan.sdk.android.net.AbsRequestInfo;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.Url;
@@ -10,7 +9,7 @@ import java.util.Map;
 /**
  * Created by zhaoj on 2018/10/13.
  */
-public class OrderRequestInfo extends AbsRequestInfo {
+public class GenerateOrderRequestInfo extends AbsRequestInfo {
     public String uid;
     public String zoneId;
     public String roleId;
@@ -36,7 +35,7 @@ public class OrderRequestInfo extends AbsRequestInfo {
         params.put(HttpConstants.REQUEST_PARAM_ZONE_ID, zoneId);
         params.put(HttpConstants.REQUEST_PARAM_ROLE_ID, roleId);
         params.put(HttpConstants.REQUEST_PARAM_ROLE_NAME, roleName);
-        params.put(HttpConstants.REQUEST_PARAM_ORDER_ID, cpOrderId);
+        params.put(HttpConstants.REQUEST_PARAM_CP_ORDER_ID, cpOrderId);
         params.put(HttpConstants.REQUEST_PARAM_EXT_INFO, extInfo);
         params.put(HttpConstants.REQUEST_PARAM_AMOUNT, amount);
         params.put(HttpConstants.REQUEST_PARAM_NOTIFY_URL, notifyUrl);

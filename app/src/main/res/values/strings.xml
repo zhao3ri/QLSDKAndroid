@@ -7,6 +7,7 @@
     <string name="qlsdk_gameid">181018126361</string>
     <string name="qlsdk_third_party_appid"></string>
     <string name="qlsdk_third_party_appkey"></string>
-    <string name="qlsdk_third_party_private"></string>
+    <string name="qlsdk_third_party_pubkey"></string>
+    <string name="qlsdk_third_party_cpid"></string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.qinglan.sdk.android;
 
 import android.content.Context;
 import android.os.Build;
+import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
 import com.qinglan.sdk.android.common.Log;
@@ -16,7 +17,7 @@ import com.qinglan.sdk.android.net.impl.ExitRequestInfo;
 import com.qinglan.sdk.android.net.impl.GameRoleRequestInfo;
 import com.qinglan.sdk.android.net.impl.HeartBeatRequestInfo;
 import com.qinglan.sdk.android.net.impl.InitRequestInfo;
-import com.qinglan.sdk.android.net.impl.OrderRequestInfo;
+import com.qinglan.sdk.android.net.impl.GenerateOrderRequestInfo;
 import com.qinglan.sdk.android.net.impl.RefreshSessionRequestInfo;
 import com.qinglan.sdk.android.net.impl.TokenRequestInfo;
 
@@ -60,7 +61,7 @@ class SDKConnector implements IConnector {
             public void onResponse(boolean success, String result) {
                 boolean isSuccess = false;
                 try {
-                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_SUCCESS_CODE) {
+                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_CODE_SUCCESS) {
                         isSuccess = true;
                     } else {
                         isSuccess = false;
@@ -89,7 +90,7 @@ class SDKConnector implements IConnector {
             @Override
             public void onResponse(boolean success, String result) {
                 try {
-                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_SUCCESS_CODE) {//获取token 成功
+                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_CODE_SUCCESS) {//获取token 成功
                         JSONObject jsonObject = new JSONObject(result);
                         String token = jsonObject.optString(HttpConstants.RESPONSE_TOKEN);
                         if (listener != null)
@@ -126,7 +127,7 @@ class SDKConnector implements IConnector {
             @Override
             public void onResponse(boolean success, String result) {
                 try {
-                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_SUCCESS_CODE) {
+                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_CODE_SUCCESS) {
                         JSONObject jsonObject = new JSONObject(result);
                         long loginTimestamp = jsonObject.optLong(HttpConstants.RESPONSE_LOGIN_TIMESTAMP);
                         long createTimestamp = jsonObject.optLong(HttpConstants.RESPONSE_CREATE_TIMESTAMP);
@@ -161,7 +162,7 @@ class SDKConnector implements IConnector {
             @Override
             public void onResponse(boolean success, String result) {
                 try {
-                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_SUCCESS_CODE) {
+                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_CODE_SUCCESS) {
                         if (listener != null)
                             listener.onResponse(true, result);
                     } else {
@@ -195,7 +196,7 @@ class SDKConnector implements IConnector {
             @Override
             public void onResponse(boolean success, String result) {
                 try {
-                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_SUCCESS_CODE) {
+                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_CODE_SUCCESS) {
                         if (listener != null)
                             listener.onSuccess();
 
@@ -227,7 +228,7 @@ class SDKConnector implements IConnector {
             @Override
             public void onResponse(boolean success, String result) {
                 try {
-                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_SUCCESS_CODE) {
+                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_CODE_SUCCESS) {
                         if (listener != null)
                             listener.onCompleted(true, result);
                     } else {
@@ -262,7 +263,7 @@ class SDKConnector implements IConnector {
             @Override
             public void onResponse(boolean success, String result) {
                 try {
-                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_SUCCESS_CODE) {
+                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_CODE_SUCCESS) {
                         if (listener != null)
                             listener.onFinished(true, result);
                     } else {
@@ -283,7 +284,7 @@ class SDKConnector implements IConnector {
     @Override
     public void generateOrder(Context context, GameRole game, GamePay pay, int fixed, String loginTime, final Callback.GenerateOrderListener listener) {
         Log.d("generateOrder request");
-        OrderRequestInfo request = new OrderRequestInfo();
+        GenerateOrderRequestInfo request = new GenerateOrderRequestInfo();
         request.gameId = iPresenter.getGameId();
         request.platformId = iPresenter.getPlatformId();
         request.uid = iPresenter.getUid();
@@ -302,7 +303,7 @@ class SDKConnector implements IConnector {
             @Override
             public void onResponse(boolean success, String result) {
                 try {
-                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_SUCCESS_CODE) {
+                    if (success && getResponseCode(result) == HttpConstants.RESPONSE_CODE_SUCCESS) {
                         Map<String, Object> resultMap = Utils.json2Object(result, new TypeToken<Map<String, Object>>() {
                         }.getType());
                         if (resultMap == null) {
@@ -329,6 +330,9 @@ class SDKConnector implements IConnector {
     }
 
     private int getResponseCode(String result) throws JSONException {
+        if (TextUtils.isEmpty(result)) {
+            return HttpConstants.RESPONSE_CODE_READ_ERROR;
+        }
         JSONObject jsonObject = new JSONObject(result);
         int code = jsonObject.getInt(HttpConstants.RESPONSE_CODE);
         return code;

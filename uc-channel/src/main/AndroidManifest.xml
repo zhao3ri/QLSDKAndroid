@@ -42,7 +42,7 @@
             android:label="PullupActivity"
             android:launchMode="singleTop"
             tools:replace="android:taskAffinity"
-            android:taskAffinity=".applicationId.diff"
+            android:taskAffinity="qinglanGameApplicationId.diff"
             android:theme="@android:style/Theme.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

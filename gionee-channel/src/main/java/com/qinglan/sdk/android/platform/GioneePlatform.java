@@ -145,7 +145,7 @@ public class GioneePlatform extends BasePlatform {
                 }
             }
         };
-        GamePayManager.getInstance().pay(activity, gameOrder, gameConfig.getPrivateKey());
+        GamePayManager.getInstance().pay(activity, gameOrder, gameConfig.getPublicKey());
     }
 
     @Override

@@ -6,12 +6,16 @@
     <platform name="YXF" id="4">
         <class-name>YXFPlatform</class-name>
     </platform>
-    <!--金立-->
-    <platform name="Gionee" id="42">
-        <class-name>GioneePlatform</class-name>
-    </platform>
     <!--UC-->
     <platform name="UC" id="5">
         <class-name>UCPlatform</class-name>
+    </platform>
+    <!--华为-->
+    <platform name="Huawei" id="6">
+        <class-name>HMSPlatform</class-name>
+    </platform>
+    <!--金立-->
+    <platform name="Gionee" id="42">
+        <class-name>GioneePlatform</class-name>
     </platform>
 </platform-list>

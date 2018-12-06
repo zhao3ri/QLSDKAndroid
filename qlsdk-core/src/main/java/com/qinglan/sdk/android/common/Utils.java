@@ -16,6 +16,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.google.gson.Gson;
+import com.qinglan.sdk.android.net.HttpConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -440,6 +441,17 @@ public class Utils {
         return jsonObject.toString();
     }
 
+    public static <T> T getJsonValue(String json, String key, T def) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            T value = (T) jsonObject.get(key);
+            return value;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return def;
+    }
+
     public static String object2Json(Object o) {
         Gson gson = new Gson();
         return gson.toJson(o);
@@ -488,4 +500,5 @@ public class Utils {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);
     }
+
 }

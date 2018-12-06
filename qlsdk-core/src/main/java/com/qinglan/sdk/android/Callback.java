@@ -9,9 +9,11 @@ import java.util.Map;
  * Created by tyland on 2018/10/13.
  */
 public class Callback {
-
-    public interface OnInitCompletedListener {
+    public interface OnResultListener {
         void onCompleted(boolean success, String result);
+    }
+
+    public interface OnInitCompletedListener extends OnResultListener {
     }
 
     public interface OnLoginResponseListener {
@@ -35,7 +37,7 @@ public class Callback {
     }
 
     public interface OnRefreshSessionListener {
-        void onRefreshed(boolean success, long loginTimestamp, long createTimestamp,String result);
+        void onRefreshed(boolean success, long loginTimestamp, long createTimestamp, String result);
     }
 
     public interface HeartBeanRequestListener {
@@ -48,8 +50,7 @@ public class Callback {
         void onFailed(String error);
     }
 
-    public interface OnExitListener {
-        void onCompleted(boolean success, String msg);
+    public interface OnExitListener extends OnResultListener {
     }
 
     public interface OnPayRequestListener {
@@ -84,8 +85,7 @@ public class Callback {
         void onFailed(String msg);
     }
 
-    public interface OnLevelUpListener {
-        void onCompleted(boolean success, String msg);
+    public interface OnLevelUpListener extends OnResultListener {
     }
 
 }
