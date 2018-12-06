@@ -192,11 +192,12 @@ public class UCPlatform extends BasePlatform {
     @Override
     public void pay(Activity activity, GameRole role, GamePay
             pay, final Map<String, Object> result, final Callback.OnPayRequestListener listener) {
+        String orderId = result.get(HttpConstants.RESPONSE_ORDER_ID).toString();
         SDKParams params = new SDKParams();
-        params.put(SDKParamKey.CALLBACK_INFO, pay.getCpExtInfo());
+        params.put(SDKParamKey.CALLBACK_INFO, pay.getExtInfo());
         params.put(SDKParamKey.NOTIFY_URL, pay.getNotifyUrl());
         params.put(SDKParamKey.AMOUNT, pay.getAmount() / 100);
-        params.put(SDKParamKey.CP_ORDER_ID, pay.getCpOrderId());
+        params.put(SDKParamKey.CP_ORDER_ID, orderId);
         params.put(SDKParamKey.ACCOUNT_ID, getUserId());
         params.put(SDKParamKey.SIGN_TYPE, SIGN_TYPE_MD5);
         params.put(SDKParamKey.SIGN, result.get(PARAM_PAY_SIGN).toString());

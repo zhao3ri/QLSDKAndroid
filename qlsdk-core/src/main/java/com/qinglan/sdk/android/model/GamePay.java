@@ -8,8 +8,8 @@ package com.qinglan.sdk.android.model;
  */
 public final class GamePay {
     private long amount;
-    private String cpOrderId;
-    private String cpExtInfo;
+//    private String cpOrderId;
+    private String extInfo;
     private String notifyUrl;
     private String productName;
     private int productCount;
@@ -23,20 +23,20 @@ public final class GamePay {
         this.amount = amount;
     }
 
-    public String getCpOrderId() {
-        return cpOrderId;
+//    public String getCpOrderId() {
+//        return cpOrderId;
+//    }
+//
+//    public void setCpOrderId(String id) {
+//        cpOrderId = id;
+//    }
+
+    public String getExtInfo() {
+        return extInfo;
     }
 
-    public void setCpOrderId(String id) {
-        cpOrderId = id;
-    }
-
-    public String getCpExtInfo() {
-        return cpExtInfo;
-    }
-
-    public void setCpExtInfo(String info) {
-        cpExtInfo = info;
+    public void setExtInfo(String info) {
+        extInfo = info;
     }
 
     public String getNotifyUrl() {

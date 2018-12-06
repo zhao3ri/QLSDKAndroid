@@ -316,10 +316,9 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
         payInfo.setRoleLevel(gameRole.getRoleLevel());
         payInfo.setZoneId(gameRole.getZoneId());
         payInfo.setZoneName(gameRole.getZoneName());
-        payInfo.setCpInfo("cusompay");
+        payInfo.setExtInfo("cusompay");
         payInfo.setAmount(Integer.parseInt(mMonnyEdit.getText().toString()));
 //        payInfo.setNotifyUrl("http://esrsservice.yaoyuenet.com/platform/yuewan");//前端设置支付回调地址，设置你们自己的通知地址。
-        payInfo.setCpOrderId("353535");
         payInfo.setProductCount(10);
         payInfo.setProductId("001");
         payInfo.setProductName("钻石");

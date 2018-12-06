@@ -291,8 +291,8 @@ class SDKConnector implements IConnector {
         request.zoneId = game.getZoneId();
         request.roleId = game.getRoleId();
         request.roleName = game.getRoleName();
-        request.cpOrderId = pay.getCpOrderId();
-        request.extInfo = pay.getCpExtInfo();
+//        request.cpOrderId = pay.getCpOrderId();
+        request.extInfo = pay.getExtInfo();
         request.amount = String.valueOf(pay.getAmount());
         request.notifyUrl = pay.getNotifyUrl();
         request.fixed = String.valueOf(fixed);

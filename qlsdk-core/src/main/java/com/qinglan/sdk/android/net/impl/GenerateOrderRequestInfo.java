@@ -14,14 +14,17 @@ public class GenerateOrderRequestInfo extends AbsRequestInfo {
     public String zoneId;
     public String roleId;
     public String roleName;
-    public String cpOrderId;//CP订单号
-    public String extInfo;//CP自定义参数
+    public String cpOrderId;//CP订单编号
+    public String extInfo;//自定义参数
     public String amount;//成功充值金额，单位为分
     public String notifyUrl;//支付结果通知地址
     public String fixed;
     public String loginTime;
     public String deviceId;
     public String gold;
+    public String productName;
+    public int productCount;
+    public String productId;
 
     @Override
     public String getPath() {
@@ -35,7 +38,7 @@ public class GenerateOrderRequestInfo extends AbsRequestInfo {
         params.put(HttpConstants.REQUEST_PARAM_ZONE_ID, zoneId);
         params.put(HttpConstants.REQUEST_PARAM_ROLE_ID, roleId);
         params.put(HttpConstants.REQUEST_PARAM_ROLE_NAME, roleName);
-        params.put(HttpConstants.REQUEST_PARAM_CP_ORDER_ID, cpOrderId);
+//        params.put(HttpConstants.REQUEST_PARAM_CP_ORDER_ID, cpOrderId);
         params.put(HttpConstants.REQUEST_PARAM_EXT_INFO, extInfo);
         params.put(HttpConstants.REQUEST_PARAM_AMOUNT, amount);
         params.put(HttpConstants.REQUEST_PARAM_NOTIFY_URL, notifyUrl);

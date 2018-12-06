@@ -49,7 +49,6 @@ public abstract class BasePlatform implements IPlatform {
         if (TextUtils.isEmpty(gameConfig.getCpID())) {
             gameConfig.setCpID(ResContainer.getString(config.getContext(), RES_NAME_CP_ID));
         }
-        queryOrderStatus("20181127183357163187603680911300", null);
     }
 
     @Override
@@ -73,10 +72,8 @@ public abstract class BasePlatform implements IPlatform {
 
     protected void queryOrderStatus(final String orderId, final Callback.OnPayRequestListener listener) {
         final QueryOrderRequestInfo request = new QueryOrderRequestInfo();
-//        request.gameId = gameConfig.getGameId();
-//        request.platformId = getId();
-        request.gameId = "181018126361";
-        request.platformId = 4;
+        request.gameId = gameConfig.getGameId();
+        request.platformId = getId();
         request.orderId = orderId;
         new HttpConnectionTask().setResponseListener(new OnResponseListener() {
             @Override

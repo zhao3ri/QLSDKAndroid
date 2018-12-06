@@ -8,11 +8,10 @@ public class PayRequest {
     private String roleLevel;
     private String serverId;
     private long amount;
-    private String cpOrderId;
-    private String cpInfo;
+    private String extInfo;
     private String notifyUrl;
     private String productName;
-    private int productCount;
+    private int productCount = 1;
     private String productId;
 
     public String getZoneId() {
@@ -71,14 +70,6 @@ public class PayRequest {
         this.amount = amount;
     }
 
-    public String getCpOrderId() {
-        return cpOrderId;
-    }
-
-    public void setCpOrderId(String cpOrderId) {
-        this.cpOrderId = cpOrderId;
-    }
-
     public String getNotifyUrl() {
         return notifyUrl;
     }
@@ -111,11 +102,11 @@ public class PayRequest {
         this.productId = productId;
     }
 
-    public String getCpInfo() {
-        return cpInfo;
+    public String getExtInfo() {
+        return extInfo;
     }
 
-    public void setCpInfo(String cpInfo) {
-        this.cpInfo = cpInfo;
+    public void setExtInfo(String extInfo) {
+        this.extInfo = extInfo;
     }
 }

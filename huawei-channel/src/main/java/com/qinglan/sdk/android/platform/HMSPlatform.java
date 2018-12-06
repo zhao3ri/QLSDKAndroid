@@ -71,7 +71,6 @@ public class HMSPlatform extends BasePlatform {
                 if (retCode == HMSAgent.AgentResultCode.HMSAGENT_SUCCESS && userData != null) {
                     Log.d("game login: onResult: retCode=" + retCode
                             + "  user=" + userData.getDisplayName() + "|" + userData.getPlayerId() + "|" + userData.getIsAuth() + "|" + userData.getPlayerLevel());
-
                     if (userData.getIsAuth() == 1) {
                         helper.verifyLogin(userData, new HMSHelper.OnVerifyRequestListener() {
                             @Override
@@ -104,20 +103,8 @@ public class HMSPlatform extends BasePlatform {
 
     @Override
     public void logout(Activity activity, GameRole role, final Callback.OnLogoutResponseListener listener) {
-//        HMSAgent.Hwid.signOut(new SignOutHandler() {
-//            @Override
-//            public void onResult(int rtnCode, SignOutResult result) {
-//                if (rtnCode == HMSAgent.AgentResultCode.HMSAGENT_SUCCESS && result != null) {
-//                    Log.d("退出登录成功");
-//                    if (listener != null)
-//                        listener.onSuccess();
-//                } else {
-//                    Log.d("退出登录失败:" + rtnCode);
-//                    if (listener != null)
-//                        listener.onFailed(result.getStatus().getStatusMessage());
-//                }
-//            }
-//        });
+        if (listener != null)
+            listener.onSuccess();
     }
 
     @Override

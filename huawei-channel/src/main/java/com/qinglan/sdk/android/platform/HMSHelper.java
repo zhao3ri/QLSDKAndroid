@@ -7,7 +7,6 @@ import com.huawei.android.hms.agent.pay.PaySignUtil;
 import com.huawei.hms.support.api.entity.game.GamePlayerInfo;
 import com.huawei.hms.support.api.entity.game.GameUserData;
 import com.huawei.hms.support.api.entity.pay.PayReq;
-import com.qinglan.sdk.android.Callback;
 import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
@@ -24,6 +23,9 @@ import java.util.Map;
 public class HMSHelper {
     private static final String RETURN_CODE_SUCCEED = "0";
     private static final int RETURN_CODE_ERROR = -1;
+    private static final String RETURN_KEY_CODE = "rtnCode";
+    private static final String RETURN_KEY_TS = "ts";
+    private static final String RETURN_KEY_SIGN = "rtnSign";
 
     private long gameId;
     private int platformId;
@@ -67,7 +69,7 @@ public class HMSHelper {
                 if (success && !TextUtils.isEmpty(result)) {
                     Map<String, Object> resMap = Utils.json2Object(result, new TypeToken<Map<String, Object>>() {
                     }.getType());
-                    String code = resMap.get("").toString();
+                    String code = String.valueOf(resMap.get(RETURN_KEY_CODE));
                     if (code.equals(RETURN_CODE_SUCCEED)) {
                         if (listener != null)
                             listener.onRequest(true, Integer.valueOf(code), resMap);
@@ -128,7 +130,7 @@ public class HMSHelper {
         // X31 话费充值,X32 机票/酒店,X33 电影票,X34 团购,X35 手机预购,X36 公共缴费,X39 流量充值
         payReq.serviceCatalog = "X6"; // 应用设置为"X5"，游戏设置为"X6"
         //商户保留信息，选填不参与签名，支付成功后会华为支付平台会原样 回调CP服务端
-        payReq.extReserved = pay.getCpExtInfo();
+        payReq.extReserved = pay.getExtInfo();
         signPay(payReq, listener);
     }
 
