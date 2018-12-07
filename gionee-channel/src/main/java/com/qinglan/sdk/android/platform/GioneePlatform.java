@@ -122,7 +122,7 @@ public class GioneePlatform extends BasePlatform {
         GameOrder gameOrder = new GameOrder();
         gameOrder.mOutOrderNo = pay.getCpOrderId();
         gameOrder.mSubmitTime = Utils.toTimeString(System.currentTimeMillis());
-        gameOrder.mSubject = pay.getProductName();
+        gameOrder.mSubject = pay.getGoodsName();
         gameOrder.mTotalFee = String.valueOf(pay.getAmount() / 100);
         gameOrder.mNotifyURL = pay.getNotifyUrl();
         gameOrder.mGamePayCallback = new GamePayCallBack() {

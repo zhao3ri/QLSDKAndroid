@@ -298,7 +298,7 @@ class SDKConnector implements IConnector {
         request.fixed = String.valueOf(fixed);
         request.loginTime = loginTime;
         request.deviceId = iPresenter.getDeviceId();
-        request.gold = String.valueOf(pay.getProductCount());
+        request.gold = String.valueOf(pay.getGoodsCount());
         new HttpConnectionTask().setResponseListener(new OnResponseListener() {
             @Override
             public void onResponse(boolean success, String result) {

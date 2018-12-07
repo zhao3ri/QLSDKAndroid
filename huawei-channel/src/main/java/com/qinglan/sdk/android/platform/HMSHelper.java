@@ -108,9 +108,9 @@ public class HMSHelper {
         String amount = String.format("%.2f", pay.getAmount() / 100);
 
         //商品名称
-        payReq.productName = pay.getProductName();
+        payReq.productName = pay.getGoodsName();
         //商品描述
-        payReq.productDesc = pay.getProductName();
+        payReq.productDesc = pay.getGoodsName();
         // 商户ID，来源于开发者联盟的“支付ID”
         payReq.merchantId = cpId;
         // 应用ID，来源于开发者联盟

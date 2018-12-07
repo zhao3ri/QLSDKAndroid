@@ -10,9 +10,9 @@ public class PayRequest {
     private long amount;
     private String extInfo;
     private String notifyUrl;
-    private String productName;
-    private int productCount = 1;
-    private String productId;
+    private String goodsName;
+    private int goodsCount = 1;
+    private String goodsId;
 
     public String getZoneId() {
         return zoneId;
@@ -78,28 +78,28 @@ public class PayRequest {
         this.notifyUrl = notifyUrl;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getGoodsName() {
+        return goodsName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 
-    public int getProductCount() {
-        return productCount;
+    public int getGoodsCount() {
+        return goodsCount;
     }
 
-    public void setProductCount(int productCount) {
-        this.productCount = productCount;
+    public void setGoodsCount(int goodsCount) {
+        this.goodsCount = goodsCount;
     }
 
-    public String getProductId() {
-        return productId;
+    public String getGoodsId() {
+        return goodsId;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
     }
 
     public String getExtInfo() {

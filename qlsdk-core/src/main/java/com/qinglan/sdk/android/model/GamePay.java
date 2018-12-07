@@ -11,9 +11,9 @@ public final class GamePay {
 //    private String cpOrderId;
     private String extInfo;
     private String notifyUrl;
-    private String productName;
-    private int productCount;
-    private String productId;
+    private String goodsName;
+    private int goodsCount;
+    private String goodsId;
 
     public long getAmount() {
         return amount;
@@ -47,27 +47,27 @@ public final class GamePay {
         notifyUrl = url;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getGoodsName() {
+        return goodsName;
     }
 
-    public void setProductName(String name) {
-        productName = name;
+    public void setGoodsName(String name) {
+        goodsName = name;
     }
 
-    public int getProductCount() {
-        return productCount;
+    public int getGoodsCount() {
+        return goodsCount;
     }
 
-    public void setProductCount(int count) {
-        productCount = count;
+    public void setGoodsCount(int count) {
+        goodsCount = count;
     }
 
-    public String getProductId() {
-        return productId;
+    public String getGoodsId() {
+        return goodsId;
     }
 
-    public void setProductId(String id) {
-        productId = id;
+    public void setGoodsId(String id) {
+        goodsId = id;
     }
 }

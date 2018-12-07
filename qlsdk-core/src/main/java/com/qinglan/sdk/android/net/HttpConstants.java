@@ -36,6 +36,9 @@ public final class HttpConstants {
     public static final String REQUEST_PARAM_FIXED = "fixed";
     public static final String REQUEST_PARAM_GOLD = "gold";
     public static final String REQUEST_PARAM_ORDER_ID = "orderId";
+    public static final String REQUEST_PARAM_GOODS_ID = "goodsId";
+    public static final String REQUEST_PARAM_GOODS_NAME = "goodsName";
+    public static final String REQUEST_PARAM_GOODS_COUNT = "goodsCount";
 
     public static final String RESPONSE_CODE = "code";
     public static final int RESPONSE_CODE_SUCCESS = 0;

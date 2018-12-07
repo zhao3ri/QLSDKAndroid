@@ -244,12 +244,12 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
                     return;
                 }
                 if (TextUtils.isEmpty(etZoneId.getText().toString().trim())) {
-                    ToastUtils.showToast(WelComeActivity.this, "分区id不能为空！");
-                    return;
+//                    ToastUtils.showToast(WelComeActivity.this, "分区id不能为空！");
+                    etZoneId.setText("1234");
                 }
                 if (TextUtils.isEmpty(etZoneName.getText().toString().trim())) {
-                    ToastUtils.showToast(WelComeActivity.this, "分区名称不能为空！");
-                    return;
+//                    ToastUtils.showToast(WelComeActivity.this, "分区名称不能为空！");
+                    etZoneName.setText("Null");
                 }
                 gameRole = new GameRole();
                 gameRole.setRoleId(etRoleId.getText().toString());
@@ -258,7 +258,6 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
                 gameRole.setRoleLevel(level);
                 gameRole.setZoneId(etZoneId.getText().toString());
                 gameRole.setZoneName(etZoneName.getText().toString());
-                gameRole.setServerId("1");
                 edRoleName.setText(etRoleName.getText().toString());
                 if (isCreate) {
                     createRole();
@@ -319,9 +318,9 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
         payInfo.setExtInfo("cusompay");
         payInfo.setAmount(Integer.parseInt(mMonnyEdit.getText().toString()));
 //        payInfo.setNotifyUrl("http://esrsservice.yaoyuenet.com/platform/yuewan");//前端设置支付回调地址，设置你们自己的通知地址。
-        payInfo.setProductCount(10);
-        payInfo.setProductId("001");
-        payInfo.setProductName("钻石");
+        payInfo.setGoodsCount(10);
+        payInfo.setGoodsId("001");
+        payInfo.setGoodsName("钻石");
         qlSDK.doPay(this, payInfo, new Callback.OnPayRequestListener() {
             @Override
             public void onSuccess(String orderId) {

@@ -96,7 +96,7 @@ public class YXFPlatform extends BasePlatform {
         String orderId = result.get(HttpConstants.RESPONSE_ORDER_ID).toString();
         YXFSDKManager.getInstance(activity)
                 .showPay(activity, role.getRoleId()
-                        , String.valueOf(Long.valueOf(pay.getAmount()) / 100), role.getServerId(), pay.getProductName(), pay.getProductId(), orderId);
+                        , String.valueOf(Long.valueOf(pay.getAmount()) / 100), role.getServerId(), pay.getGoodsName(), pay.getGoodsId(), orderId);
     }
 
     @Override

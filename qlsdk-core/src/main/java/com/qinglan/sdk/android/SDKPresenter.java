@@ -367,9 +367,9 @@ class SDKPresenter implements IPresenter {
         GamePay pay = new GamePay();
         pay.setNotifyUrl(request.getNotifyUrl());
         pay.setAmount(request.getAmount());
-        pay.setProductId(request.getProductId());
-        pay.setProductCount(request.getProductCount());
-        pay.setProductName(request.getProductName());
+        pay.setGoodsId(request.getGoodsId());
+        pay.setGoodsCount(request.getGoodsCount());
+        pay.setGoodsName(request.getGoodsName());
         return pay;
     }
 
