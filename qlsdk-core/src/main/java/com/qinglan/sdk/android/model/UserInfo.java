@@ -59,7 +59,7 @@ public final class UserInfo {
 //    }
 //
 //    public void setPlatformId(String platformId) {
-//        this.platformId = platformId;
+//        this.channelId = channelId;
 //    }
 
     @Override

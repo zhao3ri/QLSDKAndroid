@@ -12,13 +12,9 @@ import com.qinglan.sdk.android.model.UserInfo;
 import com.qinglan.sdk.android.net.HttpConnectionTask;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.OnResponseListener;
-import com.qinglan.sdk.android.net.impl.GameRoleRequestInfo;
 import com.qinglan.sdk.android.net.impl.QueryOrderRequestInfo;
 
-import java.util.HashMap;
 import java.util.Map;
-
-import static com.qinglan.sdk.android.net.HttpConstants.RESPONSE_CODE_UNKNOWN_ERROR;
 
 public abstract class BasePlatform implements IPlatform {
     private int platformId;
@@ -73,7 +69,7 @@ public abstract class BasePlatform implements IPlatform {
     protected void queryOrderStatus(final String orderId, final Callback.OnPayRequestListener listener) {
         final QueryOrderRequestInfo request = new QueryOrderRequestInfo();
         request.gameId = gameConfig.getGameId();
-        request.platformId = getId();
+        request.channelId = getId();
         request.orderId = orderId;
         new HttpConnectionTask().setResponseListener(new OnResponseListener() {
             @Override

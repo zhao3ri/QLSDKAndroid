@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public abstract class AbsRequestInfo implements IRequestInfo {
     public String gameId;
-    public int platformId;
+    public int channelId;
     public static final String ANDROID_CLIENT_TYPE = "1";
     private static final int DEFAULT_METHOD = HttpMethod.POST;//默认为post方法
 
@@ -32,7 +32,7 @@ public abstract class AbsRequestInfo implements IRequestInfo {
     public Map<String, Object> getParams() {
         Map params = new HashMap();
         params.put(HttpConstants.REQUEST_PARAM_GAME_ID, gameId);
-        params.put(HttpConstants.REQUEST_PARAM_PLATFORM_ID, platformId);
+        params.put(HttpConstants.REQUEST_PARAM_CHANNEL_ID, channelId);
         return params;
     }
 

@@ -41,7 +41,7 @@ class SDKConnector implements IConnector {
         Log.d("init sdk request");
         InitRequestInfo request = new InitRequestInfo();
         request.gameId = iPresenter.getGameId();
-        request.platformId = iPresenter.getPlatformId();
+        request.channelId = iPresenter.getPlatformId();
         request.deviceId = iPresenter.getDeviceId();
         request.imsi = Utils.getIMSI(context);
         request.latitude = "";
@@ -84,7 +84,7 @@ class SDKConnector implements IConnector {
         Log.d("getToken request");
         TokenRequestInfo request = new TokenRequestInfo();
         request.gameId = iPresenter.getGameId();
-        request.platformId = iPresenter.getPlatformId();
+        request.channelId = iPresenter.getPlatformId();
         request.extend = uid;
         new HttpConnectionTask().setResponseListener(new OnResponseListener() {
             @Override
@@ -115,7 +115,7 @@ class SDKConnector implements IConnector {
         Log.d("refreshSession request");
         RefreshSessionRequestInfo request = new RefreshSessionRequestInfo();
         request.gameId = iPresenter.getGameId();
-        request.platformId = iPresenter.getPlatformId();
+        request.channelId = iPresenter.getPlatformId();
         request.uid = iPresenter.getUid();
         request.zoneId = role.getZoneId();
         request.zoneName = role.getZoneName();
@@ -152,7 +152,7 @@ class SDKConnector implements IConnector {
         Log.d("startHeartBeat request");
         HeartBeatRequestInfo request = new HeartBeatRequestInfo();
         request.gameId = iPresenter.getGameId();
-        request.platformId = iPresenter.getPlatformId();
+        request.channelId = iPresenter.getPlatformId();
         request.loginTime = time;
         request.uid = iPresenter.getUid();
         request.zoneId = role.getZoneId();
@@ -185,7 +185,7 @@ class SDKConnector implements IConnector {
         Log.d("cleanSession request");
         CleanSessionRequestInfo request = new CleanSessionRequestInfo();
         request.gameId = iPresenter.getGameId();
-        request.platformId = iPresenter.getPlatformId();
+        request.channelId = iPresenter.getPlatformId();
         request.uid = iPresenter.getUid();
         if (role != null) {
             request.zoneId = role.getZoneId();
@@ -219,7 +219,7 @@ class SDKConnector implements IConnector {
         Log.d("exit request");
         ExitRequestInfo request = new ExitRequestInfo();
         request.gameId = iPresenter.getGameId();
-        request.platformId = iPresenter.getPlatformId();
+        request.channelId = iPresenter.getPlatformId();
         request.uid = iPresenter.getUid();
         request.zoneId = role.getZoneId();
         request.roleId = role.getRoleId();
@@ -251,7 +251,7 @@ class SDKConnector implements IConnector {
         Log.d("createRole request");
         GameRoleRequestInfo request = new GameRoleRequestInfo();
         request.gameId = iPresenter.getGameId();
-        request.platformId = iPresenter.getPlatformId();
+        request.channelId = iPresenter.getPlatformId();
         request.uid = iPresenter.getUid();
         request.zoneId = role.getZoneId();
         request.zoneName = role.getZoneName();
@@ -286,7 +286,7 @@ class SDKConnector implements IConnector {
         Log.d("generateOrder request");
         GenerateOrderRequestInfo request = new GenerateOrderRequestInfo();
         request.gameId = iPresenter.getGameId();
-        request.platformId = iPresenter.getPlatformId();
+        request.channelId = iPresenter.getPlatformId();
         request.uid = iPresenter.getUid();
         request.zoneId = game.getZoneId();
         request.roleId = game.getRoleId();

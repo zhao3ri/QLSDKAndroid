@@ -1,6 +1,5 @@
 package com.qinglan.sdk.android.net.impl;
 
-import com.qinglan.sdk.android.BuildConfig;
 import com.qinglan.sdk.android.net.AbsRequestInfo;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.Url;
@@ -45,7 +44,7 @@ public class InitRequestInfo extends AbsRequestInfo {
         params.put(HttpConstants.REQUEST_PARAM_NETWORK_COUNTRY_ISO, networkCountryIso);
         params.put(HttpConstants.REQUEST_PARAM_NETWORK_TYPE, networkType);
         params.put(HttpConstants.REQUEST_PARAM_PHONE_TYPE, phoneType);
-        params.put(HttpConstants.REQUEST_PARAM_PLATFORM, os);
+        params.put(HttpConstants.REQUEST_PARAM_OS, os);
         params.put(HttpConstants.REQUEST_PARAM_RESOLUTION, resolution);
         params.put(HttpConstants.REQUEST_PARAM_SIMOPERATOR_NAME, simOperatorName);
         params.put(HttpConstants.REQUEST_PARAM_SYSTEM_VERSION, systemVersion);

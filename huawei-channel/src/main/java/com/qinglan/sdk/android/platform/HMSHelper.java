@@ -54,7 +54,7 @@ public class HMSHelper {
     public void verifyLogin(GameUserData data, final OnVerifyRequestListener listener) {
         HMSVerifyRequest request = new HMSVerifyRequest();
         request.gameId = String.valueOf(gameId);
-        request.platformId = platformId;
+        request.channelId = platformId;
         request.appID = appID;
         request.cpID = cpId;
         request.ts = data.getTs();
@@ -140,7 +140,7 @@ public class HMSHelper {
     private void signPay(final PayReq payReq, final OnSignRequestListener listener) {
         HMSPaySignRequest request = new HMSPaySignRequest();
         request.gameId = String.valueOf(gameId);
-        request.platformId = platformId;
+        request.channelId = platformId;
         request.content = PaySignUtil.getStringForSign(payReq);
         new HttpConnectionTask().setResponseListener(new OnResponseListener() {
 

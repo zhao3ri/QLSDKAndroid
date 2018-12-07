@@ -2,7 +2,7 @@ package com.qinglan.sdk.android.net;
 
 public final class HttpConstants {
     public static final String REQUEST_PARAM_GAME_ID = "gameId";
-    public static final String REQUEST_PARAM_PLATFORM_ID = "platformId";
+    public static final String REQUEST_PARAM_CHANNEL_ID = "channelId";
     public static final String REQUEST_PARAM_TOKEN_EXTEND = "extend";
 
     public static final String REQUEST_PARAM_UID = "uid";
@@ -24,7 +24,7 @@ public final class HttpConstants {
     public static final String REQUEST_PARAM_NETWORK_COUNTRY_ISO = "networkCountryIso";
     public static final String REQUEST_PARAM_NETWORK_TYPE = "networkType";
     public static final String REQUEST_PARAM_PHONE_TYPE = "phonetype";
-    public static final String REQUEST_PARAM_PLATFORM = "platform";
+    public static final String REQUEST_PARAM_OS = "platform";
     public static final String REQUEST_PARAM_RESOLUTION = "resolution";
     public static final String REQUEST_PARAM_SIMOPERATOR_NAME = "simoperatorname";
     public static final String REQUEST_PARAM_SYSTEM_VERSION = "systemVersion";
