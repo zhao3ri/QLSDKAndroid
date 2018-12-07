@@ -19,7 +19,7 @@ public class QLSDK {
     private IPresenter mPresenter;
 
     private QLSDK(@NonNull Config config) {
-        PlatformHandler mHandler = PlatformHandler.create(config);
+        ChannelHandler mHandler = ChannelHandler.create(config);
         mPresenter = mHandler.getPresenter();
     }
 

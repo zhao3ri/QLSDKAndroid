@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<channel-list>
+    <!--所有渠道平台的配置参数在此添加-->
+    <!--id为服务端分配的平台id，不可随意更改，name可根据需要修改-->
+    <!--游戏fun平台-->
+    <channel name="YXF" id="4">
+        <class-name>YXFChannel</class-name>
+    </channel>
+    <!--UC-->
+    <channel name="UC" id="5">
+        <class-name>UCChannel</class-name>
+    </channel>
+    <!--华为-->
+    <channel name="Huawei" id="6">
+        <class-name>HMSChannel</class-name>
+    </channel>
+    <!--金立-->
+    <channel name="Gionee" id="42">
+        <class-name>GioneeChannel</class-name>
+    </channel>
+</channel-list>

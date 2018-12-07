@@ -22,7 +22,7 @@ import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.PayRequest;
 import com.qinglan.sdk.android.model.UserInfo;
 import com.qinglan.sdk.android.net.HttpConstants;
-import com.qinglan.sdk.android.platform.IPlatform;
+import com.qinglan.sdk.android.channel.IChannel;
 import com.qinglan.sdk.android.utils.SDKUtils;
 
 import org.json.JSONException;
@@ -36,7 +36,7 @@ import java.util.Map;
 class SDKPresenter implements IPresenter {
     private Context mContext;
     private IConnector iConnector;
-    private IPlatform iPlatform;
+    private IChannel iChannel;
     private String gameId;
     private boolean isLogged = false;//是否登录
     private boolean isHeartBeating = false;//心跳是否启动
@@ -66,17 +66,17 @@ class SDKPresenter implements IPresenter {
         }
     };
 
-    public SDKPresenter(@NonNull Context context, String id, @NonNull IPlatform platform) {
+    public SDKPresenter(@NonNull Context context, String id, @NonNull IChannel platform) {
         mContext = context;
         heartBeatManager = (AlarmManager) mContext.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         gameId = id;
-        iPlatform = platform;
+        iChannel = platform;
         iConnector = new SDKConnector(this);
     }
 
     @Override
     public void init(final Activity activity, final Callback.OnInitCompletedListener listener) {
-        iPlatform.init(activity, new Callback.OnInitConnectedListener() {
+        iChannel.init(activity, new Callback.OnInitConnectedListener() {
             @Override
             public void initSuccess(UserInfo user) {
                 if (user != null) {
@@ -95,7 +95,7 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void login(final Activity activity, final Callback.OnLoginResponseListener listener) {
-        iPlatform.login(activity, new Callback.OnLoginListener() {
+        iChannel.login(activity, new Callback.OnLoginListener() {
             @Override
             public void loginSuccess(final UserInfo userInfo) {
                 //当平台登录成功后，调用SDK获取session
@@ -134,7 +134,7 @@ class SDKPresenter implements IPresenter {
                 if (success) {//刷新SDK数据成功
                     loginTime = loginTimestamp;
                     createTime = createTimestamp;
-                    iPlatform.selectRole(activity, showFloat, gameRole, createTimestamp, new Callback.OnGameRoleRequestListener() {
+                    iChannel.selectRole(activity, showFloat, gameRole, createTimestamp, new Callback.OnGameRoleRequestListener() {
                         @Override
                         public void onSuccess(final GameRole role) {
                             if (!isHeartBeating) {//若当前心跳未启动
@@ -145,7 +145,7 @@ class SDKPresenter implements IPresenter {
                             if (listener != null)
                                 listener.onGameStarted(loginTimestamp);
                             if (showFloat) {
-                                iPlatform.showWinFloat(activity);
+                                iChannel.showWinFloat(activity);
                             }
                         }
 
@@ -204,7 +204,7 @@ class SDKPresenter implements IPresenter {
                         e.getMessage();
                     }
                     createTime = timestamp;
-                    iPlatform.createRole(activity, role, createTime, new Callback.OnGameRoleRequestListener() {
+                    iChannel.createRole(activity, role, createTime, new Callback.OnGameRoleRequestListener() {
                         @Override
                         public void onSuccess(GameRole role) {
                             if (listener != null)
@@ -229,7 +229,7 @@ class SDKPresenter implements IPresenter {
     @Override
     public void logout(final Activity activity, final GameRole role, final Callback.OnLogoutResponseListener listener) {
         //发起平台注销请求
-        iPlatform.logout(activity, role, new Callback.OnLogoutResponseListener() {
+        iChannel.logout(activity, role, new Callback.OnLogoutResponseListener() {
             @Override
             public void onSuccess() {
                 //平台注销返回成功，发起SDK清除用户数据请求
@@ -265,7 +265,7 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void exitGameWithTips(@NonNull final Activity activity, final GameRole role, final Callback.OnExitListener listener, String title, String msg, String negativeButtonText, String positiveButtonText) {
-        if (iPlatform.isCustomLogoutUI()) {//若平台有自定义的退出UI，直接调用退出方法
+        if (iChannel.isCustomLogoutUI()) {//若平台有自定义的退出UI，直接调用退出方法
             exit(activity, role, listener);
             return;
         }
@@ -288,7 +288,7 @@ class SDKPresenter implements IPresenter {
     }
 
     private void exit(final Activity activity, final GameRole role, final Callback.OnExitListener listener) {
-        iPlatform.exit(activity, role, new Callback.OnExitListener() {
+        iChannel.exit(activity, role, new Callback.OnExitListener() {
             @Override
             public void onCompleted(boolean success, String msg) {
                 if (success) {
@@ -325,7 +325,7 @@ class SDKPresenter implements IPresenter {
             @Override
             public void onSuccess(Map<String, Object> result) {
                 request.setNotifyUrl(result.get(HttpConstants.RESPONSE_NOTIFY_URL).toString());
-                iPlatform.pay(activity, game, pay, result, new Callback.OnPayRequestListener() {
+                iChannel.pay(activity, game, pay, result, new Callback.OnPayRequestListener() {
                     @Override
                     public void onSuccess(String orderId) {
                         if (listener != null)
@@ -375,7 +375,7 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void levelUpdate(Activity activity, GameRole role) {
-        iPlatform.levelUpdate(activity, role, createTime, new Callback.OnLevelUpListener() {
+        iChannel.levelUpdate(activity, role, createTime, new Callback.OnLevelUpListener() {
             @Override
             public void onCompleted(boolean success, String msg) {
                 Log.d("level up->success: " + success + ",msg: " + msg);
@@ -393,27 +393,27 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public int getPlatformId() {
-        return iPlatform.getId();
+        return iChannel.getId();
     }
 
     @Override
     public String getPlatformName() {
-        return iPlatform.getName();
+        return iChannel.getName();
     }
 
     @Override
     public void showFloat(Activity activity) {
-        iPlatform.showWinFloat(activity);
+        iChannel.showWinFloat(activity);
     }
 
     @Override
     public void hideFloat(Activity activity) {
-        iPlatform.hideWinFloat(activity);
+        iChannel.hideWinFloat(activity);
     }
 
     @Override
     public void onCreate(Activity activity) {
-        iPlatform.onCreate(activity);
+        iChannel.onCreate(activity);
     }
 
     @Override
@@ -421,59 +421,59 @@ class SDKPresenter implements IPresenter {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(HEART_BEAT_ACTION + getGameId());
         activity.registerReceiver(heartBeatReceiver, intentFilter);
-        iPlatform.onStart(activity);
+        iChannel.onStart(activity);
     }
 
     @Override
     public void onResume(Activity activity) {
-        iPlatform.onResume(activity);
+        iChannel.onResume(activity);
     }
 
     @Override
     public void onPause(Activity activity) {
-        iPlatform.onPause(activity);
+        iChannel.onPause(activity);
     }
 
     @Override
     public void onStop(Activity activity) {
-        iPlatform.onStop(activity);
+        iChannel.onStop(activity);
     }
 
     @Override
     public void onDestroy(Activity activity) {
         activity.unregisterReceiver(heartBeatReceiver);
-        iPlatform.onDestroy(activity);
+        iChannel.onDestroy(activity);
     }
 
     @Override
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-        iPlatform.onActivityResult(activity, requestCode, resultCode, data);
+        iChannel.onActivityResult(activity, requestCode, resultCode, data);
     }
 
     @Override
     public void onNewIntent(Intent intent) {
-        iPlatform.onNewIntent(intent);
+        iChannel.onNewIntent(intent);
     }
 
     @Override
     public void onBackPressed() {
-        iPlatform.onBackPressed();
+        iChannel.onBackPressed();
     }
 
     @Override
     public void attachBaseContext(Context newBase) {
-        iPlatform.attachBaseContext(newBase);
+        iChannel.attachBaseContext(newBase);
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        iPlatform.onConfigurationChanged(newConfig);
+        iChannel.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void saveUserInfo(UserInfo user) {
         UserPreferences.saveUserInfo(mContext, user);
-        iPlatform.setUser(user);
+        iChannel.setUser(user);
         Log.d(getUserInfo().toString());
     }
 

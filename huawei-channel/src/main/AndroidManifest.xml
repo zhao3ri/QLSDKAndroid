@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.qinglan.sdk.android.platform.huawei">
+    package="com.qinglan.sdk.android.channel.huawei">
 
     <!--HMS-SDK引导升级HMS功能，访问OTA服务器需要网络权限 | HMS-SDK upgrade HMS Feature, access to OTA server requires network privileges-->
     <uses-permission android:name="android.permission.INTERNET" />
