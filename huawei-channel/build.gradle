@@ -32,10 +32,13 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-    String HMSSDKVer ='2.6.1.301'
+//    String HMSSDKVer ='2.6.1.301'
     if (buildToolIsGreaterThan3 == true) {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
         implementation 'com.android.support:appcompat-v7:23+'
@@ -44,12 +47,12 @@ dependencies {
             exclude group: 'com.android.support', module: 'support-annotations'
         })
         compileOnly project(':qlsdk-core')
-        implementation 'com.huawei.android.hms:iap:'+HMSSDKVer
-        implementation 'com.huawei.android.hms:game:'+HMSSDKVer
-        implementation 'com.huawei.android.hms:sns:'+HMSSDKVer
-        implementation 'com.huawei.android.hms:hwid:'+HMSSDKVer
-        implementation 'com.huawei.android.hms:push:'+HMSSDKVer
-        implementation 'com.huawei.android.hms:opendevice:'+HMSSDKVer
+//        implementation 'com.huawei.android.hms:iap:'+HMSSDKVer
+//        implementation 'com.huawei.android.hms:game:'+HMSSDKVer
+//        implementation 'com.huawei.android.hms:sns:'+HMSSDKVer
+//        implementation 'com.huawei.android.hms:hwid:'+HMSSDKVer
+//        implementation 'com.huawei.android.hms:push:'+HMSSDKVer
+//        implementation 'com.huawei.android.hms:opendevice:'+HMSSDKVer
     } else {
         compile fileTree(dir: 'libs', include: ['*.jar'])
         compile 'com.android.support:appcompat-v7:23+'
@@ -58,12 +61,12 @@ dependencies {
             exclude group: 'com.android.support', module: 'support-annotations'
         })
         provided project(':qlsdk-core')
-        compile 'com.huawei.android.hms:iap:'+HMSSDKVer
-        compile 'com.huawei.android.hms:game:'+HMSSDKVer
-        compile 'com.huawei.android.hms:sns:'+HMSSDKVer
-        compile 'com.huawei.android.hms:hwid:'+HMSSDKVer
-        compile 'com.huawei.android.hms:push:'+HMSSDKVer
-        compile 'com.huawei.android.hms:opendevice:'+HMSSDKVer
+//        compile 'com.huawei.android.hms:iap:'+HMSSDKVer
+//        compile 'com.huawei.android.hms:game:'+HMSSDKVer
+//        compile 'com.huawei.android.hms:sns:'+HMSSDKVer
+//        compile 'com.huawei.android.hms:hwid:'+HMSSDKVer
+//        compile 'com.huawei.android.hms:push:'+HMSSDKVer
+//        compile 'com.huawei.android.hms:opendevice:'+HMSSDKVer
     }
 
 }

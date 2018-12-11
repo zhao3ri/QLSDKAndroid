@@ -96,6 +96,10 @@ public final class ResContainer {
     }
 
     private static int getResId(Context context, String type, String name) {
+        return getResId(context.getPackageName(), type, name);
+    }
+
+    public static int getDefaultResId(String type, String name){
         return getResId(DEFAULT_PACKAGE_NAME, type, name);
     }
 

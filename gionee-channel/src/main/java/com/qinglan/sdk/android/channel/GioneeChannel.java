@@ -120,7 +120,7 @@ public class GioneeChannel extends BaseChannel {
     public void pay(Activity activity, GameRole role, GamePay pay, Map<String, Object> result, final Callback.OnPayRequestListener listener) {
         final String orderId = result.get(HttpConstants.RESPONSE_ORDER_ID).toString();
         GameOrder gameOrder = new GameOrder();
-        gameOrder.mOutOrderNo = pay.getCpOrderId();
+        gameOrder.mOutOrderNo = orderId;
         gameOrder.mSubmitTime = Utils.toTimeString(System.currentTimeMillis());
         gameOrder.mSubject = pay.getGoodsName();
         gameOrder.mTotalFee = String.valueOf(pay.getAmount() / 100);

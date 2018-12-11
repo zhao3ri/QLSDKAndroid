@@ -1,5 +1,6 @@
 package com.qinglan.sdk.android.channel;
 
+import android.content.res.Resources;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
@@ -27,24 +28,34 @@ public abstract class BaseChannel implements IChannel {
     private static final String RES_NAME_PUBLIC_KEY = "qlsdk_third_party_pubkey";
     private static final String RES_NAME_CP_ID = "qlsdk_third_party_cpid";
 
-
     @Override
     public void load(ChannelParamsReader.ChannelParam p, Config config) {
         channelId = p.id;
         channelName = p.name;
         gameConfig = config;
         if (TextUtils.isEmpty(gameConfig.getAppID())) {
-            gameConfig.setAppID(ResContainer.getString(config.getContext(), RES_NAME_APP_ID));
+            gameConfig.setAppID(getString(RES_NAME_APP_ID));
         }
         if (TextUtils.isEmpty(gameConfig.getAppKey())) {
-            gameConfig.setAppKey(ResContainer.getString(config.getContext(), RES_NAME_APP_KEY));
+            gameConfig.setAppKey(getString(RES_NAME_APP_KEY));
         }
         if (TextUtils.isEmpty(gameConfig.getPublicKey())) {
-            gameConfig.setPublicKey(ResContainer.getString(config.getContext(), RES_NAME_PUBLIC_KEY));
+            gameConfig.setPublicKey(getString(RES_NAME_PUBLIC_KEY));
         }
         if (TextUtils.isEmpty(gameConfig.getCpID())) {
-            gameConfig.setCpID(ResContainer.getString(config.getContext(), RES_NAME_CP_ID));
+            gameConfig.setCpID(getString(RES_NAME_CP_ID));
         }
+    }
+
+    private String getString(String resName) {
+        int resId = ResContainer.getResId(BaseChannel.class.getPackage().getName(), "string", resName);
+        String res = null;
+        try {
+            res = gameConfig.getContext().getString(resId);
+        } catch (Resources.NotFoundException e) {
+            Log.e(resName + " is not found!!");
+        }
+        return res;
     }
 
     @Override

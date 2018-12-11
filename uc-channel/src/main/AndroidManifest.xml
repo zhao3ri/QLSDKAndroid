@@ -35,15 +35,17 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application>
+        <!-- android:taskAffinity 填上游戏的包名，如游戏包名为cn.uc.gamesdk.demo， 则下面填 cn.uc.gamesdk.demo.diff -->
+        <!-- data android:scheme 里将00000000替换，填上”ng+当前游戏的gameId”,如游戏ID是123456,则填 上ng123456 -->
         <activity
             android:name="cn.uc.gamesdk.activity.PullupActivity"
             android:excludeFromRecents="true"
             android:exported="true"
             android:label="PullupActivity"
             android:launchMode="singleTop"
-            tools:replace="android:taskAffinity"
             android:taskAffinity="qinglanGameApplicationId.diff"
-            android:theme="@android:style/Theme.Translucent">
+            android:theme="@android:style/Theme.Translucent"
+            tools:replace="android:taskAffinity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

@@ -40,6 +40,7 @@ dependencies {
 
         embedded project(':uc-channel')
         embedded project(':yxf-channel')
+        embedded project(':huawei-channel')
 
         implementation 'com.android.support:appcompat-v7:23.4.0'
         testImplementation 'junit:junit:4.12'
@@ -50,6 +51,7 @@ dependencies {
 
         embedded project(':uc-channel')
         embedded project(':yxf-channel')
+        embedded project(':huawei-channel')
 
         compile 'com.android.support:appcompat-v7:23+'
         testCompile 'junit:junit:4.12'

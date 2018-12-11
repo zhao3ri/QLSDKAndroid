@@ -21,7 +21,7 @@ public class HMSVerifyRequest extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return "platform2/hms/session";
+        return "channel2/hms/session";
     }
 
     @Override

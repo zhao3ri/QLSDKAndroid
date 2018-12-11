@@ -53,12 +53,12 @@ dependencies {
         androidTestCompile 'com.android.support.test:runner:1.0.2'
         androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
         provided project(':qlsdk-core')
-
-        fileTree(dir: 'libs', include: '**/*.aar')
-                .each { File file ->
-            dependencies.add("compile", [name: file.name.lastIndexOf('.').with {
-                it != -1 ? file.name[0..<it] : file.name
-            }, ext                           : 'aar'])
-        }
+        compile(name: 'net-sdk-8.0.4', ext: 'aar')
+//        fileTree(dir: 'libs', include: '**/*.aar')
+//                .each { File file ->
+//            dependencies.add("compile", [name: file.name.lastIndexOf('.').with {
+//                it != -1 ? file.name[0..<it] : file.name
+//            }, ext                           : 'aar'])
+//        }
     }
 }

@@ -20,7 +20,7 @@ public class UCSessionRequest extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return "platform/ucgame/session";
+        return "channel/ucgame/session";
     }
 
     @Override

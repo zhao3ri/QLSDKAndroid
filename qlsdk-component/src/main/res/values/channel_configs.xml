@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qlsdk_third_party_appid"></string>
+    <string name="qlsdk_third_party_appkey"></string>
+    <string name="qlsdk_third_party_pubkey"></string>
+    <string name="qlsdk_third_party_cpid"></string>
+</resources>
