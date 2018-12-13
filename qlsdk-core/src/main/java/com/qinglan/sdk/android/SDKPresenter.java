@@ -14,12 +14,13 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.qinglan.sdk.android.base.IConnector;
+import com.qinglan.sdk.android.base.IPresenter;
 import com.qinglan.sdk.android.common.CachePreferences;
 import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
-import com.qinglan.sdk.android.model.PayRequest;
 import com.qinglan.sdk.android.model.UserInfo;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.channel.IChannel;
@@ -30,6 +31,11 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+import static com.qinglan.sdk.android.Constants.ACTION_EXIT;
+import static com.qinglan.sdk.android.Constants.ACTION_HEART_BEAT;
+import static com.qinglan.sdk.android.Constants.ACTION_LOGOUT;
+import static com.qinglan.sdk.android.Constants.KEY_GAME_ROLE;
+
 /**
  * Created by zhaoj on 2018/10/17.
  */
@@ -37,31 +43,36 @@ class SDKPresenter implements IPresenter {
     private Context mContext;
     private IConnector iConnector;
     private IChannel iChannel;
-    private String gameId;
+    private String mGameId;
     private boolean isLogged = false;//是否登录
     private boolean isHeartBeating = false;//心跳是否启动
-    private long loginTime = 0;//登录时间戳
-    private long createTime = 0;//创角时间戳
+    private GameRole mRole;
+    private long mLoginTime = 0;//登录时间戳
+    private long mCreateTime = 0;//创角时间戳
 
-    private static final long HEART_RATE = 1000 * 60 * 20;//20分钟更新一次心跳
-    private static final String HEART_BEAT_ACTION = "com.qinglan.sdk.android.HEART_BEAT_ACTION";
     private AlarmManager heartBeatManager;
+    private static final long HEART_RATE = 1000 * 60 * 20;//20分钟更新一次心跳
 
-    private static final String KEY_GAME_ROLE = "IPresenter.game_role";
-    private BroadcastReceiver heartBeatReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver SDKReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(HEART_BEAT_ACTION + getGameId())) {
+            if (intent.getAction().equals(ACTION_HEART_BEAT + getGameId())) {
                 if (!isLogged) {
                     return;
                 }
 //                GameRole role = (GameRole) intent.getSerializableExtra(KEY_GAME_ROLE);
-                GameRole role = GameRole.readJson(intent.getStringExtra(KEY_GAME_ROLE));
+                GameRole role = mRole;
+                if (role == null)
+                    role = GameRole.readJson(intent.getStringExtra(KEY_GAME_ROLE));
                 if (role != null) {
                     Log.d("heartBeat!");
                     Log.d("Intent Extra:" + role.toString());
-                    iConnector.startHeartBeat(mContext, role, String.valueOf(loginTime), null);
+                    iConnector.startHeartBeat(mContext, role, String.valueOf(mLoginTime), null);
                 }
+            } else if (intent.getAction().equals(ACTION_LOGOUT + getGameId())) {
+                iConnector.cleanSession(mContext, mRole, null);
+            }else if (intent.getAction().equals(ACTION_EXIT + getGameId())) {
+                iConnector.exit(mContext, mRole, null);
             }
         }
     };
@@ -69,7 +80,7 @@ class SDKPresenter implements IPresenter {
     public SDKPresenter(@NonNull Context context, String id, @NonNull IChannel platform) {
         mContext = context;
         heartBeatManager = (AlarmManager) mContext.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        gameId = id;
+        mGameId = id;
         iChannel = platform;
         iConnector = new SDKConnector(this);
     }
@@ -78,7 +89,7 @@ class SDKPresenter implements IPresenter {
     public void init(final Activity activity, final Callback.OnInitCompletedListener listener) {
         iChannel.init(activity, new Callback.OnInitConnectedListener() {
             @Override
-            public void initSuccess(UserInfo user) {
+            public void onSuccess(UserInfo user) {
                 if (user != null) {
                     saveUserInfo(user);
                 }
@@ -86,9 +97,9 @@ class SDKPresenter implements IPresenter {
             }
 
             @Override
-            public void initFailed(String msg) {
+            public void onFailed(String msg) {
                 if (listener != null)
-                    listener.onCompleted(false, msg);
+                    listener.onFinished(false, msg);
             }
         });
     }
@@ -97,7 +108,7 @@ class SDKPresenter implements IPresenter {
     public void login(final Activity activity, final Callback.OnLoginResponseListener listener) {
         iChannel.login(activity, new Callback.OnLoginListener() {
             @Override
-            public void loginSuccess(final UserInfo userInfo) {
+            public void onSuccess(final UserInfo userInfo) {
                 //当平台登录成功后，调用SDK获取session
                 iConnector.getToken(userInfo.getId(), new Callback.GetTokenListener() {
                     @Override
@@ -111,17 +122,15 @@ class SDKPresenter implements IPresenter {
                             if (listener != null)
                                 listener.onSuccess(getUserInfo());
                         } else {
-                            if (listener != null)
-                                listener.onFailed(result);
+                            onFailedResponse(listener, result);
                         }
                     }//onSuccess
                 });
             }
 
             @Override
-            public void loginFailed(String msg) {
-                if (listener != null)
-                    listener.onFailed(msg);
+            public void onFailed(String msg) {
+                onFailedResponse(listener, msg);
             }
         });
     }
@@ -132,18 +141,19 @@ class SDKPresenter implements IPresenter {
             @Override
             public void onRefreshed(boolean success, final long loginTimestamp, long createTimestamp, String result) {
                 if (success) {//刷新SDK数据成功
-                    loginTime = loginTimestamp;
-                    createTime = createTimestamp;
+                    mLoginTime = loginTimestamp;
+                    mCreateTime = createTimestamp;
                     iChannel.selectRole(activity, showFloat, gameRole, createTimestamp, new Callback.OnGameRoleRequestListener() {
                         @Override
                         public void onSuccess(final GameRole role) {
+                            updateRole(role);
                             if (!isHeartBeating) {//若当前心跳未启动
                                 //启动心跳
                                 startHeartBeat(role);
                                 isHeartBeating = true;
                             }
                             if (listener != null)
-                                listener.onGameStarted(loginTimestamp);
+                                listener.onSuccess(loginTimestamp);
                             if (showFloat) {
                                 iChannel.showWinFloat(activity);
                             }
@@ -151,13 +161,11 @@ class SDKPresenter implements IPresenter {
 
                         @Override
                         public void onFailed(String msg) {
-                            if (listener != null)
-                                listener.onFailed(msg);
+                            onFailedResponse(listener, msg);
                         }
                     });
                 } else {
-                    if (listener != null)
-                        listener.onFailed(result);
+                    onFailedResponse(listener, result);
                 }
             }//onRefreshed
         });
@@ -177,7 +185,7 @@ class SDKPresenter implements IPresenter {
     }
 
     private PendingIntent getPendingIntent(GameRole role) {
-        Intent intent = new Intent(HEART_BEAT_ACTION + getGameId());
+        Intent intent = new Intent(ACTION_HEART_BEAT + getGameId());
         if (role != null) {
             Log.d(role.toString());
             //6.0之后使用getSerializable取不到值，换成json的形式传递数据
@@ -190,8 +198,8 @@ class SDKPresenter implements IPresenter {
     }
 
     @Override
-    public void createRole(final Activity activity, final GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
-        iConnector.createRole(activity, role, new Callback.OnCreateRoleFinishedListener() {
+    public void createRole(final Activity activity, final GameRole role, final Callback.OnCreateRoleListener listener) {
+        iConnector.createRole(activity, role, new Callback.OnCreateRoleListener() {
             @Override
             public void onFinished(boolean success, final String result) {
                 if (success) {
@@ -203,10 +211,11 @@ class SDKPresenter implements IPresenter {
                         Log.e("get create time error.");
                         e.getMessage();
                     }
-                    createTime = timestamp;
-                    iChannel.createRole(activity, role, createTime, new Callback.OnGameRoleRequestListener() {
+                    mCreateTime = timestamp;
+                    iChannel.createRole(activity, role, mCreateTime, new Callback.OnGameRoleRequestListener() {
                         @Override
                         public void onSuccess(GameRole role) {
+                            updateRole(role);
                             if (listener != null)
                                 listener.onFinished(true, result);
                         }
@@ -227,13 +236,13 @@ class SDKPresenter implements IPresenter {
     }
 
     @Override
-    public void logout(final Activity activity, final GameRole role, final Callback.OnLogoutResponseListener listener) {
+    public void logout(final Activity activity, final Callback.OnLogoutResponseListener listener) {
         //发起平台注销请求
-        iChannel.logout(activity, role, new Callback.OnLogoutResponseListener() {
+        iChannel.logout(activity, mRole, new Callback.OnLogoutResponseListener() {
             @Override
             public void onSuccess() {
                 //平台注销返回成功，发起SDK清除用户数据请求
-                iConnector.cleanSession(activity, role, new Callback.OnLogoutResponseListener() {
+                iConnector.cleanSession(activity, mRole, new Callback.OnLogoutResponseListener() {
                     @Override
                     public void onSuccess() {
                         //若成功，则更改和删除相关数据，回调成功接口方法
@@ -244,29 +253,27 @@ class SDKPresenter implements IPresenter {
 
                     @Override
                     public void onFailed(String error) {
-                        if (listener != null)
-                            listener.onFailed(error);
+                        onFailedResponse(listener, error);
                     }
                 });
             }
 
             @Override
             public void onFailed(String error) {
-                if (listener != null)
-                    listener.onFailed(error);
+                onFailedResponse(listener, error);
             }
         });
     }
 
     @Override
-    public void exitGame(@NonNull final Activity activity, @NonNull final GameRole role, final Callback.OnExitListener listener) {
-        exitGameWithTips(activity, role, listener, "退出游戏", "不多玩一会吗？", "取消", "确定");
+    public void exitGame(@NonNull final Activity activity, final Callback.OnExitListener listener) {
+        exitGameWithTips(activity, listener, "退出游戏", "不多玩一会吗？", "取消", "确定");
     }
 
     @Override
-    public void exitGameWithTips(@NonNull final Activity activity, final GameRole role, final Callback.OnExitListener listener, String title, String msg, String negativeButtonText, String positiveButtonText) {
+    public void exitGameWithTips(@NonNull final Activity activity, final Callback.OnExitListener listener, String title, String msg, String negativeButtonText, String positiveButtonText) {
         if (iChannel.isCustomLogoutUI()) {//若平台有自定义的退出UI，直接调用退出方法
-            exit(activity, role, listener);
+            exit(activity, listener);
             return;
         }
         new AlertDialog.Builder(activity).setTitle(title)
@@ -281,51 +288,51 @@ class SDKPresenter implements IPresenter {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                exit(activity, role, listener);
+                exit(activity, listener);
                 dialog.dismiss();
             }
         }).setCancelable(false).show();
     }
 
-    private void exit(final Activity activity, final GameRole role, final Callback.OnExitListener listener) {
-        iChannel.exit(activity, role, new Callback.OnExitListener() {
+    private void exit(final Activity activity, final Callback.OnExitListener listener) {
+        iChannel.exit(activity, mRole, new Callback.OnExitListener() {
             @Override
-            public void onCompleted(boolean success, String msg) {
+            public void onFinished(boolean success, String msg) {
                 if (success) {
                     if (TextUtils.isEmpty(getUserInfo().getId())) {
-                        listener.onCompleted(true, msg);
+                        if (listener != null)
+                            listener.onFinished(true, msg);
                         return;
                     }
                     //当平台退出成功时，调用SDK的退出
-                    iConnector.exit(activity, role, new Callback.OnExitListener() {
+                    iConnector.exit(activity, mRole, new Callback.OnExitListener() {
                         @Override
-                        public void onCompleted(boolean success, String msg) {
+                        public void onFinished(boolean success, String msg) {
                             //若平台退出成功，不管SDK最后请求结果如何都需要清除数据
                             clear();
-                            listener.onCompleted(true, msg);
+                            if (listener != null)
+                                listener.onFinished(true, msg);
                         }
                     });
                 } else {
                     if (listener != null)
-                        listener.onCompleted(false, msg);
+                        listener.onFinished(false, msg);
                 }
             }
         });
     }
 
     @Override
-    public void doPay(@NonNull final Activity activity, final PayRequest request, final Callback.OnPayRequestListener listener) {
+    public void doPay(@NonNull final Activity activity, final GamePay pay, final Callback.OnPayRequestListener listener) {
         int fixed = 0;
-        if (request.getAmount() > 0) {
+        if (pay.getAmount() > 0) {
             fixed = 1;
         }
-        final GameRole game = getGameRole(request);
-        final GamePay pay = getGamePay(request);
-        iConnector.generateOrder(activity, game, pay, fixed, String.valueOf(loginTime), new Callback.GenerateOrderListener() {
+        iConnector.generateOrder(activity, mRole, pay, fixed, String.valueOf(mLoginTime), new Callback.GenerateOrderListener() {
             @Override
             public void onSuccess(Map<String, Object> result) {
-                request.setNotifyUrl(result.get(HttpConstants.RESPONSE_NOTIFY_URL).toString());
-                iChannel.pay(activity, game, pay, result, new Callback.OnPayRequestListener() {
+                pay.setNotifyUrl(result.get(HttpConstants.RESPONSE_NOTIFY_URL).toString());
+                iChannel.pay(activity, mRole, pay, result, new Callback.OnPayRequestListener() {
                     @Override
                     public void onSuccess(String orderId) {
                         if (listener != null)
@@ -334,50 +341,24 @@ class SDKPresenter implements IPresenter {
 
                     @Override
                     public void onFailed(String msg) {
-                        if (listener != null)
-                            listener.onFailed(msg);
+                        onFailedResponse(listener, msg);
                     }
                 });
             }
 
             @Override
             public void onFailed(String msg) {
-                if (listener != null)
-                    listener.onFailed(msg);
+                onFailedResponse(listener, msg);
             }
         });
     }
 
-    private GameRole getGameRole(PayRequest pay) {
-        GameRole role = new GameRole();
-        role.setRoleId(pay.getRoleId());
-        role.setRoleName(pay.getRoleName());
-        role.setRoleLevel(pay.getRoleLevel());
-        if (TextUtils.isEmpty(pay.getServerId())) {
-            role.setServerId(String.valueOf(1));
-        } else {
-            role.setServerId(pay.getServerId());
-        }
-        role.setZoneId(pay.getZoneId());
-        role.setZoneName(pay.getZoneName());
-        return role;
-    }
-
-    private GamePay getGamePay(PayRequest request) {
-        GamePay pay = new GamePay();
-        pay.setNotifyUrl(request.getNotifyUrl());
-        pay.setAmount(request.getAmount());
-        pay.setGoodsId(request.getGoodsId());
-        pay.setGoodsCount(request.getGoodsCount());
-        pay.setGoodsName(request.getGoodsName());
-        return pay;
-    }
-
     @Override
-    public void levelUpdate(Activity activity, GameRole role) {
-        iChannel.levelUpdate(activity, role, createTime, new Callback.OnLevelUpListener() {
+    public void levelUpdate(Activity activity, final GameRole role) {
+        iChannel.levelUpdate(activity, role, mCreateTime, new Callback.OnLevelUpListener() {
             @Override
-            public void onCompleted(boolean success, String msg) {
+            public void onFinished(boolean success, String msg) {
+                updateRole(role);
                 Log.d("level up->success: " + success + ",msg: " + msg);
             }
         });
@@ -385,10 +366,20 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public String getGameId() {
-        if (TextUtils.isEmpty(gameId)) {
-            gameId = SDKUtils.getGameId(mContext.getApplicationContext());
+        if (TextUtils.isEmpty(mGameId)) {
+            mGameId = SDKUtils.getGameId(mContext.getApplicationContext());
         }
-        return gameId;
+        return mGameId;
+    }
+
+    private void updateRole(GameRole gameRole) {
+        if (gameRole == null) {
+            gameRole = new GameRole();
+        }
+        mRole = gameRole;
+        if (TextUtils.isEmpty(mRole.getServerId())) {
+            mRole.setServerId(String.valueOf(1));
+        }
     }
 
     @Override
@@ -419,8 +410,10 @@ class SDKPresenter implements IPresenter {
     @Override
     public void onStart(Activity activity) {
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(HEART_BEAT_ACTION + getGameId());
-        activity.registerReceiver(heartBeatReceiver, intentFilter);
+        intentFilter.addAction(ACTION_HEART_BEAT + getGameId());
+        intentFilter.addAction(ACTION_LOGOUT + getGameId());
+        intentFilter.addAction(ACTION_EXIT + getGameId());
+        activity.registerReceiver(SDKReceiver, intentFilter);
         iChannel.onStart(activity);
     }
 
@@ -441,7 +434,7 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void onDestroy(Activity activity) {
-        activity.unregisterReceiver(heartBeatReceiver);
+        activity.unregisterReceiver(SDKReceiver);
         iChannel.onDestroy(activity);
     }
 
@@ -497,11 +490,17 @@ class SDKPresenter implements IPresenter {
     public void clear() {
         isLogged = false;
         isHeartBeating = false;
-        loginTime = 0;
-        createTime = 0;
+        mLoginTime = 0;
+        mCreateTime = 0;
+        mRole = null;
         UserPreferences.clear(mContext);
         stopHeartBeat(null);
         Log.d("User===" + getUserInfo().toString());
+    }
+
+    private void onFailedResponse(Callback.DefaultResponseListener listener, String msg) {
+        if (listener != null)
+            listener.onFailed(msg);
     }
 
     private static final String KEY_DEVICE_ID = "deviceId";

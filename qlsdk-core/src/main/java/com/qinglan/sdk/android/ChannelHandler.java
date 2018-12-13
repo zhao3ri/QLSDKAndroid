@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
 
+import com.qinglan.sdk.android.base.IPresenter;
 import com.qinglan.sdk.android.channel.DefaultChannel;
 import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.channel.IChannel;

@@ -43,7 +43,7 @@
             android:exported="true"
             android:label="PullupActivity"
             android:launchMode="singleTop"
-            android:taskAffinity="qinglanGameApplicationId.diff"
+            android:taskAffinity="${QL_PACKAGENAME}.diff"
             android:theme="@android:style/Theme.Translucent"
             tools:replace="android:taskAffinity">
             <intent-filter>
@@ -52,7 +52,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="ng00000000" />
+                <data android:scheme="ng${CHANNEL_APPID}" />
             </intent-filter>
         </activity>
         <!-- alipay sdk begin -->

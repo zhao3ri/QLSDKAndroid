@@ -12,7 +12,6 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 
-import com.qinglan.sdk.android.R;
 import com.qinglan.sdk.android.common.Log;
 
 import java.util.ArrayList;

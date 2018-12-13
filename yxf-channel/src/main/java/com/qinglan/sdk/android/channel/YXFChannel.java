@@ -31,7 +31,7 @@ public class YXFChannel extends BaseChannel {
         //yxf平台不需要初始化，直接回调成功
         YXFSDKManager.getInstance(activity);
         if (onInitConnectedListener != null) {
-            onInitConnectedListener.initSuccess(null);
+            onInitConnectedListener.onSuccess(null);
         }
     }
 
@@ -44,7 +44,7 @@ public class YXFChannel extends BaseChannel {
                 Log.d(getName() + " loginSuccess");
                 if (onLoginListener != null) {
                     UserInfo user = getUser(logincallBack);
-                    onLoginListener.loginSuccess(user);
+                    onLoginListener.onSuccess(user);
                 }
             }
 
@@ -52,7 +52,7 @@ public class YXFChannel extends BaseChannel {
             public void loginError(LoginErrorMsg loginErrorMsg) {
                 Log.d(getName() + " loginError");
                 if (onLoginListener != null)
-                    onLoginListener.loginFailed(loginErrorMsg.msg);
+                    onLoginListener.onFailed(loginErrorMsg.msg);
             }
         });
     }
@@ -87,7 +87,7 @@ public class YXFChannel extends BaseChannel {
         Log.d(getName() + " ChannelParam exit");
         YXFSDKManager.getInstance(activity).LoginOut(true);
         if (onExitListener != null)
-            onExitListener.onCompleted(true, "");
+            onExitListener.onFinished(true, "");
     }
 
     @Override
@@ -149,7 +149,7 @@ public class YXFChannel extends BaseChannel {
     @Override
     public void levelUpdate(Activity activity, GameRole gameRole, long createTime, Callback.OnLevelUpListener onLevelUpListener) {
         if (onLevelUpListener != null)
-            onLevelUpListener.onCompleted(true, "");
+            onLevelUpListener.onFinished(true, "");
     }
 
     @Override

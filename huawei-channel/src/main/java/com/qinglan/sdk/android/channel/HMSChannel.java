@@ -45,7 +45,7 @@ public class HMSChannel extends BaseChannel {
             public void onConnect(int rst) {
                 Log.d("HMS connect end:" + rst);
                 if (listener != null)
-                    listener.initSuccess(null);
+                    listener.onSuccess(null);
             }
         });
     }
@@ -72,10 +72,10 @@ public class HMSChannel extends BaseChannel {
                             public void onRequest(boolean success, int code, Map<String, Object> resMap) {
                                 if (success) {
                                     if (listener != null)
-                                        listener.loginSuccess(helper.getUserInfo(userData));
+                                        listener.onSuccess(helper.getUserInfo(userData));
                                 } else {
                                     if (listener != null)
-                                        listener.loginFailed(getErrorMsg("login", code));
+                                        listener.onFailed(getErrorMsg("login", code));
                                 }
                             }
                         });
@@ -83,7 +83,7 @@ public class HMSChannel extends BaseChannel {
                 } else {
                     Log.d("game login: onResult: retCode=" + retCode);
                     if (listener != null)
-                        listener.loginFailed(getErrorMsg("login", retCode));
+                        listener.onFailed(getErrorMsg("login", retCode));
                 }
             }
 
@@ -115,7 +115,7 @@ public class HMSChannel extends BaseChannel {
     @Override
     public void exit(Activity activity, GameRole role, Callback.OnExitListener listener) {
         if (listener != null) {
-            listener.onCompleted(true, "");
+            listener.onFinished(true, "");
         }
     }
 
@@ -189,9 +189,9 @@ public class HMSChannel extends BaseChannel {
             @Override
             public void onResult(int rst) {
                 if (rst == GameStatusCodes.GAME_STATE_SUCCESS) {
-                    listener.onCompleted(true, "");
+                    listener.onFinished(true, "");
                 } else {
-                    listener.onCompleted(false, getErrorMsg("", rst));
+                    listener.onFinished(false, getErrorMsg("", rst));
                 }
             }
         });

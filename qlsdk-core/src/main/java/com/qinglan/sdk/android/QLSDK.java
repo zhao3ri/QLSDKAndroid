@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 
+import com.qinglan.sdk.android.base.IPresenter;
+import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
-import com.qinglan.sdk.android.model.PayRequest;
 
 /**
  * Created by zhaoj on 2018/9/19
@@ -69,7 +70,7 @@ public class QLSDK {
     /**
      * 创建角色
      */
-    public void createGameRole(Activity activity, GameRole role, Callback.OnCreateRoleFinishedListener listener) {
+    public void createGameRole(Activity activity, GameRole role, Callback.OnCreateRoleListener listener) {
         mPresenter.createRole(activity, role, listener);
     }
 
@@ -90,21 +91,21 @@ public class QLSDK {
     /**
      * 注销
      */
-    public void logout(Activity activity, GameRole role, Callback.OnLogoutResponseListener listener) {
-        mPresenter.logout(activity, role, listener);
+    public void logout(Activity activity, Callback.OnLogoutResponseListener listener) {
+        mPresenter.logout(activity, listener);
     }
 
     /**
      * 退出
      */
-    public void exit(Activity activity, GameRole role, Callback.OnExitListener listener) {
-        mPresenter.exitGame(activity, role, listener);
+    public void exit(Activity activity,Callback.OnExitListener listener) {
+        mPresenter.exitGame(activity, listener);
     }
 
     /**
      * 支付
      */
-    public void doPay(Activity activity, PayRequest pay, Callback.OnPayRequestListener listener) {
+    public void doPay(Activity activity, GamePay pay, Callback.OnPayRequestListener listener) {
         mPresenter.doPay(activity, pay, listener);
     }
 

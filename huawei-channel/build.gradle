@@ -22,6 +22,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                QL_PACKAGENAME: "qinglanGameApplicationId",
+                CHANNEL_APPID : "qinglanChannelAppId",
+                CHANNEL_APPKEY: "qinglanChannelAppKey",
+                CHANNEL_CPID  : "qinglanChannelCpId"
+        ]
 
     }
 

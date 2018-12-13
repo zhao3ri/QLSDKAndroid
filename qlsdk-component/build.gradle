@@ -11,6 +11,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                QL_PACKAGENAME: "qinglanGameApplicationId",
+                CHANNEL_APPID : "qinglanChannelAppId",
+                CHANNEL_APPKEY: "qinglanChannelAppKey",
+                CHANNEL_CPID  : "qinglanChannelCpId"
+        ]
 
     }
 
@@ -21,11 +27,11 @@ android {
         }
     }
 
-    repositories {
-        flatDir {
-            dirs 'libs', '/../uc-channel/libs'
-        }
-    }
+//    repositories {
+//        flatDir {
+//            dirs 'libs', '/../uc-channel/libs'
+//        }
+//    }
     sourceSets {
         main {
             jniLibs.srcDirs = [' /../yxf-channel/libs/so']
@@ -37,25 +43,18 @@ apply from: "../fat-aar.gradle"
 dependencies {
     if (buildToolIsGreaterThan3 == true) {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-        embedded project(':uc-channel')
-        embedded project(':yxf-channel')
-        embedded project(':huawei-channel')
-
-        implementation 'com.android.support:appcompat-v7:23.4.0'
+        implementation 'com.android.support:appcompat-v7:23+'
         testImplementation 'junit:junit:4.12'
         androidTestImplementation 'com.android.support.test:runner:1.0.2'
         androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     } else {
         compile fileTree(dir: 'libs', include: ['*.jar'])
-
-        embedded project(':uc-channel')
-        embedded project(':yxf-channel')
-        embedded project(':huawei-channel')
-
         compile 'com.android.support:appcompat-v7:23+'
         testCompile 'junit:junit:4.12'
         androidTestCompile 'com.android.support.test:runner:1.0.2'
         androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
     }
+    embedded project(':uc-channel')
+    embedded project(':yxf-channel')
+    embedded project(':huawei-channel')
 }

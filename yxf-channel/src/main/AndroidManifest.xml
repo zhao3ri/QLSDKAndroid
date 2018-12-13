@@ -110,7 +110,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="qinglanGameApplicationId"
+            android:authorities="${QL_PACKAGENAME}"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
@@ -120,5 +120,19 @@
                 android:resource="@xml/yxf_file_paths"
                 tools:replace="android:resource" />
         </provider>
+
+        <!-- meta-data需要写在application中 -->
+        <!-- SDK_APPID的值android:value="2"在4.0没有意义，但是该meta-data要保留在清单文件 -->
+        <meta-data
+            android:name="SDK_APPID"
+            android:value="2" />
+        <!-- SDK_GAMEID的值android:value="5"在4.0有意义，运营会在qq群分配参数给你们去替换 -->
+        <meta-data
+            android:name="SDK_GAMEID"
+            android:value="${CHANNEL_APPID}" />
+
+        <meta-data
+            android:name="SDK_AGENT"
+            android:value="default" />
     </application>
 </manifest>

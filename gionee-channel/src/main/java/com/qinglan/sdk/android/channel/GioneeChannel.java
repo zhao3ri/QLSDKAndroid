@@ -35,7 +35,7 @@ public class GioneeChannel extends BaseChannel {
     public void init(Activity activity, Callback.OnInitConnectedListener listener) {
         //直接回调成功
         if (listener != null) {
-            listener.initSuccess(null);
+            listener.onSuccess(null);
         }
     }
 
@@ -45,14 +45,14 @@ public class GioneeChannel extends BaseChannel {
             @Override
             public void onError(Object o) {
                 if (listener != null) {
-                    listener.loginFailed(o.toString());
+                    listener.onFailed(o.toString());
                 }
             }
 
             @Override
             public void onSuccess(AccountInfo accountInfo) {
                 if (listener != null) {
-                    listener.loginSuccess(getUser(accountInfo));
+                    listener.onSuccess(getUser(accountInfo));
                 }
             }
 
@@ -105,13 +105,13 @@ public class GioneeChannel extends BaseChannel {
             @Override
             public void onQuit() {
                 if (listener != null)
-                    listener.onCompleted(true, "");
+                    listener.onFinished(true, "");
             }
 
             @Override
             public void onCancel() {
                 if (listener != null)
-                    listener.onCompleted(false, "");
+                    listener.onFinished(false, "");
             }
         });
     }
@@ -165,7 +165,7 @@ public class GioneeChannel extends BaseChannel {
     @Override
     public void levelUpdate(Activity activity, GameRole role, long createTime, Callback.OnLevelUpListener listener) {
         if (listener != null) {
-            listener.onCompleted(true, "");
+            listener.onFinished(true, "");
         }
     }
 

@@ -5,6 +5,8 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
+import com.qinglan.sdk.android.base.IConnector;
+import com.qinglan.sdk.android.base.IPresenter;
 import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
@@ -73,7 +75,7 @@ class SDKConnector implements IConnector {
                     isSuccess = false;
                 } finally {
                     if (listener != null)
-                        listener.onCompleted(isSuccess, result);
+                        listener.onFinished(isSuccess, result);
                 }
             }
         }).execute(request);
@@ -230,24 +232,24 @@ class SDKConnector implements IConnector {
                 try {
                     if (success && getResponseCode(result) == HttpConstants.RESPONSE_CODE_SUCCESS) {
                         if (listener != null)
-                            listener.onCompleted(true, result);
+                            listener.onFinished(true, result);
                     } else {
                         if (listener != null)
-                            listener.onCompleted(false, result);
+                            listener.onFinished(false, result);
                         Log.e("exit error:" + result);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("exit error, The jason was not properly formatted." + result);
                     if (listener != null)
-                        listener.onCompleted(false, result);
+                        listener.onFinished(false, result);
                 }
             }
         }).execute(request);
     }
 
     @Override
-    public void createRole(Context context, GameRole role, final Callback.OnCreateRoleFinishedListener listener) {
+    public void createRole(Context context, GameRole role, final Callback.OnCreateRoleListener listener) {
         Log.d("createRole request");
         GameRoleRequestInfo request = new GameRoleRequestInfo();
         request.gameId = iPresenter.getGameId();

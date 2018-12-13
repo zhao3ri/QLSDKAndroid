@@ -50,14 +50,14 @@ public class UCChannel extends BaseChannel {
                 @Subscribe(event = SDKEventKey.ON_INIT_SUCC)
                 private void onInitSucc() {
                     if (listener != null)
-                        listener.initSuccess(null);
+                        listener.onSuccess(null);
                     UCGameSdk.defaultSdk().unregisterSDKEventReceiver(this);
                 }
 
                 @Subscribe(event = SDKEventKey.ON_INIT_FAILED)
                 private void onInitFailed(String desc) {
                     if (listener != null)
-                        listener.initFailed(desc);
+                        listener.onFailed(desc);
                     UCGameSdk.defaultSdk().unregisterSDKEventReceiver(this);
                 }
             };
@@ -65,7 +65,7 @@ public class UCChannel extends BaseChannel {
         } catch (AliLackActivityException e) {
             e.printStackTrace();
             if (listener != null)
-                listener.initFailed(e.getMessage());
+                listener.onFailed(e.getMessage());
         }
     }
 
@@ -86,20 +86,20 @@ public class UCChannel extends BaseChannel {
                 @Subscribe(event = SDKEventKey.ON_LOGIN_FAILED)
                 private void onLoginFailed(String desc) {
                     if (listener != null)
-                        listener.loginFailed(desc);
+                        listener.onFailed(desc);
                 }
             };
             UCGameSdk.defaultSdk().registerSDKEventReceiver(receiver);
         } catch (AliNotInitException | AliLackActivityException e) {
             if (listener != null)
-                listener.loginFailed(e.getMessage());
+                listener.onFailed(e.getMessage());
         }
     }
 
     private void verifySession(String sid, final Callback.OnLoginListener listener) {
         final UCSessionRequest request = new UCSessionRequest();
-        request.gameId = Long.valueOf(gameConfig.getGameId());
-        request.platformId = getId();
+        request.gameId = gameConfig.getGameId();
+        request.channelId = getId();
         request.sid = sid;
         request.appID = gameConfig.getAppID();
         new HttpConnectionTask().setResponseListener(new OnResponseListener() {
@@ -111,18 +111,18 @@ public class UCChannel extends BaseChannel {
                     if (null == response
                             || Integer.valueOf(response.state.get(UCResponse.RESPONSE_KEY_CODE).toString()) != UCResponse.RESPONSE_SUCCESS_CODE) {
                         if (listener != null)
-                            listener.loginFailed(result);
+                            listener.onFailed(result);
                         return;
                     }
                     UserInfo userInfo = new UserInfo();
                     userInfo.setId(response.data.get(UCResponse.RESPONSE_KEY_ACCOUNT_ID).toString());
                     userInfo.setUserName(response.data.get(UCResponse.RESPONSE_KEY_NICKNAME).toString());
                     if (listener != null) {
-                        listener.loginSuccess(userInfo);
+                        listener.onSuccess(userInfo);
                     }
                 } else {
                     if (listener != null)
-                        listener.loginFailed(result);
+                        listener.onFailed(result);
                 }
             }
         }).execute(request);
@@ -171,21 +171,21 @@ public class UCChannel extends BaseChannel {
                 @Subscribe(event = SDKEventKey.ON_EXIT_SUCC)
                 private void onExitSucc() {
                     if (listener != null)
-                        listener.onCompleted(true, "");
+                        listener.onFinished(true, "");
                     UCGameSdk.defaultSdk().unregisterSDKEventReceiver(this);
                 }
 
                 @Subscribe(event = SDKEventKey.ON_EXIT_CANCELED)
                 private void onExitCanceled() {
                     if (listener != null)
-                        listener.onCompleted(false, "exit error");
+                        listener.onFinished(false, "exit error");
                     UCGameSdk.defaultSdk().unregisterSDKEventReceiver(this);
                 }
             };
             UCGameSdk.defaultSdk().registerSDKEventReceiver(receiver);
         } catch (AliNotInitException | AliLackActivityException e) {
             if (listener != null)
-                listener.onCompleted(false, e.getMessage());
+                listener.onFinished(false, e.getMessage());
         }
     }
 
@@ -255,11 +255,11 @@ public class UCChannel extends BaseChannel {
         try {
             submitRoleData(activity, role, createTime);
             if (listener != null)
-                listener.onCompleted(true, "");
+                listener.onFinished(true, "");
         } catch (Exception e) {
             e.printStackTrace();
             if (listener != null)
-                listener.onCompleted(false, e.getMessage());
+                listener.onFinished(false, e.getMessage());
         }
     }
 

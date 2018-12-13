@@ -26,6 +26,7 @@ public abstract class BaseChannel implements IChannel {
     private static final String RES_NAME_APP_ID = "qlsdk_third_party_appid";
     private static final String RES_NAME_APP_KEY = "qlsdk_third_party_appkey";
     private static final String RES_NAME_PUBLIC_KEY = "qlsdk_third_party_pubkey";
+    private static final String RES_NAME_SECRET_KEY = "qlsdk_third_party_seckey";
     private static final String RES_NAME_CP_ID = "qlsdk_third_party_cpid";
 
     @Override
@@ -33,6 +34,10 @@ public abstract class BaseChannel implements IChannel {
         channelId = p.id;
         channelName = p.name;
         gameConfig = config;
+        setupConfig();
+    }
+
+    private void setupConfig() {
         if (TextUtils.isEmpty(gameConfig.getAppID())) {
             gameConfig.setAppID(getString(RES_NAME_APP_ID));
         }
@@ -41,6 +46,9 @@ public abstract class BaseChannel implements IChannel {
         }
         if (TextUtils.isEmpty(gameConfig.getPublicKey())) {
             gameConfig.setPublicKey(getString(RES_NAME_PUBLIC_KEY));
+        }
+        if (TextUtils.isEmpty(gameConfig.getSecretKey())) {
+            gameConfig.setSecretKey(getString(RES_NAME_SECRET_KEY));
         }
         if (TextUtils.isEmpty(gameConfig.getCpID())) {
             gameConfig.setCpID(getString(RES_NAME_CP_ID));
@@ -52,6 +60,7 @@ public abstract class BaseChannel implements IChannel {
         String res = null;
         try {
             res = gameConfig.getContext().getString(resId);
+            Log.d("string==" + res);
         } catch (Resources.NotFoundException e) {
             Log.e(resName + " is not found!!");
         }
@@ -75,6 +84,14 @@ public abstract class BaseChannel implements IChannel {
 
     protected final String getUserId() {
         return user.getId();
+    }
+
+    protected final String getUserToken() {
+        return user.getUdToken();
+    }
+
+    protected final String getUserName() {
+        return user.getUserName();
     }
 
     protected void queryOrderStatus(final String orderId, final Callback.OnPayRequestListener listener) {

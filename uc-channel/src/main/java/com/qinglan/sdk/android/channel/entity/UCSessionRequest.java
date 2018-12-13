@@ -13,8 +13,6 @@ public class UCSessionRequest extends AbsRequestInfo {
     private static final String REQUEST_PARAM_SID = "sid";
     private static final String REQUEST_PARAM_APP_ID = "appID";
 
-    public long gameId;
-    public int platformId;
     public String sid;
     public String appID;
 

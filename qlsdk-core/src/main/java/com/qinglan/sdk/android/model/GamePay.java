@@ -8,11 +8,11 @@ package com.qinglan.sdk.android.model;
  */
 public final class GamePay {
     private long amount;
-//    private String cpOrderId;
+    //    private String cpOrderId;
     private String extInfo;
     private String notifyUrl;
     private String goodsName;
-    private int goodsCount;
+    private int goodsCount = 1;
     private String goodsId;
 
     public long getAmount() {

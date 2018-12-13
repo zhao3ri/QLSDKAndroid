@@ -15,7 +15,7 @@
         <class-name>HMSChannel</class-name>
     </channel>
     <!--金立-->
-    <channel name="Gionee" id="42">
-        <class-name>GioneeChannel</class-name>
+    <channel name="YeShen" id="42">
+        <class-name>YeshenChannel</class-name>
     </channel>
 </channel-list>

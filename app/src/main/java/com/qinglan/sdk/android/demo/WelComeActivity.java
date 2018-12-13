@@ -19,7 +19,6 @@ import com.qinglan.sdk.android.PermissionActivity;
 import com.qinglan.sdk.android.QLSDK;
 import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.model.GameRole;
-import com.qinglan.sdk.android.model.PayRequest;
 import com.qinglan.sdk.android.model.UserInfo;
 import com.qinglan.sdk.android.utils.PermissionUtils;
 import com.qinglan.sdk.android.utils.ToastUtils;
@@ -129,7 +128,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
     private void init() {
         qlSDK.initPlatform(this, new Callback.OnInitCompletedListener() {
             @Override
-            public void onCompleted(boolean success, String result) {
+            public void onFinished(boolean success, String result) {
                 //初始化完成后的操作
                 if (success) {
                     login();
@@ -168,7 +167,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
     private void startGame() {
         qlSDK.enterGame(this, true, gameRole, new Callback.OnGameStartedListener() {
             @Override
-            public void onGameStarted(long timestamp) {
+            public void onSuccess(long timestamp) {
                 Log.d(TAG, "time==" + timestamp);
             }
 
@@ -189,7 +188,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
         mDialog = new LoadingDialog(this, "创建中……");
         mDialog.show();
         gameRole.setRoleName(edRoleName.getText().toString().trim());
-        qlSDK.createGameRole(this, gameRole, new Callback.OnCreateRoleFinishedListener() {
+        qlSDK.createGameRole(this, gameRole, new Callback.OnCreateRoleListener() {
             @Override
             public void onFinished(boolean success, String result) {
                 if (mDialog.isShowing()) {
@@ -296,7 +295,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
         //yxf平台退出无回调
         qlSDK.exit(this, gameRole, new Callback.OnExitListener() {
             @Override
-            public void onCompleted(boolean success, String msg) {
+            public void onFinished(boolean success, String msg) {
                 finish();
                 System.exit(0);
             }

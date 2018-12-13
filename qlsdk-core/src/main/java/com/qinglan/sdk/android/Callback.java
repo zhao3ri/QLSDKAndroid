@@ -10,30 +10,28 @@ import java.util.Map;
  */
 public class Callback {
     public interface OnResultListener {
-        void onCompleted(boolean success, String result);
+        void onFinished(boolean success, String result);
+    }
+
+    public interface DefaultResponseListener {
+        void onFailed(String msg);
     }
 
     public interface OnInitCompletedListener extends OnResultListener {
     }
 
-    public interface OnLoginResponseListener {
+    public interface OnLoginResponseListener extends DefaultResponseListener {
         void onSuccess(UserInfo user);
-
-        void onFailed(String error);
     }
 
-    public interface GetTokenListener {
-        void onFinished(boolean success, String result);
+    public interface GetTokenListener extends OnResultListener {
     }
 
-    public interface OnCreateRoleFinishedListener {
-        void onFinished(boolean success, String result);
+    public interface OnCreateRoleListener extends OnResultListener  {
     }
 
-    public interface OnGameStartedListener {
-        void onGameStarted(long timestamp);
-
-        void onFailed(String result);
+    public interface OnGameStartedListener extends DefaultResponseListener {
+        void onSuccess(long timestamp);
     }
 
     public interface OnRefreshSessionListener {
@@ -44,45 +42,33 @@ public class Callback {
         void onResponse(boolean success, String result);
     }
 
-    public interface OnLogoutResponseListener {
+    public interface OnLogoutResponseListener extends DefaultResponseListener {
         void onSuccess();
-
-        void onFailed(String error);
     }
 
     public interface OnExitListener extends OnResultListener {
     }
 
-    public interface OnPayRequestListener {
+    public interface OnPayRequestListener extends DefaultResponseListener {
         void onSuccess(String orderId);
-
-        void onFailed(String msg);
     }
 
-    public interface GenerateOrderListener {
+    public interface GenerateOrderListener extends DefaultResponseListener {
         //        void onSuccess(String orderId, String notifyUrl);
         void onSuccess(Map<String, Object> result);
-
-        void onFailed(String msg);
     }
 
 
-    public interface OnInitConnectedListener {
-        void initSuccess(UserInfo user);
-
-        void initFailed(String msg);
+    public interface OnInitConnectedListener extends DefaultResponseListener {
+        void onSuccess(UserInfo user);
     }
 
-    public interface OnLoginListener {
-        void loginSuccess(UserInfo userInfo);
-
-        void loginFailed(String msg);
+    public interface OnLoginListener extends DefaultResponseListener {
+        void onSuccess(UserInfo userInfo);
     }
 
-    public interface OnGameRoleRequestListener {
+    public interface OnGameRoleRequestListener extends DefaultResponseListener {
         void onSuccess(GameRole role);
-
-        void onFailed(String msg);
     }
 
     public interface OnLevelUpListener extends OnResultListener {

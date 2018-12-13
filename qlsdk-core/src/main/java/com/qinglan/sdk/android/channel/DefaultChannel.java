@@ -36,13 +36,13 @@ public class DefaultChannel extends BaseChannel {
     @Override
     public void init(Activity activity, Callback.OnInitConnectedListener listener) {
         Log.d(TAG, "platform init");
-        listener.initSuccess(null);
+        listener.onSuccess(null);
     }
 
     @Override
     public void login(Activity activity, Callback.OnLoginListener listener) {
         Log.d(TAG, "platform login");
-        listener.loginSuccess(null);
+        listener.onSuccess(null);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class DefaultChannel extends BaseChannel {
     @Override
     public void exit(Activity activity, GameRole role, Callback.OnExitListener listener) {
         Log.d(TAG, "exit");
-        listener.onCompleted(true, "");
+        listener.onFinished(true, "");
     }
 
     @Override
@@ -88,7 +88,7 @@ public class DefaultChannel extends BaseChannel {
     @Override
     public void levelUpdate(Activity activity, GameRole role, long createTime, Callback.OnLevelUpListener listener) {
         Log.d(TAG, "levelUpdate");
-        listener.onCompleted(true, "");
+        listener.onFinished(true, "");
     }
 
     @Override

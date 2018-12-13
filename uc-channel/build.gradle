@@ -12,6 +12,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                QL_PACKAGENAME: "qinglanGameApplicationId",
+                CHANNEL_APPID : "qinglanChannelAppId",
+                CHANNEL_APPKEY: "qinglanChannelAppKey",
+                CHANNEL_CPID  : "qinglanChannelCpId"
+        ]
     }
 
     buildTypes {
@@ -23,11 +29,11 @@ android {
 
 }
 
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
+//repositories {
+//    flatDir {
+//        dirs 'libs'
+//    }
+//}
 
 dependencies {
     if (buildToolIsGreaterThan3 == true) {
@@ -39,12 +45,12 @@ dependencies {
         androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
         compileOnly project(':qlsdk-core')
 
-        fileTree(dir: 'libs', include: '**/*.aar')
-                .each { File file ->
-            dependencies.add("implementation", [name: file.name.lastIndexOf('.').with {
-                it != -1 ? file.name[0..<it] : file.name
-            }, ext                                  : 'aar'])
-        }
+//        fileTree(dir: 'libs', include: '**/*.aar')
+//                .each { File file ->
+//            dependencies.add("implementation", [name: file.name.lastIndexOf('.').with {
+//                it != -1 ? file.name[0..<it] : file.name
+//            }, ext                                  : 'aar'])
+//        }
     } else {
         compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -53,7 +59,6 @@ dependencies {
         androidTestCompile 'com.android.support.test:runner:1.0.2'
         androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
         provided project(':qlsdk-core')
-        compile(name: 'net-sdk-8.0.4', ext: 'aar')
 //        fileTree(dir: 'libs', include: '**/*.aar')
 //                .each { File file ->
 //            dependencies.add("compile", [name: file.name.lastIndexOf('.').with {

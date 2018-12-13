@@ -16,6 +16,7 @@ public final class Config {
     private String appID;
     private String appKey;
     private String publicKey;
+    private String secretKey;
     private String cpID;
     private int screenOrientation;
     protected Context context;
@@ -72,6 +73,11 @@ public final class Config {
         return this;
     }
 
+    public Config setSecretKey(String key) {
+        secretKey = key;
+        return this;
+    }
+
     public Config setScreenOrientation(int orientation) {
         screenOrientation = orientation;
         return this;
@@ -91,6 +97,10 @@ public final class Config {
 
     public String getCpID() {
         return cpID;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
     }
 
     public Context getContext() {

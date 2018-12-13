@@ -9,8 +9,8 @@ import com.qinglan.sdk.android.common.Utils;
 
 
 public class SDKUtils {
-    public static final String META_DATA_APP_ID = "QLSDK_GAMEID";
-    public static final String RES_NAME_APP_ID = "qlsdk_gameid";
+    public static final String META_DATA_GAME_ID = "QLSDK_GAMEID";
+    public static final String RES_NAME_GAME_ID = "qlsdk_gameid";
 
     public static String getMeteData(Context context, String tag) {
         ApplicationInfo info = Utils.getApplicationInfo(context);
@@ -34,14 +34,14 @@ public class SDKUtils {
         if (info == null) {
             return null;
         }
-        int id = info.metaData.getInt(META_DATA_APP_ID);
+        int id = info.metaData.getInt(META_DATA_GAME_ID);
         Log.d("read:string id===" + id);
         if (id != 0) {
             gameId = context.getResources().getString(id);
             Log.d("read:gameId===" + gameId);
         } else {
             //当获取不到meta-data中的resId时，直接通过资源名称获取gameId
-            gameId = ResContainer.getString(context, RES_NAME_APP_ID);
+            gameId = ResContainer.getString(context, RES_NAME_GAME_ID);
             Log.d("read:gameId===" + gameId);
         }
         return gameId;
