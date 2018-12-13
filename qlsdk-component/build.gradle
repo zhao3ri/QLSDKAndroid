@@ -34,7 +34,7 @@ android {
 //    }
     sourceSets {
         main {
-            jniLibs.srcDirs = [' /../yxf-channel/libs/so']
+            jniLibs.srcDirs = [' /../yxf-channel/libs/so',' /../yeshen-channel/libs']
         }
     }
 }
@@ -57,4 +57,5 @@ dependencies {
     embedded project(':uc-channel')
     embedded project(':yxf-channel')
     embedded project(':huawei-channel')
+    embedded project(':yeshen-channel')
 }
