@@ -87,7 +87,7 @@ public class SavePlayerInfoApi extends BaseApiAgent {
     }
 
     private void onSavePlayInfoResult(int resultCode) {
-        HMSAgentLog.i("getPlayerInfo:callback=" + StrUtils.objDesc(handler) +" retCode=" + resultCode);
+        HMSAgentLog.i("savePlayerInfo:callback=" + StrUtils.objDesc(handler) +" retCode=" + resultCode);
         if (handler != null) {
             new Handler(Looper.getMainLooper()).post(new CallbackCodeRunnable(handler, resultCode));
             handler = null;
@@ -103,7 +103,7 @@ public class SavePlayerInfoApi extends BaseApiAgent {
      * @param handler 结果回调
      */
     public void savePlayerInfo(GamePlayerInfo playerInfo, final SaveInfoHandler handler){
-        HMSAgentLog.i("getPlayerInfo:playerInfo=" + StrUtils.objDesc(playerInfo) + "   handler=" + StrUtils.objDesc(handler));
+        HMSAgentLog.i("savePlayerInfo:playerInfo=" + StrUtils.objDesc(playerInfo) + "   handler=" + StrUtils.objDesc(handler));
         this.playerInfo = playerInfo;
         this.handler = handler;
         this.retryTimes = MAX_RETRY_TIMES;

@@ -26,11 +26,6 @@ import com.huawei.android.hms.agent.game.handler.GetTemperatureHandler;
 import com.huawei.android.hms.agent.game.handler.LoginHandler;
 import com.huawei.android.hms.agent.game.handler.RegisterHardwareCapabilityHandler;
 import com.huawei.android.hms.agent.game.handler.SaveInfoHandler;
-import com.huawei.android.hms.agent.hwid.CheckSignInApi;
-import com.huawei.android.hms.agent.hwid.SignInApi;
-import com.huawei.android.hms.agent.hwid.SignOutApi;
-import com.huawei.android.hms.agent.hwid.handler.SignInHandler;
-import com.huawei.android.hms.agent.hwid.handler.SignOutHandler;
 import com.huawei.android.hms.agent.pay.GetPayOrderApi;
 import com.huawei.android.hms.agent.pay.GetProductDetailsApi;
 import com.huawei.android.hms.agent.pay.GetPurchaseInfoApi;
@@ -448,33 +443,6 @@ public final class HMSAgent implements INoProguard {
         }
     }
 
-    /**
-     * 帐号接口封装 | Account Interface Encapsulation
-     */
-    public static final class Hwid {
-        /**
-         * 帐号登录请求 | Account Login Request
-         * 当forceLogin为false时，如果当前没有登录授权，则直接回调错误码。| When Forcelogin is false, the error code is directly invoked if there is currently no login authorization.
-         * 当forceLogin为true时，如果当前没有登录授权，则会拉起相应界面引导用户登录授权。 | When Forcelogin is true, if there is currently no login authorization, the corresponding interface is pulled to boot the user to logon authorization.
-         * @param forceLogin 是否强制登录。 | Whether to force a login.
-         * @param handler 登录结果回调（结果会在主线程回调） | Login result Callback (result is in main thread callback)
-         */
-        public static void signIn(boolean forceLogin, SignInHandler handler){
-            if (forceLogin) {
-                SignInApi.INST.signIn(handler);
-            } else {
-                new CheckSignInApi().checkSignIn(handler);
-            }
-        }
-
-        /**
-         * 帐号登出请求。此接口调用后，下次再调用signIn会拉起界面，请谨慎调用。如果不确定就不要调用了。 | Account Login Request. After this method is called, the next time you call signIn will pull the interface, please call carefully. Do not call if you are unsure.
-         * @param handler 登出结果回调（结果会在主线程回调） | Logout result callback (result will be callback in main thread)
-         */
-        public static void signOut(SignOutHandler handler){
-            new SignOutApi().signOut(handler);
-        }
-    }
 
     /**
      * push接口封装 | Push interface Encapsulation

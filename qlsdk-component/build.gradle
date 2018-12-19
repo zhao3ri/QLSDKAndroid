@@ -37,6 +37,10 @@ android {
             jniLibs.srcDirs = [' /../yxf-channel/libs/so',' /../yeshen-channel/libs']
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 apply from: "../fat-aar.gradle"

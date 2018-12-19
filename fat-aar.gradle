@@ -394,6 +394,10 @@ task embedJavaJars(dependsOn: embedRClass) << {
         jars += fileTree(dir: jar_dir + "/libs", include: '*.jar')
         jars += fileTree(dir: "$aarPath/libs", include: '*.jar')
 
+        println jar_dir
+        println classs_release_dir
+        println bundle_release_dir
+        println embeddedJars
         copy {
             from jars
             into file("$bundle_release_dir/libs")
