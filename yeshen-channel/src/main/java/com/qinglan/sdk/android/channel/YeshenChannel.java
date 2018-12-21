@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.text.TextUtils;
 
+import com.bignox.sdk.INoxLogAgent;
 import com.bignox.sdk.NoxSDKPlatform;
 import com.bignox.sdk.NoxStatus;
 import com.bignox.sdk.export.entity.KSAppEntity;
@@ -256,7 +257,6 @@ public class YeshenChannel extends BaseChannel implements OnLogoutListener {
         userRoleEntity.setZoneName(role.getZoneName());
         userRoleEntity.setRoleId(role.getRoleId());
         userRoleEntity.setRoleName(role.getRoleName());
-        userRoleEntity.setVip(role.getRoleLevel());
         userRoleEntity.setRoleCreateTime(createTime);
         return userRoleEntity;
     }
@@ -288,6 +288,7 @@ public class YeshenChannel extends BaseChannel implements OnLogoutListener {
     @Override
     public void levelUpdate(Activity activity, GameRole role, long createTime, Callback.
             OnLevelUpListener listener) {
+        NoxSDKPlatform.getInstance().getLogAgent().levelUp(Integer.valueOf(role.getRoleLevel()));
         if (listener != null)
             listener.onFinished(true, "");
     }
