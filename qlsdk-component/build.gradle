@@ -58,8 +58,8 @@ dependencies {
         androidTestCompile 'com.android.support.test:runner:1.0.2'
         androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
     }
-    embedded project(':uc-channel')
-    embedded project(':yxf-channel')
-    embedded project(':huawei-channel')
-    embedded project(':yeshen-channel')
+    embedded project(':channel-uc')
+    embedded project(':channel-yxf')
+    embedded project(':channel-huawei')
+    embedded project(':channel-yeshen')
 }
