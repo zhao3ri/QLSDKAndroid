@@ -5,4 +5,5 @@
     <string name="qlsdk_third_party_pubkey"></string>
     <string name="qlsdk_third_party_seckey"></string>
     <string name="qlsdk_third_party_cpid"></string>
+    <string name="qlsdk_third_party_cpkey"></string>
 </resources>

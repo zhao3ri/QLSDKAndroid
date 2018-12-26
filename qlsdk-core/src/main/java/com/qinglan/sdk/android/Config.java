@@ -18,6 +18,7 @@ public final class Config {
     private String publicKey;
     private String secretKey;
     private String cpID;
+    private String cpKey;
     private int screenOrientation;
     protected Context context;
     //屏幕方向
@@ -73,6 +74,11 @@ public final class Config {
         return this;
     }
 
+    public Config setCpKey(String key) {
+        cpKey = key;
+        return this;
+    }
+
     public Config setSecretKey(String key) {
         secretKey = key;
         return this;
@@ -97,6 +103,10 @@ public final class Config {
 
     public String getCpID() {
         return cpID;
+    }
+
+    public String getCpKey() {
+        return cpKey;
     }
 
     public String getSecretKey() {

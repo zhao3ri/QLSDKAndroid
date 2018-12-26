@@ -15,7 +15,8 @@ android {
                 QL_PACKAGENAME: "qinglanGameApplicationId",
                 CHANNEL_APPID : "qinglanChannelAppId",
                 CHANNEL_APPKEY: "qinglanChannelAppKey",
-                CHANNEL_CPID  : "qinglanChannelCpId"
+                CHANNEL_CPID  : "qinglanChannelCpId",
+                CHANNEL_CPKEY  : "qinglanChannelCpKey"
         ]
 
     }

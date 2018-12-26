@@ -1,12 +1,8 @@
 package com.qinglan.sdk.android.channel.entity;
 
-import com.qinglan.sdk.android.BuildConfig;
 import com.qinglan.sdk.android.net.AbsRequestInfo;
-import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.HttpMethod;
-import com.qinglan.sdk.android.net.IRequestInfo;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class UCSessionRequest extends AbsRequestInfo {

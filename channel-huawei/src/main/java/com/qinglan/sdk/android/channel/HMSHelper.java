@@ -21,6 +21,8 @@ import java.util.Map;
 
 
 public class HMSHelper {
+    private static final String MERCHANT_NAME = "Qinglanbingshui";
+
     private static final String RETURN_CODE_SUCCEED = "0";
     private static final int RETURN_CODE_ERROR = -1;
     private static final String RETURN_KEY_CODE = "rtnCode";
@@ -124,7 +126,7 @@ public class HMSHelper {
 //        payReq.url = url;
 
         // 商户名称，必填，不参与签名。开发者注册的公司名称
-        payReq.merchantName = "Qinglanbingshui";
+        payReq.merchantName = MERCHANT_NAME;
         //分类，必填，不参与签名。该字段会影响风控策略
         // X4：主题,X5：应用商店,  X6：游戏,X7：天际通,X8：云空间,X9：电子书,X10：华为学习,X11：音乐,X12 视频,
         // X31 话费充值,X32 机票/酒店,X33 电影票,X34 团购,X35 手机预购,X36 公共缴费,X39 流量充值

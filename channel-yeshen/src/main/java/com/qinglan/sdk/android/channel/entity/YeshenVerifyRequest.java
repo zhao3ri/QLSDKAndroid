@@ -15,7 +15,7 @@ public class YeshenVerifyRequest extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return "channel2/yeshen/session";
+        return "channel/yeshen/session";
     }
 
     @Override

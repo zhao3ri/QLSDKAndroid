@@ -11,7 +11,7 @@ public class HMSPaySignRequest extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return "channel2/hms/pay/sign";
+        return "channel/hms/pay/sign";
     }
 
     @Override

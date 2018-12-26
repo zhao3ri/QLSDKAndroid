@@ -1,1 +1,1 @@
-include ':app', ':channel-yxf', ':qlsdk-core', ':channel-gionee', ':channel-uc', ':qlsdk-component', ':channel-huawei', ':channel-yeshen'
+include ':app', ':channel-yxf', ':qlsdk-core', ':channel-gionee', ':channel-uc', ':qlsdk-component', ':channel-huawei', ':channel-yeshen', ':channel-57k'

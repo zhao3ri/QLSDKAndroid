@@ -2,20 +2,24 @@
 <channel-list>
     <!--所有渠道平台的配置参数在此添加-->
     <!--id为服务端分配的平台id，不可随意更改，name可根据需要修改-->
+    <!--UC-->
+    <channel name="UC" id="1">
+        <class-name>UCChannel</class-name>
+    </channel>
+    <!--华为-->
+    <channel name="Huawei" id="2">
+        <class-name>HMSChannel</class-name>
+    </channel>
+    <!--夜神-->
+    <channel name="YeShen" id="3">
+        <class-name>YeshenChannel</class-name>
+    </channel>
     <!--游戏fun平台-->
     <channel name="YXF" id="4">
         <class-name>YXFChannel</class-name>
     </channel>
-    <!--UC-->
-    <channel name="UC" id="5">
-        <class-name>UCChannel</class-name>
-    </channel>
-    <!--华为-->
-    <channel name="Huawei" id="6">
-        <class-name>HMSChannel</class-name>
-    </channel>
-    <!--金立-->
-    <channel name="YeShen" id="42">
-        <class-name>YeshenChannel</class-name>
+    <!--游戏fun平台-->
+    <channel name="57k" id="5">
+        <class-name>HuoSdkChannel</class-name>
     </channel>
 </channel-list>

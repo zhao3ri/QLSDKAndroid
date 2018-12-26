@@ -28,6 +28,7 @@ public abstract class BaseChannel implements IChannel {
     private static final String RES_NAME_PUBLIC_KEY = "qlsdk_third_party_pubkey";
     private static final String RES_NAME_SECRET_KEY = "qlsdk_third_party_seckey";
     private static final String RES_NAME_CP_ID = "qlsdk_third_party_cpid";
+    private static final String RES_NAME_CP_KEY = "qlsdk_third_party_cpkey";
 
     @Override
     public void load(ChannelParamsReader.ChannelParam p, Config config) {
@@ -52,6 +53,9 @@ public abstract class BaseChannel implements IChannel {
         }
         if (TextUtils.isEmpty(gameConfig.getCpID())) {
             gameConfig.setCpID(getString(RES_NAME_CP_ID));
+        }
+        if (TextUtils.isEmpty(gameConfig.getCpKey())) {
+            gameConfig.setCpKey(getString(RES_NAME_CP_KEY));
         }
     }
 
@@ -134,4 +138,8 @@ public abstract class BaseChannel implements IChannel {
         }).execute(request);
     }
 
+    protected String getErrorMsg(String code, String msg) {
+        String error = String.format("%s:%s", code, msg);
+        return error;
+    }
 }

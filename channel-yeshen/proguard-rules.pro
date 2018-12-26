@@ -19,3 +19,90 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keepattributes *Annotation*,InnerClasses
+-keepattributes Signature
+-keepattributes SourceFile,LineNumberTable
+#==================sdk==========================
+-dontwarn com.game.sdk.**
+-keep class com.game.sdk.** {*;}
+
+#==================gson==========================
+-dontwarn com.google.**
+-keep class com.google.gson.** {*;}
+
+#==================okvolly_1.1.0.jar==========================
+-dontwarn com.kymjs.rxvolley.**
+-keep class com.kymjs.rxvolley.** {*;}
+
+#==================alipaySdk支付宝支付==========================
+-dontwarn com.alipay.**
+-dontwarn com.ta.utdid2.**
+-dontwarn com.ut.device.**
+-dontwarn org.json.alipay.**
+-dontwarn com.alipay.android.app.IAlixPay.**
+-keep class com.alipay.android.app.IAlixPay.**
+-keep class com.alipay.** {*;}
+-keep class com.ta.utdid2.** {*;}
+-keep class com.ut.device.** {*;}
+-keep class org.json.alipay.** {*;}
+
+#==================威富通支付==========================
+-dontwarn com.switfpass.pay.**
+-keep class com.switfpass.pay.** {*;}
+
+#==================汇付宝支付==========================
+-dontwarn com.heepay.plugin.**
+-keep class com.heepay.plugin.** {*;}
+-dontwarn com.junnet.**
+-keep class com.junnet.** {*;}
+
+#==================易联银联支付==========================
+-dontwarn com.payeco.android.plugin.**
+-keep class com.payeco.android.plugin.** {*;}
+
+#==================现在支付==========================
+-dontwarn com.ipaynow.plugin.**
+-keep class com.ipaynow.plugin.** {*;}
+
+#==================梓微信支付==========================
+-dontwarn com.zwxpay.**
+-keep class com.zwxpay.** {*;}
+
+#==================银联支付==========================
+-dontwarn com.unionpay.**
+-keep class com.unionpay.** {*;}
+-dontwarn cn.gov.pbc.**
+-keep class cn.gov.pbc.** {*;}
+-dontwarn cn.gov.pbc.**
+-keep class cn.gov.pbc.** {*;}
+-dontwarn com.UCMobile.**
+-keep class com.UCMobile.** {*;}
+
+#==================聚宝支付==========================
+-dontwarn android.app.**
+-keep class android.app.** {*;}
+-dontwarn com.fanwei.**
+-keep class com.fanwei.** {*;}
+-dontwarn com.opensdk.**
+-keep class com.opensdk.** {*;}
+
+
+#==================百度定位==========================
+-dontwarn com.baidu.location.**
+-keep class com.baidu.location.** {*;}
+
+
+#apache
+-dontwarn org.apache.**
+-keep class org.apache.** {*;}
+-dontwarn android.net.http.**
+-keep class android.net.http.** { *;}
+-keep class com.android.volley.**{*;}
+
+#ShareSDK
+-keep class cn.sharesdk.**{*;}
+-keep class com.sina.**{*;}
+-keep class **.R$* {*;}
+-keep class **.R{*;}
+-dontwarn cn.sharesdk.**
+-dontwarn **.R$*

@@ -367,8 +367,7 @@ public class YeshenChannel extends BaseChannel implements OnLogoutListener {
     }
 
     private String getErrorMsg(int code, String msg) {
-        String error = String.format("%s:%s", code, msg);
-        return error;
+        return getErrorMsg(String.valueOf(code), msg);
     }
 
     @Override
