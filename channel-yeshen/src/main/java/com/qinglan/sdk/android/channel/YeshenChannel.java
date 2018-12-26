@@ -328,31 +328,6 @@ public class YeshenChannel extends BaseChannel implements OnLogoutListener {
         NoxSDKPlatform.getInstance().noxDestroy();
     }
 
-    @Override
-    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-
-    }
-
-    @Override
-    public void onNewIntent(Intent intent) {
-
-    }
-
-    @Override
-    public void onBackPressed() {
-
-    }
-
-    @Override
-    public void attachBaseContext(Context newBase) {
-
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-
-    }
-
     private void onFailed(Callback.DefaultResponseListener listener, NoxEvent event) {
         onFailed(listener, getErrorMsg(event));
     }

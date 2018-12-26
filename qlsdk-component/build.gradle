@@ -12,11 +12,12 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
-                QL_PACKAGENAME: "qinglanGameApplicationId",
-                CHANNEL_APPID : "qinglanChannelAppId",
-                CHANNEL_APPKEY: "qinglanChannelAppKey",
-                CHANNEL_CPID  : "qinglanChannelCpId",
-                CHANNEL_CPKEY  : "qinglanChannelCpKey"
+                QL_PACKAGENAME  : "qinglanGameApplicationId",
+                CHANNEL_APPID   : "qinglanChannelAppId",
+                CHANNEL_APPKEY  : "qinglanChannelAppKey",
+                CHANNEL_CPID    : "qinglanChannelCpId",
+                CHANNEL_CPKEY   : "qinglanChannelCpKey",
+                CHANNEL_LAUNCHER: "qinglanChannelLauncher"
         ]
 
     }
@@ -35,7 +36,7 @@ android {
 //    }
     sourceSets {
         main {
-            jniLibs.srcDirs = [' /../yxf-channel/libs/so',' /../yeshen-channel/libs']
+            jniLibs.srcDirs = [' /../channel-yxf/libs/so', ' /../channel-yeshen/libs', ' /../channel-57k/libs', ' /../channel-hanfeng/libs']
         }
     }
 

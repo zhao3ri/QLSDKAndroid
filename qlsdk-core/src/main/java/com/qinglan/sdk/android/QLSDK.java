@@ -1,28 +1,28 @@
 package com.qinglan.sdk.android;
 
 /**
+ * **#*#*  *#                          **#*
+ * #*      *#    #**#                 #*     *#
+ * #*  @  @  *#         **#*#        *#      #*       *#**
+ * #*     *#                *#**   ##     *#      #*     *#
+ * **#*#*            * *       #***    #*     #*      #*
+ * #*           *  @  *          #**     #*     #*
+ * #*          * *       * *      #*#     *#
+ * *#   #*              *  @  *      *# *
+ * #*   *#                 * *          #*
+ * #*     #*                              #*
+ * *#      *#             #*      *#*      #*
+ * #*        *#  *#  **       **    **    #*
+ * #*                        **    **   #*
+ * *#*                       *#*     #*
+ * *#*                         *#*
+ * *#*                   *#*
+ * *#   #  *#   #*
+ * <p>
+ * 小猪佩奇保佑代码永无bug！！
  *
- *            **#*#*  *#                          **#*
- *          #*      *#    #**#                 #*     *#
- *         #*  @  @  *#         **#*#        *#      #*       *#**
- *          #*     *#                *#**   ##     *#      #*     *#
- *           **#*#*            * *       #***    #*     #*      #*
- *              #*           *  @  *          #**     #*     #*
- *                 #*          * *       * *      #*#     *#
- *                *#   #*              *  @  *      *# *
- *               #*   *#                 * *          #*
- *              #*     #*                              #*
- *              *#      *#             #*      *#*      #*
- *               #*        *#  *#  **       **    **    #*
- *                #*                        **    **   #*
- *                  *#*                       *#*     #*
- *                     *#*                         *#*
- *                        *#*                   *#*
- *                             *#   #  *#   #*
- *
- *                        小猪佩奇保佑代码永无bug！！
- *                                     @author 三日
- * */
+ * @author 三日
+ */
 
 import android.app.Activity;
 import android.content.Context;
@@ -101,15 +101,15 @@ public class QLSDK {
     /**
      * 获取平台id
      */
-    public int getPlatformId() {
-        return mPresenter.getPlatformId();
+    public int getChannelId() {
+        return mPresenter.getChannelId();
     }
 
     /**
      * 获取平台名称
      */
-    public String getPlatformName() {
-        return mPresenter.getPlatformName();
+    public String getChannelName() {
+        return mPresenter.getChannelName();
     }
 
     /**
@@ -122,7 +122,7 @@ public class QLSDK {
     /**
      * 退出
      */
-    public void exit(Activity activity,Callback.OnExitListener listener) {
+    public void exit(Activity activity, Callback.OnExitListener listener) {
         mPresenter.exitGame(activity, listener);
     }
 
@@ -162,6 +162,10 @@ public class QLSDK {
         mPresenter.onStart(activity);
     }
 
+    public void onRestart(Activity activity) {
+        mPresenter.onRestart(activity);
+    }
+
     public void onResume(Activity activity) {
         mPresenter.onResume(activity);
     }
@@ -178,23 +182,43 @@ public class QLSDK {
         mPresenter.onDestroy(activity);
     }
 
-    public void onNewIntent(Intent intent) {
-        mPresenter.onNewIntent(intent);
+    public void onNewIntent(Activity activity, Intent intent) {
+        mPresenter.onNewIntent(activity, intent);
     }
 
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
         mPresenter.onActivityResult(activity, requestCode, resultCode, data);
     }
 
-    public void onBackPressed() {
-        mPresenter.onBackPressed();
+    public void onRequestPermissionsResult(Activity activity, int requestCode, String[] permissions, int[] grantResults) {
+        mPresenter.onRequestPermissionsResult(activity, requestCode, permissions, grantResults);
+    }
+
+    public void onWindowFocusChanged(Activity activity, boolean hasFocus) {
+        mPresenter.onWindowFocusChanged(activity, hasFocus);
+    }
+
+    public void onApplicationAttachBaseContext(Context base) {
+        mPresenter.onApplicationAttachBaseContext(base);
+    }
+
+    public void onApplicationConfiguration(Context base, Configuration newConfig) {
+        mPresenter.onApplicationConfiguration(base, newConfig);
+    }
+
+    public void onApplicationTerminate(Context base) {
+        mPresenter.onApplicationTerminate(base);
+    }
+
+    public void onBackPressed(Activity activity) {
+        mPresenter.onBackPressed(activity);
     }
 
     public void attachBaseContext(Context newBase) {
         mPresenter.attachBaseContext(newBase);
     }
 
-    public void onConfigurationChanged(Configuration newConfig) {
-        mPresenter.onConfigurationChanged(newConfig);
+    public void onConfigurationChanged(Activity activity, Configuration newConfig) {
+        mPresenter.onConfigurationChanged(activity, newConfig);
     }
 }

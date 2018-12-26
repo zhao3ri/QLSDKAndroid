@@ -16,6 +16,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.qinglan.sdk.android.net.HttpConstants;
 
 import org.json.JSONArray;
@@ -459,6 +460,11 @@ public class Utils {
 
     public static <T> T json2Object(String json, Class<T> cls) {
         Gson gson = new Gson();
+        return gson.fromJson(json, cls);
+    }
+
+    public static <T> T jsonWithoutExpose2Object(String json, Class<T> cls) {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create() ;
         return gson.fromJson(json, cls);
     }
 

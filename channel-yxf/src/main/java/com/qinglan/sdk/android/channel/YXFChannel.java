@@ -190,24 +190,4 @@ public class YXFChannel extends BaseChannel {
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
 
     }
-
-    @Override
-    public void onNewIntent(Intent intent) {
-
-    }
-
-    @Override
-    public void onBackPressed() {
-
-    }
-
-    @Override
-    public void attachBaseContext(Context newBase) {
-
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-
-    }
 }

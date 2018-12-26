@@ -71,7 +71,7 @@ class SDKPresenter implements IPresenter {
                 }
             } else if (intent.getAction().equals(ACTION_LOGOUT + getGameId())) {
                 iConnector.cleanSession(mContext, mRole, null);
-            }else if (intent.getAction().equals(ACTION_EXIT + getGameId())) {
+            } else if (intent.getAction().equals(ACTION_EXIT + getGameId())) {
                 iConnector.exit(mContext, mRole, null);
             }
         }
@@ -383,12 +383,12 @@ class SDKPresenter implements IPresenter {
     }
 
     @Override
-    public int getPlatformId() {
+    public int getChannelId() {
         return iChannel.getId();
     }
 
     @Override
-    public String getPlatformName() {
+    public String getChannelName() {
         return iChannel.getName();
     }
 
@@ -418,6 +418,11 @@ class SDKPresenter implements IPresenter {
     }
 
     @Override
+    public void onRestart(Activity activity) {
+        iChannel.onRestart(activity);
+    }
+
+    @Override
     public void onResume(Activity activity) {
         iChannel.onResume(activity);
     }
@@ -444,13 +449,13 @@ class SDKPresenter implements IPresenter {
     }
 
     @Override
-    public void onNewIntent(Intent intent) {
-        iChannel.onNewIntent(intent);
+    public void onNewIntent(Activity activity, Intent intent) {
+        iChannel.onNewIntent(activity, intent);
     }
 
     @Override
-    public void onBackPressed() {
-        iChannel.onBackPressed();
+    public void onBackPressed(Activity activity) {
+        iChannel.onBackPressed(activity);
     }
 
     @Override
@@ -459,8 +464,33 @@ class SDKPresenter implements IPresenter {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        iChannel.onConfigurationChanged(newConfig);
+    public void onConfigurationChanged(Activity activity, Configuration newConfig) {
+        iChannel.onConfigurationChanged(activity, newConfig);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(Activity activity, int requestCode, String[] permissions, int[] grantResults) {
+        iChannel.onRequestPermissionsResult(activity, requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onWindowFocusChanged(Activity activity, boolean hasFocus) {
+        iChannel.onWindowFocusChanged(activity, hasFocus);
+    }
+
+    @Override
+    public void onApplicationAttachBaseContext(Context base) {
+        iChannel.onApplicationAttachBaseContext(base);
+    }
+
+    @Override
+    public void onApplicationConfiguration(Context base, Configuration newConfig) {
+        iChannel.onApplicationConfiguration(base, newConfig);
+    }
+
+    @Override
+    public void onApplicationTerminate(Context base) {
+        iChannel.onApplicationTerminate(base);
     }
 
     @Override

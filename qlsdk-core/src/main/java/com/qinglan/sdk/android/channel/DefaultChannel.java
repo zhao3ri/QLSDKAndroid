@@ -132,12 +132,12 @@ public class DefaultChannel extends BaseChannel {
     }
 
     @Override
-    public void onNewIntent(Intent intent) {
+    public void onNewIntent(Activity activity, Intent intent) {
         Log.d(TAG, "onNewIntent");
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed(Activity activity) {
         Log.d(TAG, "onBackPressed");
     }
 

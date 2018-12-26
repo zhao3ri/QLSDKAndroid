@@ -92,6 +92,8 @@ public interface IChannel {
 
     void onStart(Activity activity);
 
+    void onRestart(Activity activity);
+
     void onResume(Activity activity);
 
     void onPause(Activity activity);
@@ -102,13 +104,23 @@ public interface IChannel {
 
     void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data);
 
-    void onNewIntent(Intent intent);
+    void onNewIntent(Activity activity, Intent intent);
 
-    void onBackPressed();
+    void onBackPressed(Activity activity);
 
     void attachBaseContext(Context newBase);
 
-    void onConfigurationChanged(Configuration newConfig);
+    void onConfigurationChanged(Activity activity, Configuration newConfig);
+
+    void onRequestPermissionsResult(Activity activity, int requestCode, String[] permissions, int[] grantResults);
+
+    void onWindowFocusChanged(Activity activity, boolean hasFocus);
 
     void setUser(UserInfo user);
+
+    void onApplicationAttachBaseContext(Context base);
+
+    void onApplicationConfiguration(Context base, Configuration newConfig);
+
+    void onApplicationTerminate(Context base);
 }

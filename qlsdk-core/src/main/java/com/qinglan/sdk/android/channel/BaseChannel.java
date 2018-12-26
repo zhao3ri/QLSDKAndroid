@@ -1,5 +1,9 @@
 package com.qinglan.sdk.android.channel;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.text.TextUtils;
 
@@ -141,5 +145,81 @@ public abstract class BaseChannel implements IChannel {
     protected String getErrorMsg(String code, String msg) {
         String error = String.format("%s:%s", code, msg);
         return error;
+    }
+
+    @Override
+    public void onCreate(Activity activity) {
+    }
+
+    @Override
+    public void onStart(Activity activity) {
+    }
+
+    @Override
+    public void onRestart(Activity activity) {
+    }
+
+    @Override
+    public void onResume(Activity activity) {
+
+    }
+
+    @Override
+    public void onPause(Activity activity) {
+
+    }
+
+    @Override
+    public void onStop(Activity activity) {
+
+    }
+
+    @Override
+    public void onDestroy(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+    }
+
+    @Override
+    public void onNewIntent(Activity activity, Intent intent) {
+
+    }
+
+    @Override
+    public void onBackPressed(Activity activity) {
+
+    }
+
+    @Override
+    public void attachBaseContext(Context newBase) {
+
+    }
+
+    @Override
+    public void onConfigurationChanged(Activity activity, Configuration newConfig) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(Activity activity, int requestCode, String[] permissions, int[] grantResults) {
+    }
+
+    @Override
+    public void onWindowFocusChanged(Activity activity, boolean hasFocus) {
+    }
+
+    @Override
+    public void onApplicationAttachBaseContext(Context base) {
+    }
+
+    @Override
+    public void onApplicationConfiguration(Context base, Configuration newConfig) {
+    }
+
+    @Override
+    public void onApplicationTerminate(Context base) {
     }
 }

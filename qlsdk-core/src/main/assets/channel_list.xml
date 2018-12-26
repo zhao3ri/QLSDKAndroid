@@ -18,8 +18,12 @@
     <channel name="YXF" id="4">
         <class-name>YXFChannel</class-name>
     </channel>
-    <!--游戏fun平台-->
+    <!--57k平台-->
     <channel name="57k" id="5">
         <class-name>HuoSdkChannel</class-name>
+    </channel>
+    <!--汉风平台-->
+    <channel name="hanfeng" id="6">
+        <class-name>HanfengChannel</class-name>
     </channel>
 </channel-list>

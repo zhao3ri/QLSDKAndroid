@@ -1,0 +1,102 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.qinglan.sdk.android.channel.hanfeng">
+    <!-- 汉风sdk权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.webkit.permission.PLUGIN" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <application>
+        <!--&lt;!&ndash; 闪屏Activity,必须用hf.sdk.common.components.HfWelcomeActivity作为启动activity-->
+        <!--android:screenOrientation 设置为自己的方向 &ndash;&gt;-->
+        <!--<activity-->
+        <!--android:name="hf.sdk.common.components.HfWelcomeActivity"-->
+        <!--android:screenOrientation="landscape"-->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
+
+        <!--<category android:name="android.intent.category.LAUNCHER" />-->
+        <!--</intent-filter>-->
+        <!--</activity>-->
+
+        <!-- 需要修改 值为cp的启动Activity -->
+        <meta-data
+            android:name="hf_entryactivity"
+            android:value="${CHANNEL_LAUNCHER}" />
+
+        <!-- 需要修改,hf的appid和appkey参数 -->
+        <meta-data
+            android:name="hf_app_id"
+            android:value="${CHANNEL_APPID}" />
+        <meta-data
+            android:name="hf_appkey"
+            android:value="${CHANNEL_APPKEY}" />
+        <!-- 选择正式服务器还是测试服务器, 默认为true, 要测试线则改为false, 上线一定要改为true -->
+        <meta-data
+            android:name="hf_online"
+            android:value="true" />
+
+        <!-- 以下不用修改 -->
+        <meta-data
+            android:name="hf_splash_pic"
+            android:value="true" />
+        <meta-data
+            android:name="hf_userlmp"
+            android:value="hf.sdk.channel.hanfeng.Hanfeng" />
+        <meta-data
+            android:name="hf_channelId"
+            android:value="1" />
+        <meta-data
+            android:name="hf_subChannelId"
+            android:value="0" />
+
+        <activity
+            android:name="com.hanfeng.guildsdk.YhSDKActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="yysdk"
+            android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity
+            android:name="com.unionpay.uppay.PayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
+            android:label="@string/demo_app_name" />
+        <activity
+            android:name="com.hanfeng.guildsdk.activity.PayWebActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|keyboard|screenLayout"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+        <activity
+            android:name="com.hanfeng.guildsdk.activity.FloatWindowActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenLayout|screenSize"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name="com.hanfeng.guildsdk.activity.FloatMineActivity"
+            android:configChanges="keyboardHidden|keyboard|screenLayout|screenSize"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+
+        <receiver android:name="com.hanfeng.guildsdk.services.HfTaskReceiver" />
+        <!-- 汉风sdk -->
+    </application>
+</manifest>

@@ -254,58 +254,8 @@ public class HuoSdkChannel extends BaseChannel {
     }
 
     @Override
-    public void onCreate(Activity activity) {
-
-    }
-
-    @Override
-    public void onStart(Activity activity) {
-
-    }
-
-    @Override
-    public void onResume(Activity activity) {
-
-    }
-
-    @Override
-    public void onPause(Activity activity) {
-
-    }
-
-    @Override
-    public void onStop(Activity activity) {
-
-    }
-
-    @Override
     public void onDestroy(Activity activity) {
         sdkManager.recycle();
-    }
-
-    @Override
-    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-
-    }
-
-    @Override
-    public void onNewIntent(Intent intent) {
-
-    }
-
-    @Override
-    public void onBackPressed() {
-
-    }
-
-    @Override
-    public void attachBaseContext(Context newBase) {
-
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-
     }
 
 }

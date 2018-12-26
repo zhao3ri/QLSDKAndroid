@@ -70,12 +70,12 @@ public interface IPresenter {
     /**
      * 获取平台id
      */
-    int getPlatformId();
+    int getChannelId();
 
     /**
      * 获取平台名称
      */
-    String getPlatformName();
+    String getChannelName();
 
     /**
      * 显示浮窗
@@ -91,6 +91,8 @@ public interface IPresenter {
 
     void onStart(Activity activity);
 
+    void onRestart(Activity activity);
+
     void onResume(Activity activity);
 
     void onPause(Activity activity);
@@ -101,13 +103,23 @@ public interface IPresenter {
 
     void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data);
 
-    void onNewIntent(Intent intent);
+    void onNewIntent(Activity activity, Intent intent);
 
-    void onBackPressed();
+    void onBackPressed(Activity activity);
 
     void attachBaseContext(Context newBase);
 
-    void onConfigurationChanged(Configuration newConfig);
+    void onConfigurationChanged(Activity activity, Configuration newConfig);
+
+    void onRequestPermissionsResult(Activity activity, int requestCode, String[] permissions, int[] grantResults);
+
+    void onWindowFocusChanged(Activity activity, boolean hasFocus);
+
+    void onApplicationAttachBaseContext(Context base);
+
+    void onApplicationConfiguration(Context base, Configuration newConfig);
+
+    void onApplicationTerminate(Context base);
 
     void saveUserInfo(UserInfo user);
 
