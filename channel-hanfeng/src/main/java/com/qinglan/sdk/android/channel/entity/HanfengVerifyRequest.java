@@ -30,7 +30,7 @@ public class HanfengVerifyRequest extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return null;
+        return "channel/hanfeng/session";
     }
 
     @Override
