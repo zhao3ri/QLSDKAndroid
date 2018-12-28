@@ -36,7 +36,13 @@ android {
 //    }
     sourceSets {
         main {
-            jniLibs.srcDirs = [' /../channel-yxf/libs/so', ' /../channel-yeshen/libs', ' /../channel-57k/libs', ' /../channel-hanfeng/libs']
+            jniLibs.srcDirs = [
+                    ' /../channel-yxf/libs/so',
+                    ' /../channel-yeshen/libs',
+                    ' /../channel-57k/libs',
+                    ' /../channel-hanfeng/libs',
+                    ' /../channel-chongchong/libs'
+            ]
         }
     }
 
@@ -64,4 +70,6 @@ dependencies {
     embedded project(':channel-yxf')
     embedded project(':channel-huawei')
     embedded project(':channel-yeshen')
+    embedded project(':channel-hanfeng')
+    embedded project(':channel-chongchong')
 }

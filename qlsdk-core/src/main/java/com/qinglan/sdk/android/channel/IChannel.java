@@ -1,6 +1,7 @@
 package com.qinglan.sdk.android.channel;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -118,9 +119,9 @@ public interface IChannel {
 
     void setUser(UserInfo user);
 
-    void onApplicationAttachBaseContext(Context base);
+    void onApplicationAttachBaseContext(Application app, Context base);
 
-    void onApplicationConfiguration(Context base, Configuration newConfig);
+    void onApplicationConfiguration(Application app, Configuration newConfig);
 
-    void onApplicationTerminate(Context base);
+    void onApplicationTerminate(Application app);
 }

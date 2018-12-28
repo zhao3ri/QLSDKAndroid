@@ -218,23 +218,23 @@ public class HanfengChannel extends BaseChannel implements IHfSdkListener {
     }
 
     @Override
+    public void onApplicationAttachBaseContext(Application app, Context base) {
+        HfCommonSdk.getInstance().onApplicationAttachBaseContextInApplication(app, base);
+    }
+
+    @Override
+    public void onApplicationConfiguration(Application app, Configuration newConfig) {
+        HfCommonSdk.getInstance().onApplicationConfigurationChanged(app, newConfig);
+    }
+
+    @Override
+    public void onApplicationTerminate(Application app) {
+        HfCommonSdk.getInstance().onApplicationTerminate(app);
+    }
+
+    @Override
     public void onConfigurationChanged(Activity activity, Configuration newConfig) {
         HfCommonSdk.getInstance().onConfigurationChanged(activity, newConfig);
-    }
-
-    @Override
-    public void onApplicationAttachBaseContext(Context base) {
-        HfCommonSdk.getInstance().onApplicationAttachBaseContextInApplication((Application) base.getApplicationContext(), base);
-    }
-
-    @Override
-    public void onApplicationConfiguration(Context base, Configuration newConfig) {
-        HfCommonSdk.getInstance().onApplicationAttachBaseContextInApplication((Application) base.getApplicationContext(), base);
-    }
-
-    @Override
-    public void onApplicationTerminate(Context base) {
-        HfCommonSdk.getInstance().onApplicationTerminate((Application) base.getApplicationContext());
     }
 
     @Override

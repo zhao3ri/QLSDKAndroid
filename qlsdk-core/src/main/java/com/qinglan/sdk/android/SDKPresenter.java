@@ -3,6 +3,7 @@ package com.qinglan.sdk.android;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -479,18 +480,18 @@ class SDKPresenter implements IPresenter {
     }
 
     @Override
-    public void onApplicationAttachBaseContext(Context base) {
-        iChannel.onApplicationAttachBaseContext(base);
+    public void onApplicationAttachBaseContext(Application app, Context base) {
+        iChannel.onApplicationAttachBaseContext(app, base);
     }
 
     @Override
-    public void onApplicationConfiguration(Context base, Configuration newConfig) {
-        iChannel.onApplicationConfiguration(base, newConfig);
+    public void onApplicationConfiguration(Application app, Configuration newConfig) {
+        iChannel.onApplicationConfiguration(app, newConfig);
     }
 
     @Override
-    public void onApplicationTerminate(Context base) {
-        iChannel.onApplicationTerminate(base);
+    public void onApplicationTerminate(Application app) {
+        iChannel.onApplicationTerminate(app);
     }
 
     @Override

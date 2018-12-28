@@ -1,6 +1,7 @@
 package com.qinglan.sdk.android;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -174,16 +175,16 @@ public class QLSDK {
         mPresenter.onWindowFocusChanged(activity, hasFocus);
     }
 
-    public void onApplicationAttachBaseContext(Context base) {
-        mPresenter.onApplicationAttachBaseContext(base);
+    public void onApplicationAttachBaseContext(Application app, Context base) {
+        mPresenter.onApplicationAttachBaseContext(app, base);
     }
 
-    public void onApplicationConfiguration(Context base, Configuration newConfig) {
-        mPresenter.onApplicationConfiguration(base, newConfig);
+    public void onApplicationConfiguration(Application app, Configuration newConfig) {
+        mPresenter.onApplicationConfiguration(app, newConfig);
     }
 
-    public void onApplicationTerminate(Context base) {
-        mPresenter.onApplicationTerminate(base);
+    public void onApplicationTerminate(Application app) {
+        mPresenter.onApplicationTerminate(app);
     }
 
     public void onBackPressed(Activity activity) {

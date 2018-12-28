@@ -26,4 +26,8 @@
     <channel name="hanfeng" id="6">
         <class-name>HanfengChannel</class-name>
     </channel>
+    <!--虫虫平台-->
+    <channel name="chongchong" id="7">
+        <class-name>ChongchongChannel</class-name>
+    </channel>
 </channel-list>

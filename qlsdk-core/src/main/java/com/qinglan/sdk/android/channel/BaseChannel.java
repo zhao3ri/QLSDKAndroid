@@ -1,6 +1,7 @@
 package com.qinglan.sdk.android.channel;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -212,14 +213,14 @@ public abstract class BaseChannel implements IChannel {
     }
 
     @Override
-    public void onApplicationAttachBaseContext(Context base) {
+    public void onApplicationAttachBaseContext(Application app, Context base) {
     }
 
     @Override
-    public void onApplicationConfiguration(Context base, Configuration newConfig) {
+    public void onApplicationConfiguration(Application app, Configuration newConfig) {
     }
 
     @Override
-    public void onApplicationTerminate(Context base) {
+    public void onApplicationTerminate(Application app) {
     }
 }
