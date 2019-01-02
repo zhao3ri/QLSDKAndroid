@@ -12,6 +12,7 @@ import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
+import com.qinglan.sdk.android.net.BaseResult;
 import com.qinglan.sdk.android.net.HttpConnectionTask;
 import com.qinglan.sdk.android.net.OnResponseListener;
 import com.qinglan.sdk.android.channel.entity.HMSPaySignRequest;
@@ -19,15 +20,13 @@ import com.qinglan.sdk.android.channel.entity.HMSVerifyRequest;
 
 import java.util.Map;
 
+import static com.qinglan.sdk.android.net.HttpConstants.RESPONSE_CODE_SUCCESS;
+
 
 public class HMSHelper {
     private static final String MERCHANT_NAME = "Qinglanbingshui";
 
-    private static final String RETURN_CODE_SUCCEED = "0";
     private static final int RETURN_CODE_ERROR = -1;
-    private static final String RETURN_KEY_CODE = "rtnCode";
-    private static final String RETURN_KEY_TS = "ts";
-    private static final String RETURN_KEY_SIGN = "rtnSign";
 
     private long gameId;
     private int platformId;
@@ -68,25 +67,27 @@ public class HMSHelper {
             @Override
             public void onResponse(boolean success, String result) {
                 Log.d("verify result===" + result);
-                if (success && !TextUtils.isEmpty(result)) {
-                    Map<String, Object> resMap = Utils.json2Object(result, new TypeToken<Map<String, Object>>() {
-                    }.getType());
-                    String code = String.valueOf(resMap.get(RETURN_KEY_CODE));
-                    if (code.equals(RETURN_CODE_SUCCEED)) {
+                if (success && !TextUtils.isEmpty(result) && getResult(result) != null) {
+                    BaseResult res = getResult(result);
+                    if (res.code == RESPONSE_CODE_SUCCESS) {
                         if (listener != null)
-                            listener.onRequest(true, Integer.valueOf(code), resMap);
+                            listener.onRequest(true, res.code, res.msg, res.data);
                     } else {
                         if (listener != null)
-                            listener.onRequest(false, Integer.valueOf(code), resMap);
+                            listener.onRequest(false, res.code, res.msg, res.data);
                     }
-
                 } else {
                     if (listener != null)
-                        listener.onRequest(false, RETURN_CODE_ERROR, null);
+                        listener.onRequest(false, RETURN_CODE_ERROR, result, null);
                 }
 
             }
         }).execute(request);
+    }
+
+    private BaseResult getResult(String content) {
+        BaseResult result = Utils.json2Object(content, BaseResult.class);
+        return result;
     }
 
     /**
@@ -165,6 +166,6 @@ public class HMSHelper {
     }
 
     interface OnVerifyRequestListener {
-        void onRequest(boolean success, int code, Map<String, Object> resMap);
+        void onRequest(boolean success, int code, String msg, Map<String, Object> data);
     }
 }

@@ -16,6 +16,7 @@ import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
+import com.qinglan.sdk.android.net.BaseResult;
 import com.qinglan.sdk.android.net.HttpConnectionTask;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.OnResponseListener;
@@ -27,12 +28,10 @@ import hf.sdk.shell.proxy.HfCommonSdk;
 import hf.sdk.shell.proxy.HfPayParams;
 import hf.sdk.shell.proxy.HfUserExtraData;
 
-public class HanfengChannel extends BaseChannel implements IHfSdkListener {
-    private static final String STATUS_SUCCESS = "YHYZ_000";
+import static com.qinglan.sdk.android.net.HttpConstants.RESPONSE_CODE_SUCCESS;
 
+public class HanfengChannel extends BaseChannel implements IHfSdkListener {
     private static final String RESULT_USER_ID = "userId";
-    private static final String RESULT_STATUS = "status";
-    private static final String RESULT_MSG = "msg";
 
     private Callback.OnInitConnectedListener onInitConnectedListener;
     private Callback.OnLoginListener onLoginListener;
@@ -266,19 +265,18 @@ public class HanfengChannel extends BaseChannel implements IHfSdkListener {
         new HttpConnectionTask().setResponseListener(new OnResponseListener() {
             @Override
             public void onResponse(boolean success, String result) {
-                if (success && !TextUtils.isEmpty(result)) {
-                    Map<String, String> resMap = Utils.json2Object(result, new TypeToken<Map<String, String>>() {
-                    }.getType());
-                    String status = resMap.get(RESULT_STATUS);
-                    String msg = resMap.get(RESULT_MSG);
-                    String userId = resMap.get(RESULT_USER_ID);
-                    if (status.equals(STATUS_SUCCESS)) {
-                        if (onLoginListener != null) {
-                            onLoginListener.onSuccess(getUser(userId, request));
+                if (success && !TextUtils.isEmpty(result) && getResult(result) != null) {
+                    BaseResult res = getResult(result);
+                    if (res.code == RESPONSE_CODE_SUCCESS) {
+                        if (res.data != null && res.data.get(RESULT_USER_ID) != null) {
+                            String userId = String.valueOf(res.data.get(RESULT_USER_ID));
+                            if (onLoginListener != null) {
+                                onLoginListener.onSuccess(getUser(userId, request));
+                            }
                         }
                     } else {
                         if (onLoginListener != null)
-                            onLoginListener.onFailed(getErrorMsg(status, msg));
+                            onLoginListener.onFailed(getErrorMsg(res.code + "", res.msg));
                     }
                 } else {
                     if (onLoginListener != null)

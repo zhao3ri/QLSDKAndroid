@@ -41,6 +41,9 @@ public final class HttpConstants {
     public static final String REQUEST_PARAM_GOODS_COUNT = "goodsCount";
 
     public static final String RESPONSE_CODE = "code";
+    public static final String RESPONSE_MESSAGE = "msg";
+    public static final String RESPONSE_DATA = "data";
+
     public static final int RESPONSE_CODE_SUCCESS = 0;
     public static final int RESPONSE_CODE_READ_ERROR = -2;
     public static final int RESPONSE_CODE_UNKNOWN_ERROR = -3;

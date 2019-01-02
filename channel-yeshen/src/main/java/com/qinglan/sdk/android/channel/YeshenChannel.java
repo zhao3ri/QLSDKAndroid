@@ -22,12 +22,11 @@ import com.bignox.sdk.export.listener.OnInitListener;
 import com.bignox.sdk.export.listener.OnLoginListener;
 import com.bignox.sdk.export.listener.OnLogoutListener;
 import com.qinglan.sdk.android.Callback;
-import com.qinglan.sdk.android.channel.entity.YeshenPassportResponse;
 import com.qinglan.sdk.android.channel.entity.YeshenVerifyRequest;
-import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
+import com.qinglan.sdk.android.net.BaseResult;
 import com.qinglan.sdk.android.net.HttpConnectionTask;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.OnResponseListener;
@@ -35,13 +34,9 @@ import com.qinglan.sdk.android.net.OnResponseListener;
 import java.util.Map;
 
 import static com.qinglan.sdk.android.Constants.ACTION_LOGOUT;
+import static com.qinglan.sdk.android.net.HttpConstants.RESPONSE_CODE_SUCCESS;
 
 public class YeshenChannel extends BaseChannel implements OnLogoutListener {
-    private static final int CODE_SUCCESS = 0;
-    private static final int CODE_FAILED = -1;
-    private static final String MSG_PASSPORT_VALID = "1";
-    private static final String MSG_PASSPORT_INVALID = "0";
-    private static final String RESULT_PARAM_VALIDATE = "isValidate";
 
     @Override
     public void init(Activity activity, final Callback.OnInitConnectedListener listener) {
@@ -107,24 +102,15 @@ public class YeshenChannel extends BaseChannel implements OnLogoutListener {
 
             @Override
             public void onResponse(boolean success, String result) {
-                if (success && !TextUtils.isEmpty(result)) {
-                    YeshenPassportResponse response = Utils.json2Object(result, YeshenPassportResponse.class);
-                    if (response != null) {
-                        if (response.getErrNum() == CODE_SUCCESS) {
-                            Map<String, Object> transdata = response.getTransdata();
-                            if (transdata != null && transdata.containsKey(RESULT_PARAM_VALIDATE)) {
-                                if (MSG_PASSPORT_VALID.equals(transdata.get(RESULT_PARAM_VALIDATE).toString())) {
-                                    if (listener != null)
-                                        listener.onSuccess(user);
-                                } else {
-                                    onFailed(listener, getErrorMsg(response.getErrNum(), response.getErrMsg()));
-                                }
-                            }
-                        } else {// 收到异常信息
-                            onFailed(listener, getErrorMsg(response.getErrNum(), response.getErrMsg()));
-                        }
-                        return;
-                    }//if(response != null)
+                if (success && !TextUtils.isEmpty(result) && getResult(result) != null) {
+                    BaseResult res = getResult(result);
+                    if (res.code == RESPONSE_CODE_SUCCESS) {
+                        if (listener != null)
+                            listener.onSuccess(user);
+                    } else {// 收到异常信息
+                        onFailed(listener, getErrorMsg(res.code, res.msg));
+                    }
+                    return;
                 }
                 onFailed(listener, result);
             }

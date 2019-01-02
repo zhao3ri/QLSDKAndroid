@@ -1,9 +1,6 @@
 package com.qinglan.sdk.android.channel;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.text.TextUtils;
 
 import com.game.sdk.HuosdkManager;
@@ -27,11 +24,14 @@ import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
+import com.qinglan.sdk.android.net.BaseResult;
 import com.qinglan.sdk.android.net.HttpConnectionTask;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.OnResponseListener;
 
 import java.util.Map;
+
+import static com.qinglan.sdk.android.net.HttpConstants.RESPONSE_CODE_SUCCESS;
 
 public class HuoSdkChannel extends BaseChannel {
     private static final int RESULT_STATUS_SUCCESS = 1;
@@ -95,23 +95,15 @@ public class HuoSdkChannel extends BaseChannel {
 
             @Override
             public void onResponse(boolean success, String result) {
-                if (success && !TextUtils.isEmpty(result)) {
-                    Map<String, String> resMap = Utils.json2Object(result, new TypeToken<Map<String, String>>() {
-                    }.getType());
-                    String status = resMap.get(RESULT_STATUS);
-                    String msg = resMap.get(RESULT_MSG);
-                    if (TextUtils.isEmpty(status)) {
-                        if (listener != null)
-                            listener.onFailed(result);
-                        return;
-                    }
-                    if (Integer.valueOf(status) == RESULT_STATUS_SUCCESS) {
+                if (success && !TextUtils.isEmpty(result) && getResult(result) != null) {
+                    BaseResult res = getResult(result);
+                    if (res.code == RESPONSE_CODE_SUCCESS) {
                         if (listener != null) {
                             listener.onSuccess(getUser(logincallBack));
                         }
                     } else {
                         if (listener != null)
-                            listener.onFailed(getErrorMsg(status, msg));
+                            listener.onFailed(getErrorMsg(res.code + "", res.msg));
                     }
                 } else {
                     if (listener != null)

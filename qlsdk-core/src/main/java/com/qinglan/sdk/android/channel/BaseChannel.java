@@ -15,12 +15,16 @@ import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.common.ResContainer;
 import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.UserInfo;
+import com.qinglan.sdk.android.net.BaseResult;
 import com.qinglan.sdk.android.net.HttpConnectionTask;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.OnResponseListener;
 import com.qinglan.sdk.android.net.impl.QueryOrderRequestInfo;
 
 import java.util.Map;
+
+import static com.qinglan.sdk.android.net.HttpConstants.RESPONSE_CODE;
+import static com.qinglan.sdk.android.net.HttpConstants.RESPONSE_CODE_UNKNOWN_ERROR;
 
 public abstract class BaseChannel implements IChannel {
     private int channelId;
@@ -120,7 +124,7 @@ public abstract class BaseChannel implements IChannel {
 
                 Map<String, Object> resMap = Utils.json2Object(result, new TypeToken<Map<String, Object>>() {
                 }.getType());
-                int code = Utils.getJsonValue(result, HttpConstants.RESPONSE_CODE, HttpConstants.RESPONSE_CODE_UNKNOWN_ERROR);
+                int code = Utils.getJsonValue(result, RESPONSE_CODE, RESPONSE_CODE_UNKNOWN_ERROR);
                 if (success && null != resMap && !resMap.isEmpty()
                         && code == HttpConstants.RESPONSE_CODE_SUCCESS) {
                     int status = Utils.getJsonValue(result, HttpConstants.RESPONSE_ORDER_STATUS
@@ -146,6 +150,25 @@ public abstract class BaseChannel implements IChannel {
     protected String getErrorMsg(String code, String msg) {
         String error = String.format("%s:%s", code, msg);
         return error;
+    }
+
+    protected Map<String, Object> getParams(String result) {
+        Map<String, Object> resMap = Utils.json2Object(result, new TypeToken<Map<String, Object>>() {
+        }.getType());
+        return resMap;
+    }
+
+    protected int getCode(Map<String, Object> res) {
+        int code = RESPONSE_CODE_UNKNOWN_ERROR;
+        if (null != res.get(RESPONSE_CODE)) {
+            code = Integer.valueOf(res.get(RESPONSE_CODE).toString());
+        }
+        return code;
+    }
+
+    protected BaseResult getResult(String content) {
+        BaseResult result = Utils.json2Object(content, BaseResult.class);
+        return result;
     }
 
     @Override

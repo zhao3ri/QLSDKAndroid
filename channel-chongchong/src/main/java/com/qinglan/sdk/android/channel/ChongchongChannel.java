@@ -20,14 +20,16 @@ import com.qinglan.sdk.android.channel.entity.CCVerifyRequest;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
+import com.qinglan.sdk.android.net.BaseResult;
 import com.qinglan.sdk.android.net.HttpConnectionTask;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.OnResponseListener;
 
 import java.util.Map;
 
+import static com.qinglan.sdk.android.net.HttpConstants.RESPONSE_CODE_SUCCESS;
+
 public class ChongchongChannel extends BaseChannel {
-    private static final String VERIFY_SUCCESS = "success";
 
     @Override
     public void load(ChannelParamsReader.ChannelParam p, Config config) {
@@ -78,13 +80,20 @@ public class ChongchongChannel extends BaseChannel {
         new HttpConnectionTask().setResponseListener(new OnResponseListener() {
             @Override
             public void onResponse(boolean success, String result) {
-                if (success && !TextUtils.isEmpty(result) && result.equals(VERIFY_SUCCESS)) {
-                    UserInfo userInfo = new UserInfo();
-                    userInfo.setUserName(sdkUser.userName);
-                    userInfo.setId(sdkUser.uid);
-                    userInfo.setUdToken(sdkUser.token);
-                    if (listener != null) {
-                        listener.onSuccess(userInfo);
+                if (success && !TextUtils.isEmpty(result) && getResult(result) != null) {
+                    BaseResult res = getResult(result);
+                    if (res.code == RESPONSE_CODE_SUCCESS) {
+                        UserInfo userInfo = new UserInfo();
+                        userInfo.setUserName(sdkUser.userName);
+                        userInfo.setId(sdkUser.uid);
+                        userInfo.setUdToken(sdkUser.token);
+                        if (listener != null) {
+                            listener.onSuccess(userInfo);
+                        }
+                    } else {
+                        if (listener != null) {
+                            listener.onFailed(getErrorMsg(res.code + "", res.msg));
+                        }
                     }
                 } else {
                     if (listener != null) {

@@ -69,7 +69,7 @@ public class HMSChannel extends BaseChannel {
                     if (userData.getIsAuth() == 1) {
                         helper.verifyLogin(userData, new HMSHelper.OnVerifyRequestListener() {
                             @Override
-                            public void onRequest(boolean success, int code, Map<String, Object> resMap) {
+                            public void onRequest(boolean success, int code, String msg, Map<String, Object> data) {
                                 if (success) {
                                     if (listener != null)
                                         listener.onSuccess(helper.getUserInfo(userData));

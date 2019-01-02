@@ -13,6 +13,7 @@ import com.qinglan.sdk.android.common.Utils;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
 import com.qinglan.sdk.android.model.UserInfo;
+import com.qinglan.sdk.android.net.BaseResult;
 import com.qinglan.sdk.android.net.HttpConnectionTask;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.OnResponseListener;
@@ -32,6 +33,8 @@ import cn.gundam.sdk.shell.open.UCOrientation;
 import cn.gundam.sdk.shell.param.SDKParamKey;
 import cn.gundam.sdk.shell.param.SDKParams;
 import cn.uc.gamesdk.UCGameSdk;
+
+import static com.qinglan.sdk.android.net.HttpConstants.RESPONSE_CODE_SUCCESS;
 
 public class UCChannel extends BaseChannel {
     private static final String SIGN_TYPE_MD5 = "MD5";
@@ -106,19 +109,18 @@ public class UCChannel extends BaseChannel {
 
             @Override
             public void onResponse(boolean success, String result) {
-                if (success && !TextUtils.isEmpty(result)) {
-                    UCResponse response = Utils.json2Object(result, UCResponse.class);
-                    if (null == response
-                            || Integer.valueOf(response.state.get(UCResponse.RESPONSE_KEY_CODE).toString()) != UCResponse.RESPONSE_SUCCESS_CODE) {
+                if (success && !TextUtils.isEmpty(result) && getResult(result) != null) {
+                    BaseResult res = getResult(result);
+                    if (res.code == RESPONSE_CODE_SUCCESS) {
+                        UserInfo userInfo = new UserInfo();
+                        userInfo.setId(res.data.get(UCResponse.RESPONSE_KEY_ACCOUNT_ID).toString());
+                        userInfo.setUserName(res.data.get(UCResponse.RESPONSE_KEY_NICKNAME).toString());
+                        if (listener != null) {
+                            listener.onSuccess(userInfo);
+                        }
+                    } else {
                         if (listener != null)
-                            listener.onFailed(result);
-                        return;
-                    }
-                    UserInfo userInfo = new UserInfo();
-                    userInfo.setId(response.data.get(UCResponse.RESPONSE_KEY_ACCOUNT_ID).toString());
-                    userInfo.setUserName(response.data.get(UCResponse.RESPONSE_KEY_NICKNAME).toString());
-                    if (listener != null) {
-                        listener.onSuccess(userInfo);
+                            listener.onFailed(getErrorMsg(res.code + "", res.msg));
                     }
                 } else {
                     if (listener != null)

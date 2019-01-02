@@ -6,4 +6,5 @@ public interface Constants {
     String ACTION_EXIT = "com.qinglan.sdk.android.LOGOUT_EXIT";
 
     String KEY_GAME_ROLE = "IPresenter.game_role";
+
 }
