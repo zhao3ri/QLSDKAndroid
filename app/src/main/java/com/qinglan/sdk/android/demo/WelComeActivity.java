@@ -358,7 +358,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        qlSDK.onNewIntent(intent);
+        qlSDK.onNewIntent(this, intent);
     }
 
     @Override
@@ -378,7 +378,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
     public void onBackPressed() {
         super.onBackPressed();
         // 提示，这个api很重要，要实现
-        qlSDK.onBackPressed();
+        qlSDK.onBackPressed(this);
     }
 
     @Override
@@ -394,7 +394,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // 提示，这个api很重要，要实现
-        qlSDK.onConfigurationChanged(newConfig);
+        qlSDK.onConfigurationChanged(this, newConfig);
     }
 
     @Override

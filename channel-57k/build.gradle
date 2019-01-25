@@ -17,7 +17,7 @@ android {
                 CHANNEL_APPID : "qinglanChannelAppId",
                 CHANNEL_APPKEY: "qinglanChannelAppKey",
                 CHANNEL_CPID  : "qinglanChannelCpId",
-                CHANNEL_CPKEY  : "qinglanChannelCpKey"
+                CHANNEL_CPKEY : "qinglanChannelCpKey"
         ]
     }
 
@@ -35,12 +35,15 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'libs', exclude: [
+            'alipaySdk*.jar',
+            'android-support-v4.jar'], include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23+'
     testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     provided project(':qlsdk-core')
-
+    provided files('android-support-v4.jar')
+    provided files('alipaySdk-20170309.jar')
 }

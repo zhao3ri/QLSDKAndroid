@@ -9,6 +9,7 @@ import com.qinglan.sdk.android.Callback;
 import com.qinglan.sdk.android.common.Log;
 import com.qinglan.sdk.android.model.GamePay;
 import com.qinglan.sdk.android.model.GameRole;
+import com.qinglan.sdk.android.model.UserInfo;
 
 import java.util.Map;
 
@@ -21,7 +22,8 @@ import java.util.Map;
 public class DefaultChannel extends BaseChannel {
     private static final String TAG = "DefaultChannel";
     public static final String DEFAULT_PLATFORM_NAME = "DEFAULT";
-    public static final int DEFAULT_PLATFORM_ID = 41;
+    public static final int DEFAULT_PLATFORM_ID = 0;
+    private static final String USER_PREFIX = "default_";
 
     @Override
     public int getId() {
@@ -36,19 +38,24 @@ public class DefaultChannel extends BaseChannel {
     @Override
     public void init(Activity activity, Callback.OnInitConnectedListener listener) {
         Log.d(TAG, "platform init");
-        listener.onSuccess(null);
+        if (listener != null)
+            listener.onSuccess(null);
     }
 
     @Override
     public void login(Activity activity, Callback.OnLoginListener listener) {
         Log.d(TAG, "platform login");
-        listener.onSuccess(null);
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(USER_PREFIX + System.currentTimeMillis() / 1000);
+        if (listener != null)
+            listener.onSuccess(userInfo);
     }
 
     @Override
     public void logout(Activity activity, GameRole role, Callback.OnLogoutResponseListener listener) {
         Log.d(TAG, "platform logout");
-        listener.onSuccess();
+        if (listener != null)
+            listener.onSuccess();
     }
 
     @Override
@@ -64,31 +71,36 @@ public class DefaultChannel extends BaseChannel {
     @Override
     public void exit(Activity activity, GameRole role, Callback.OnExitListener listener) {
         Log.d(TAG, "exit");
-        listener.onFinished(true, "");
+        if (listener != null)
+            listener.onFinished(true, "");
     }
 
     @Override
     public void pay(Activity activity, GameRole role, GamePay pay, Map<String, Object> result, Callback.OnPayRequestListener listener) {
         Log.d(TAG, "pay");
-        listener.onSuccess("");
+        if (listener != null)
+            listener.onSuccess("");
     }
 
     @Override
     public void createRole(Activity activity, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
         Log.d(TAG, "createRole");
-        listener.onSuccess(role);
+        if (listener != null)
+            listener.onSuccess(role);
     }
 
     @Override
     public void selectRole(Activity activity, boolean showFloat, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
         Log.d(TAG, "selectRole");
-        listener.onSuccess(role);
+        if (listener != null)
+            listener.onSuccess(role);
     }
 
     @Override
     public void levelUpdate(Activity activity, GameRole role, long createTime, Callback.OnLevelUpListener listener) {
         Log.d(TAG, "levelUpdate");
-        listener.onFinished(true, "");
+        if (listener != null)
+            listener.onFinished(true, "");
     }
 
     @Override
@@ -145,11 +157,5 @@ public class DefaultChannel extends BaseChannel {
     public void attachBaseContext(Context newBase) {
         Log.d(TAG, "attachBaseContext");
     }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        Log.d(TAG, "onConfigurationChanged");
-    }
-
 
 }

@@ -26,7 +26,6 @@ public final class ChannelParamsReader {
     }
 
     public void parser() {
-        Log.d("parser channel");
         try {
             parserXml();
         } catch (Exception e) {
@@ -66,7 +65,6 @@ public final class ChannelParamsReader {
             if (qName.equals(ELEMENT_CHANNEL)) {
                 channel = new ChannelParam();
                 if (attributes != null) {
-                    Log.d("attributes length===" + attributes.getLength());
                     for (int i = 0; i < attributes.getLength(); i++) {
                         if (attributes.getQName(i).equals(ATTRIBUTE_CHANNEL_ID)) {
                             channel.id = Integer.parseInt(attributes.getValue(ATTRIBUTE_CHANNEL_ID));
@@ -77,7 +75,6 @@ public final class ChannelParamsReader {
                 }
             }
             curTag = qName;
-            Log.d("start element:" + qName);
         }
 
         @Override
@@ -99,7 +96,6 @@ public final class ChannelParamsReader {
                 channel = null;
             }
             curTag = null;
-            Log.d("end element:" + qName);
         }
 
         @Override

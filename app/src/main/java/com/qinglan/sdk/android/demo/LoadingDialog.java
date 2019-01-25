@@ -12,7 +12,6 @@ import android.widget.TextView;
  *
  */
 public class LoadingDialog extends Dialog{
-
 	public TextView mTvMessage;
 	public ProgressBar mBar;
 	public LoadingDialog(Context context) {

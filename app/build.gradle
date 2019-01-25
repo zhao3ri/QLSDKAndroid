@@ -46,7 +46,7 @@ android {
     }
     sourceSets {
         main {
-            jniLibs.srcDirs = [' /../yxf-channel/libs/so',' /../yeshen-channel/libs']
+            jniLibs.srcDirs = [' /../yxf-channel/libs/so', ' /../yeshen-channel/libs']
         }
     }
 }
@@ -66,8 +66,10 @@ dependencies {
         compile fileTree(dir: 'libs', include: ['*.jar'])
         compile project(":qlsdk-core")
 //        compile project(":qlsdk-component")
-        compile(name:'qlsdk-component',ext:'aar');
+//        compile(name: 'qlsdk-component', ext: 'aar')
+        compile(name: 'qlsdk-component-release', ext: 'aar')
         compile 'com.android.support:appcompat-v7:23+' //Non embedded dependency
+        compile 'com.android.support:support-v4:23+' //Non embedded dependency
         compile 'com.android.support.constraint:constraint-layout:1.1.3'
         testCompile 'junit:junit:4.12'
         androidTestCompile 'com.android.support.test:runner:1.0.2'
@@ -76,5 +78,8 @@ dependencies {
 }
 
 configurations {
-    all*.exclude group: 'com.android.support', module: 'support-v4'
+//    all*.exclude group: 'com.android.support', module: 'support-v4'
+    all*.exclude group: 'com.android.support', module: 'support-annotations'
+//    all*.exclude group: 'com.google.code.gson'
+
 }

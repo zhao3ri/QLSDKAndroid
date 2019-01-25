@@ -64,6 +64,7 @@
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            tools:replace="android:configChanges"
             android:exported="false"
             android:screenOrientation="behind" />
         <activity

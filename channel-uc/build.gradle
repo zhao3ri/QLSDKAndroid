@@ -52,18 +52,12 @@ dependencies {
 //            }, ext                                  : 'aar'])
 //        }
     } else {
-        compile fileTree(dir: 'libs', include: ['*.jar'])
-
+        compile fileTree(dir: 'libs'/*,exclude: ['alipaySdk-*.jar']*/, include: ['*.jar'])
+        //        provided files('alipaySdk-20160825.jar')
         compile 'com.android.support:appcompat-v7:23+'
         testCompile 'junit:junit:4.12'
         androidTestCompile 'com.android.support.test:runner:1.0.2'
         androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
         provided project(':qlsdk-core')
-//        fileTree(dir: 'libs', include: '**/*.aar')
-//                .each { File file ->
-//            dependencies.add("compile", [name: file.name.lastIndexOf('.').with {
-//                it != -1 ? file.name[0..<it] : file.name
-//            }, ext                           : 'aar'])
-//        }
     }
 }

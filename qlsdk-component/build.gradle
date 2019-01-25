@@ -37,11 +37,11 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = [
-                    ' /../channel-yxf/libs/so',
-                    ' /../channel-yeshen/libs',
                     ' /../channel-57k/libs',
+                    ' /../channel-chongchong/libs',
                     ' /../channel-hanfeng/libs',
-                    ' /../channel-chongchong/libs'
+                    ' /../channel-yeshen/libs',
+                    ' /../channel-yxf/libs/so'
             ]
         }
     }
@@ -56,20 +56,40 @@ dependencies {
     if (buildToolIsGreaterThan3 == true) {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
         implementation 'com.android.support:appcompat-v7:23+'
+        implementation 'com.android.support:support-v4:23+'
         testImplementation 'junit:junit:4.12'
         androidTestImplementation 'com.android.support.test:runner:1.0.2'
         androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     } else {
         compile fileTree(dir: 'libs', include: ['*.jar'])
         compile 'com.android.support:appcompat-v7:23+'
+        compile 'com.android.support:support-v4:23+'
         testCompile 'junit:junit:4.12'
         androidTestCompile 'com.android.support.test:runner:1.0.2'
         androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
     }
-    embedded project(':channel-uc')
-    embedded project(':channel-yxf')
-    embedded project(':channel-huawei')
-    embedded project(':channel-yeshen')
-    embedded project(':channel-hanfeng')
     embedded project(':channel-chongchong')
+    embedded project(':channel-hanfeng')
+    embedded project(':channel-huawei')
+    embedded project(':channel-uc')
+    embedded project(':channel-yeshen')
+    embedded project(':channel-yxf')
 }
+
+build.dependsOn(
+        ':channel-chongchong:build',
+        ':channel-hanfeng:build',
+        ':channel-huawei:build',
+        ':channel-uc:build',
+        ':channel-yeshen:build',
+        ':channel-yxf:build'
+)
+
+clean.dependsOn(
+        ':channel-chongchong:clean',
+        ':channel-hanfeng:clean',
+        ':channel-huawei:clean',
+        ':channel-uc:clean',
+        ':channel-yeshen:clean',
+        ':channel-yxf:clean'
+)

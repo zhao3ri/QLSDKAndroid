@@ -43,10 +43,11 @@ dependencies {
         androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
         api files('libs/android-support-v4.jar')
         implementation files('libs/yxf4.1_1011.jar')
-    }else{
-        compile fileTree(include: ['*.jar'], dir: 'libs')
+    } else {
+        compile fileTree(include: ['*.jar'], exclude: ['android-support-v4.jar'], dir: 'libs')
         compile 'com.android.support:appcompat-v7:23+'
         provided project(':qlsdk-core')
+        provided files('android-support-v4.jar')
         testCompile 'junit:junit:4.12'
         androidTestCompile 'com.android.support.test:runner:1.0.2'
         androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'

@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.qinglan.sdk.android.channel.chongchong">
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -275,6 +276,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
+            tools:replace="android:configChanges"
             android:windowSoftInputMode="adjustResize" />
 
         <receiver
