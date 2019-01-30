@@ -1,6 +1,5 @@
 package com.qinglan.sdk.android.net.impl;
 
-import com.qinglan.sdk.android.BuildConfig;
 import com.qinglan.sdk.android.net.AbsRequestInfo;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.Url;
@@ -21,7 +20,7 @@ public class GameRoleRequestInfo extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return Url.ROLE_ESTABLISH_URL;
+        return Url.ROLE_CREATE_URL;
     }
 
     @Override

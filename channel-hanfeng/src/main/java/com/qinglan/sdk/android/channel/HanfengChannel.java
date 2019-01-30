@@ -118,7 +118,7 @@ public class HanfengChannel extends BaseChannel implements IHfSdkListener {
     }
 
     @Override
-    public void selectRole(Activity activity, boolean showFloat, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
+    public void selectRole(Activity activity, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
         HfCommonSdk.getInstance().hfSubmitData(activity, createRoleInfo(role, createTime, HfUserExtraData.TYPE_ENTER_GAME));
         if (listener != null)
             listener.onSuccess(role);

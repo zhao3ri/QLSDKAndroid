@@ -5,12 +5,14 @@ import com.qinglan.sdk.android.net.HttpConstants;
 
 import java.util.Map;
 
+import static com.qinglan.sdk.android.net.Url.ORDER_QUERY_URL;
+
 public class QueryOrderRequestInfo extends AbsRequestInfo {
     public String orderId;
 
     @Override
     public String getPath() {
-        return "account/order/query";
+        return ORDER_QUERY_URL;
     }
 
     @Override

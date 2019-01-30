@@ -138,13 +138,13 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void enterGame(final Activity activity, final boolean showFloat, final GameRole gameRole, final Callback.OnGameStartedListener listener) {
-        iConnector.refreshSession(activity, gameRole, new Callback.OnRefreshSessionListener() {
+        iConnector.gameStart(activity, gameRole, new Callback.OnGameStartResponseListener() {
             @Override
-            public void onRefreshed(boolean success, final long loginTimestamp, long createTimestamp, String result) {
+            public void onResult(boolean success, final long loginTimestamp, long createTimestamp, String result) {
                 if (success) {//刷新SDK数据成功
                     mLoginTime = loginTimestamp;
                     mCreateTime = createTimestamp;
-                    iChannel.selectRole(activity, showFloat, gameRole, createTimestamp, new Callback.OnGameRoleRequestListener() {
+                    iChannel.selectRole(activity, gameRole, createTimestamp, new Callback.OnGameRoleRequestListener() {
                         @Override
                         public void onSuccess(final GameRole role) {
                             updateRole(role);

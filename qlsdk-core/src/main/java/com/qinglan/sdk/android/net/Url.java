@@ -8,7 +8,7 @@ public interface Url {
     String INIT_URL = "account/initial";
 
     /**
-     * 登录URL
+     * 进入游戏URL
      */
     String LOGIN_URL = "account/login";
 
@@ -30,12 +30,17 @@ public interface Url {
     /**
      * 创建角色URL
      */
-    String ROLE_ESTABLISH_URL = "account/role/establish";
+    String ROLE_CREATE_URL = "account/role/create";
 
     /**
      * 生成订单URL
      */
     String ORDER_GENERATE_URL = "account/order/generate";
+
+    /**
+     * 查询订单URL
+     */
+    String ORDER_QUERY_URL = "account/order/query";
 
     /**
      * 获取用户信息URL

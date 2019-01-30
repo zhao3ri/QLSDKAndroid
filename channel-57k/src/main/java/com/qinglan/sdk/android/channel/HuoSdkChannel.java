@@ -205,11 +205,11 @@ public class HuoSdkChannel extends BaseChannel {
 
     @Override
     public void createRole(Activity activity, final GameRole role, long createTime, final Callback.OnGameRoleRequestListener listener) {
-        selectRole(activity, false, role, createTime, listener);
+        selectRole(activity, role, createTime, listener);
     }
 
     @Override
-    public void selectRole(Activity activity, boolean showFloat, final GameRole role, long createTime, final Callback.OnGameRoleRequestListener listener) {
+    public void selectRole(Activity activity, final GameRole role, long createTime, final Callback.OnGameRoleRequestListener listener) {
         sdkManager.setRoleInfo(getRoleInfo(role, createTime), new SubmitRoleInfoCallBack() {
             @Override
             public void submitSuccess() {

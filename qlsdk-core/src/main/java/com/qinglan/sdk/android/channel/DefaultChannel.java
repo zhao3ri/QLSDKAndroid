@@ -90,7 +90,7 @@ public class DefaultChannel extends BaseChannel {
     }
 
     @Override
-    public void selectRole(Activity activity, boolean showFloat, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
+    public void selectRole(Activity activity, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
         Log.d(TAG, "selectRole");
         if (listener != null)
             listener.onSuccess(role);

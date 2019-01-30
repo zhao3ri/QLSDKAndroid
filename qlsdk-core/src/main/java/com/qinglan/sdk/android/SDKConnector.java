@@ -20,7 +20,7 @@ import com.qinglan.sdk.android.net.impl.GameRoleRequestInfo;
 import com.qinglan.sdk.android.net.impl.HeartBeatRequestInfo;
 import com.qinglan.sdk.android.net.impl.InitRequestInfo;
 import com.qinglan.sdk.android.net.impl.GenerateOrderRequestInfo;
-import com.qinglan.sdk.android.net.impl.RefreshSessionRequestInfo;
+import com.qinglan.sdk.android.net.impl.GameStartRequestInfo;
 import com.qinglan.sdk.android.net.impl.TokenRequestInfo;
 
 import org.json.JSONException;
@@ -113,9 +113,9 @@ class SDKConnector implements IConnector {
     }
 
     @Override
-    public void refreshSession(final Context context, final GameRole role, final Callback.OnRefreshSessionListener listener) {
+    public void gameStart(final Context context, final GameRole role, final Callback.OnGameStartResponseListener listener) {
         Log.d("refreshSession request");
-        RefreshSessionRequestInfo request = new RefreshSessionRequestInfo();
+        GameStartRequestInfo request = new GameStartRequestInfo();
         request.gameId = iPresenter.getGameId();
         request.channelId = iPresenter.getChannelId();
         request.uid = iPresenter.getUid();
@@ -134,23 +134,23 @@ class SDKConnector implements IConnector {
                         long loginTimestamp = jsonObject.optLong(HttpConstants.RESPONSE_LOGIN_TIMESTAMP);
                         long createTimestamp = jsonObject.optLong(HttpConstants.RESPONSE_CREATE_TIMESTAMP);
                         if (listener != null)
-                            listener.onRefreshed(true, loginTimestamp, createTimestamp, result);
+                            listener.onResult(true, loginTimestamp, createTimestamp, result);
                     } else {
                         if (listener != null)
-                            listener.onRefreshed(false, 0, 0, result);
+                            listener.onResult(false, 0, 0, result);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("refreshSession error, The jason was not properly formatted." + result);
                     if (listener != null)
-                        listener.onRefreshed(false, 0, 0, result);
+                        listener.onResult(false, 0, 0, result);
                 }
             }
         }).execute(request);
     }
 
     @Override
-    public void startHeartBeat(Context context, GameRole role, String time, final Callback.HeartBeanRequestListener listener) {
+    public void startHeartBeat(Context context, GameRole role, String time, final Callback.HeartBeanResponseListener listener) {
         Log.d("startHeartBeat request");
         HeartBeatRequestInfo request = new HeartBeatRequestInfo();
         request.gameId = iPresenter.getGameId();

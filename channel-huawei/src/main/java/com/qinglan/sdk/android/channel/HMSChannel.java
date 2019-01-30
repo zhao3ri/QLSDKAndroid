@@ -164,11 +164,11 @@ public class HMSChannel extends BaseChannel {
 
     @Override
     public void createRole(final Activity activity, final GameRole role, long createTime, final Callback.OnGameRoleRequestListener listener) {
-        selectRole(activity, false, role, createTime, listener);
+        selectRole(activity, role, createTime, listener);
     }
 
     @Override
-    public void selectRole(final Activity activity, final boolean showFloat, final GameRole role, long createTime, final Callback.OnGameRoleRequestListener listener) {
+    public void selectRole(final Activity activity, final GameRole role, long createTime, final Callback.OnGameRoleRequestListener listener) {
         GamePlayerInfo playerInfo = helper.getPlayerInfo(role);
         HMSAgent.Game.savePlayerInfo(playerInfo, new SaveInfoHandler() {
             @Override

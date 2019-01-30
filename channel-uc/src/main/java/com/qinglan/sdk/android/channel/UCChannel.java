@@ -236,11 +236,11 @@ public class UCChannel extends BaseChannel {
 
     @Override
     public void createRole(Activity activity, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
-        selectRole(activity, false, role, createTime, listener);
+        selectRole(activity, role, createTime, listener);
     }
 
     @Override
-    public void selectRole(Activity activity, boolean showFloat, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
+    public void selectRole(Activity activity, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
         try {
             submitRoleData(activity, role, createTime);
             if (listener != null)

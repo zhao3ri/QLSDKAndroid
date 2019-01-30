@@ -188,7 +188,7 @@ public class ChongchongChannel extends BaseChannel {
     }
 
     @Override
-    public void selectRole(Activity activity, boolean showFloat, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
+    public void selectRole(Activity activity, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
         CCPaySdk.getInstance().submitExtraData(getPlayUser(role, createTime, PlayUserInfo.TYPE_ENTER_GAME));
         if (listener != null)
             listener.onSuccess(role);

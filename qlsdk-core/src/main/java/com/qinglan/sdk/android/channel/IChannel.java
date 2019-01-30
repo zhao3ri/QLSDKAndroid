@@ -77,7 +77,7 @@ public interface IChannel {
     /**
      * 设置角色
      */
-    void selectRole(Activity activity, boolean showFloat, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener);
+    void selectRole(Activity activity, /*boolean showFloat,*/ GameRole role, long createTime, Callback.OnGameRoleRequestListener listener);
 
     /**
      * 升级

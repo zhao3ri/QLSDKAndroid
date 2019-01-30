@@ -156,7 +156,7 @@ public class GioneeChannel extends BaseChannel {
     }
 
     @Override
-    public void selectRole(Activity activity, boolean showFloat, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
+    public void selectRole(Activity activity, GameRole role, long createTime, Callback.OnGameRoleRequestListener listener) {
         if (listener != null) {
             listener.onSuccess(role);
         }

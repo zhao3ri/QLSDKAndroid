@@ -22,9 +22,9 @@ public interface IConnector {
      */
     void getToken(String uid, Callback.GetTokenListener listener);
 
-    void refreshSession(Context context, GameRole role, Callback.OnRefreshSessionListener listener);
+    void gameStart(Context context, GameRole role, Callback.OnGameStartResponseListener listener);
 
-    void startHeartBeat(Context context, GameRole role, String time, Callback.HeartBeanRequestListener listener);
+    void startHeartBeat(Context context, GameRole role, String time, Callback.HeartBeanResponseListener listener);
 
     void cleanSession(Context context, GameRole role, Callback.OnLogoutResponseListener listener);
 

@@ -117,7 +117,7 @@ public class YXFChannel extends BaseChannel {
     }
 
     @Override
-    public void selectRole(Activity activity, boolean show, final GameRole gameRole, long createTime, final Callback.OnGameRoleRequestListener onGameRoleRequestListener) {
+    public void selectRole(Activity activity, final GameRole gameRole, long createTime, final Callback.OnGameRoleRequestListener onGameRoleRequestListener) {
         RoleInfo roleInfo = getRoleInfo(gameRole);
         Log.d("setGameInfo RoleInfo : " + gameRole.getRoleLevel() + " " + gameRole.getRoleName() + " " + gameRole.getServerId());
         YXFSDKManager.getInstance(activity).getRoleInfo(activity, roleInfo, Constants.TYPE_ENTER_GAME, new onRoleListener() {

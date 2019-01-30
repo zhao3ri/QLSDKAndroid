@@ -267,7 +267,7 @@ public class Utils {
     }
 
     /**
-     * 查询手机的 MCC+MNC
+     * SIM卡运营商的国家代码
      */
     public static String getSimCountryIso(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);

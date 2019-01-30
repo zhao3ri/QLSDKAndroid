@@ -248,8 +248,7 @@ public class YeshenChannel extends BaseChannel implements OnLogoutListener {
     }
 
     @Override
-    public void selectRole(Activity activity, boolean showFloat, final GameRole role,
-                           long createTime, final Callback.OnGameRoleRequestListener listener) {
+    public void selectRole(Activity activity, final GameRole role, long createTime, final Callback.OnGameRoleRequestListener listener) {
         KSUserRoleEntity userRoleEntity = getUserRoleEntity(role, createTime);
         NoxSDKPlatform.getInstance().noxEntryGame(userRoleEntity, new OnEntryListener() {
             @Override

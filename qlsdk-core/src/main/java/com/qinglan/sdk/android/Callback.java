@@ -34,11 +34,11 @@ public class Callback {
         void onSuccess(long timestamp);
     }
 
-    public interface OnRefreshSessionListener {
-        void onRefreshed(boolean success, long loginTimestamp, long createTimestamp, String result);
+    public interface OnGameStartResponseListener {
+        void onResult(boolean success, long loginTimestamp, long createTimestamp, String result);
     }
 
-    public interface HeartBeanRequestListener {
+    public interface HeartBeanResponseListener {
         void onResponse(boolean success, String result);
     }
 
