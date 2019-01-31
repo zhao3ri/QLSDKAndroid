@@ -280,6 +280,19 @@ public class Utils {
     }
 
     /**
+     * 网络运营商的的国家代码
+     */
+    public static String getNetworkCountryIso(Context context) {
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        try {
+            return tm.getNetworkCountryIso();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    /**
      * 获取sim运营商信息
      * 例如：46000中国移动 46001中国联通 46003中国电信
      */

@@ -55,14 +55,14 @@ public class QLSDK {
     }
 
     /**
-     * 平台初始化
+     * 初始化
      */
-    public void initPlatform(Activity activity, Callback.OnInitCompletedListener listener) {
+    public void init(Activity activity, Callback.OnInitCompletedListener listener) {
         mPresenter.init(activity, listener);
     }
 
     /**
-     * 显示登录页面
+     * 登录
      */
     public void login(Activity activity, Callback.OnLoginResponseListener listener) {
         mPresenter.login(activity, listener);
@@ -76,14 +76,14 @@ public class QLSDK {
     }
 
     /**
-     * 获取平台id
+     * 获取渠道id
      */
     public int getChannelId() {
         return mPresenter.getChannelId();
     }
 
     /**
-     * 获取平台名称
+     * 获取渠道名称
      */
     public String getChannelName() {
         return mPresenter.getChannelName();

@@ -2,7 +2,6 @@ package com.qinglan.sdk.android.channel;
 
 import android.text.TextUtils;
 
-import com.google.gson.reflect.TypeToken;
 import com.huawei.android.hms.agent.pay.PaySignUtil;
 import com.huawei.hms.support.api.entity.game.GamePlayerInfo;
 import com.huawei.hms.support.api.entity.game.GameUserData;
@@ -29,7 +28,7 @@ public class HMSHelper {
     private static final int RETURN_CODE_ERROR = -1;
 
     private long gameId;
-    private int platformId;
+    private int channelId;
     private String pubKey;
     private String appID;
     private String cpId;
@@ -37,11 +36,11 @@ public class HMSHelper {
     private HMSHelper() {
     }
 
-    public HMSHelper(long gameId, int platformId, String appID, String pubKey, String cpId) {
+    public HMSHelper(long gameId, int channelId, String appID, String pubKey, String cpId) {
         this.appID = appID;
         this.pubKey = pubKey;
         this.gameId = gameId;
-        this.platformId = platformId;
+        this.channelId = channelId;
         this.cpId = cpId;
     }
 
@@ -55,7 +54,7 @@ public class HMSHelper {
     public void verifyLogin(GameUserData data, final OnVerifyRequestListener listener) {
         HMSVerifyRequest request = new HMSVerifyRequest();
         request.gameId = String.valueOf(gameId);
-        request.channelId = platformId;
+        request.channelId = channelId;
         request.appID = appID;
         request.cpID = cpId;
         request.ts = data.getTs();
@@ -143,7 +142,7 @@ public class HMSHelper {
     private void signPay(final PayReq payReq, final OnSignRequestListener listener) {
         HMSPaySignRequest request = new HMSPaySignRequest();
         request.gameId = String.valueOf(gameId);
-        request.channelId = platformId;
+        request.channelId = channelId;
         request.content = PaySignUtil.getStringForSign(payReq);
         new HttpConnectionTask().setResponseListener(new OnResponseListener() {
 

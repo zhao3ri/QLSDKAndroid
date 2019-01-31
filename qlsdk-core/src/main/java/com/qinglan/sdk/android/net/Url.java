@@ -10,7 +10,7 @@ public interface Url {
     /**
      * 进入游戏URL
      */
-    String LOGIN_URL = "account/login";
+    String START_GAME_URL = "account/join";
 
     /**
      * 用户心跳URL

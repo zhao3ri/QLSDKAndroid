@@ -56,12 +56,12 @@ public interface IPresenter {
     /**
      * 支付
      */
-    void doPay(@NonNull Activity activity, GamePay pay, Callback.OnPayRequestListener listener);
+    void doPay(@NonNull Activity activity, @NonNull GamePay pay, Callback.OnPayRequestListener listener);
 
     /**
      * 升级
      */
-    void levelUpdate(Activity activity, GameRole role);
+    void levelUpdate(@NonNull Activity activity, @NonNull GameRole role);
 
     /**
      * 获取当前游戏id

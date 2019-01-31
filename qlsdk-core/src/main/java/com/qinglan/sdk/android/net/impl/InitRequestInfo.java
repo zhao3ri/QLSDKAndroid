@@ -13,8 +13,8 @@ public class InitRequestInfo extends AbsRequestInfo {
     public String deviceId;
     public String manufacturer;
     public String model;
-    public String systemVersion;
-    public String os;
+    public int apiVersion;
+    public String osVersion;
     public String latitude;
     public String longitude;
     public String imsi;
@@ -44,10 +44,10 @@ public class InitRequestInfo extends AbsRequestInfo {
         params.put(HttpConstants.REQUEST_PARAM_NETWORK_COUNTRY_ISO, networkCountryIso);
         params.put(HttpConstants.REQUEST_PARAM_NETWORK_TYPE, networkType);
         params.put(HttpConstants.REQUEST_PARAM_PHONE_TYPE, phoneType);
-        params.put(HttpConstants.REQUEST_PARAM_OS, os);
         params.put(HttpConstants.REQUEST_PARAM_RESOLUTION, resolution);
         params.put(HttpConstants.REQUEST_PARAM_SIMOPERATOR_NAME, simOperatorName);
-        params.put(HttpConstants.REQUEST_PARAM_SYSTEM_VERSION, systemVersion);
+        params.put(HttpConstants.REQUEST_PARAM_OS_VERSION, osVersion);
+        params.put(HttpConstants.REQUEST_PARAM_API_VERSION, apiVersion);
         return params;
     }
 }

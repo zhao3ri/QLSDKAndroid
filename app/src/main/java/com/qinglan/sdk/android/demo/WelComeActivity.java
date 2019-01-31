@@ -127,7 +127,7 @@ public class WelComeActivity extends PermissionActivity implements OnClickListen
      * 平台初始化
      */
     private void init() {
-        qlSDK.initPlatform(this, new Callback.OnInitCompletedListener() {
+        qlSDK.init(this, new Callback.OnInitCompletedListener() {
             @Override
             public void onFinished(boolean success, String result) {
                 //初始化完成后的操作

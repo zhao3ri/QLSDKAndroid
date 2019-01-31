@@ -48,8 +48,8 @@ class SDKPresenter implements IPresenter {
     private boolean isLogged = false;//是否登录
     private boolean isHeartBeating = false;//心跳是否启动
     private GameRole mRole;
-    private long mLoginTime = 0;//登录时间戳
-    private long mCreateTime = 0;//创角时间戳
+    private long mGameStartTime = 0;//游戏开始时间戳
+    private long mRoleCreateTime = 0;//角色创建时间戳
 
     private AlarmManager heartBeatManager;
     private static final long HEART_RATE = 1000 * 60 * 20;//20分钟更新一次心跳
@@ -68,7 +68,7 @@ class SDKPresenter implements IPresenter {
                 if (role != null) {
                     Log.d("heartBeat!");
                     Log.d("Intent Extra:" + role.toString());
-                    iConnector.startHeartBeat(mContext, role, String.valueOf(mLoginTime), null);
+                    iConnector.startHeartBeat(mContext, role, String.valueOf(mGameStartTime), null);
                 }
             } else if (intent.getAction().equals(ACTION_LOGOUT + getGameId())) {
                 iConnector.cleanSession(mContext, mRole, null);
@@ -110,7 +110,7 @@ class SDKPresenter implements IPresenter {
         iChannel.login(activity, new Callback.OnLoginListener() {
             @Override
             public void onSuccess(final UserInfo userInfo) {
-                //当平台登录成功后，调用SDK获取session
+                //当渠道登录成功后，调用SDK获取session
                 iConnector.getToken(userInfo.getId(), new Callback.GetTokenListener() {
                     @Override
                     public void onFinished(boolean success, String result) {
@@ -140,10 +140,10 @@ class SDKPresenter implements IPresenter {
     public void enterGame(final Activity activity, final boolean showFloat, final GameRole gameRole, final Callback.OnGameStartedListener listener) {
         iConnector.gameStart(activity, gameRole, new Callback.OnGameStartResponseListener() {
             @Override
-            public void onResult(boolean success, final long loginTimestamp, long createTimestamp, String result) {
+            public void onResult(boolean success, final long startTimestamp, long createTimestamp, String result) {
                 if (success) {//刷新SDK数据成功
-                    mLoginTime = loginTimestamp;
-                    mCreateTime = createTimestamp;
+                    mGameStartTime = startTimestamp;
+                    mRoleCreateTime = createTimestamp;
                     iChannel.selectRole(activity, gameRole, createTimestamp, new Callback.OnGameRoleRequestListener() {
                         @Override
                         public void onSuccess(final GameRole role) {
@@ -154,7 +154,7 @@ class SDKPresenter implements IPresenter {
                                 isHeartBeating = true;
                             }
                             if (listener != null)
-                                listener.onSuccess(loginTimestamp);
+                                listener.onSuccess(startTimestamp);
                             if (showFloat) {
                                 iChannel.showWinFloat(activity);
                             }
@@ -212,8 +212,8 @@ class SDKPresenter implements IPresenter {
                         Log.e("get create time error.");
                         e.getMessage();
                     }
-                    mCreateTime = timestamp;
-                    iChannel.createRole(activity, role, mCreateTime, new Callback.OnGameRoleRequestListener() {
+                    mRoleCreateTime = timestamp;
+                    iChannel.createRole(activity, role, mRoleCreateTime, new Callback.OnGameRoleRequestListener() {
                         @Override
                         public void onSuccess(GameRole role) {
                             updateRole(role);
@@ -329,7 +329,7 @@ class SDKPresenter implements IPresenter {
         if (pay.getAmount() > 0) {
             fixed = 1;
         }
-        iConnector.generateOrder(activity, mRole, pay, fixed, String.valueOf(mLoginTime), new Callback.GenerateOrderListener() {
+        iConnector.generateOrder(activity, mRole, pay, fixed, String.valueOf(mGameStartTime), new Callback.GenerateOrderListener() {
             @Override
             public void onSuccess(Map<String, Object> result) {
                 pay.setNotifyUrl(result.get(HttpConstants.RESPONSE_NOTIFY_URL).toString());
@@ -356,7 +356,7 @@ class SDKPresenter implements IPresenter {
 
     @Override
     public void levelUpdate(Activity activity, final GameRole role) {
-        iChannel.levelUpdate(activity, role, mCreateTime, new Callback.OnLevelUpListener() {
+        iChannel.levelUpdate(activity, role, mRoleCreateTime, new Callback.OnLevelUpListener() {
             @Override
             public void onFinished(boolean success, String msg) {
                 updateRole(role);
@@ -521,8 +521,8 @@ class SDKPresenter implements IPresenter {
     public void clear() {
         isLogged = false;
         isHeartBeating = false;
-        mLoginTime = 0;
-        mCreateTime = 0;
+        mGameStartTime = 0;
+        mRoleCreateTime = 0;
         mRole = null;
         UserPreferences.clear(mContext);
         stopHeartBeat(null);

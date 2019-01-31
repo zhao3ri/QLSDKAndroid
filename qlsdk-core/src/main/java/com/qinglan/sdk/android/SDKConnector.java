@@ -50,14 +50,14 @@ class SDKConnector implements IConnector {
         request.longitude = "";
         request.location = "";
         request.manufacturer = Build.BRAND;
-        request.model = Build.MODEL;
-        request.os = "Android " + Build.VERSION.RELEASE;
-        request.networkCountryIso = Utils.getSimCountryIso(context);
+        request.model = Build.PRODUCT;
+        request.networkCountryIso = Utils.getNetworkCountryIso(context);
         request.phoneType = Utils.getPhoneType(context);
         request.networkType = Utils.getNetworkClass(context);
         request.resolution = Utils.getResolution(context);
         request.simOperatorName = Utils.getSimOperatorName(context);
-        request.systemVersion = String.valueOf(Build.VERSION.SDK_INT);
+        request.osVersion = "Android " + Build.VERSION.RELEASE;
+        request.apiVersion = Build.VERSION.SDK_INT;
         new HttpConnectionTask().setResponseListener(new OnResponseListener() {
             @Override
             public void onResponse(boolean success, String result) {
@@ -131,10 +131,10 @@ class SDKConnector implements IConnector {
                 try {
                     if (success && getResponseCode(result) == HttpConstants.RESPONSE_CODE_SUCCESS) {
                         JSONObject jsonObject = new JSONObject(result);
-                        long loginTimestamp = jsonObject.optLong(HttpConstants.RESPONSE_LOGIN_TIMESTAMP);
+                        long startTimestamp = jsonObject.optLong(HttpConstants.RESPONSE_START_TIMESTAMP);
                         long createTimestamp = jsonObject.optLong(HttpConstants.RESPONSE_CREATE_TIMESTAMP);
                         if (listener != null)
-                            listener.onResult(true, loginTimestamp, createTimestamp, result);
+                            listener.onResult(true, startTimestamp, createTimestamp, result);
                     } else {
                         if (listener != null)
                             listener.onResult(false, 0, 0, result);

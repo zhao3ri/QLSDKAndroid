@@ -1,6 +1,5 @@
 package com.qinglan.sdk.android.net.impl;
 
-import com.qinglan.sdk.android.BuildConfig;
 import com.qinglan.sdk.android.net.AbsRequestInfo;
 import com.qinglan.sdk.android.net.HttpConstants;
 import com.qinglan.sdk.android.net.Url;
@@ -22,7 +21,7 @@ public class GameStartRequestInfo extends AbsRequestInfo {
 
     @Override
     public String getPath() {
-        return Url.LOGIN_URL;
+        return Url.START_GAME_URL;
     }
 
     @Override
